@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.*
+!.env.example
+dist
+dist-ssr
+build
+.DS_Store
+*.log
+*.local
+vite.config.js.timestamp*
+uploads/*
+!uploads/.gitkeep
+
