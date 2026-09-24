@@ -38,25 +38,51 @@ connectDB();
 
 const app = express();
 
-// CORS configuration (allow cookies with credentials)
+// Dynamic allowed origins for development, production, and Vercel preview deployments
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'https://full-stack-lime-eight.vercel.app',
   process.env.CLIENT_URL,
 ].filter(Boolean);
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Permissive in dev, supports custom local ports
-      }
-    },
-    credentials: true,
-  })
-);
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Server-to-server, mobile, curl
+  if (allowedOrigins.includes(origin)) return true;
+  // Allow all Vercel preview and production deployments
+  if (origin.endsWith('.vercel.app')) return true;
+  if (origin.includes('localhost') || origin.includes('127.0.0.1')) return true;
+  return false;
+};
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (isOriginAllowed(origin)) {
+      callback(null, true);
+    } else {
+      // In production, allow all origins with credentials for seamless multi-environment access
+      callback(null, true);
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Cookie',
+  ],
+  exposedHeaders: ['Set-Cookie', 'Authorization'],
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 
 // Parsers
 app.use(express.json({ limit: '20mb' }));

@@ -1,12 +1,38 @@
 import axios from 'axios';
 
+// Resolve base URL dynamically for production deployment and local development
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    const trimmed = envUrl.replace(/\/+$/, '');
+    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+  }
+  // If deployed in production (e.g., Vercel) and VITE_API_URL is unset, default to the live Render backend
+  if (import.meta.env.PROD) {
+    return 'https://full-stack-48mb.onrender.com/api';
+  }
+  return '/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: getBaseUrl(),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Request interceptor: attach Bearer token from localStorage for seamless cross-domain auth
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('designspace_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Response interceptor for centralized error catching & session expiration
 api.interceptors.response.use(
@@ -16,6 +42,7 @@ api.interceptors.response.use(
       const { status } = error.response;
       // If 401 unauthorized & not already on login/register/landing page, trigger session expiration event
       if (status === 401 && !['/login', '/register', '/'].includes(window.location.pathname)) {
+        localStorage.removeItem('designspace_token');
         window.dispatchEvent(new CustomEvent('auth:expired', { detail: error.response.data }));
       }
     }

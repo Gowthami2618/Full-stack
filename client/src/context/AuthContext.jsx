@@ -20,7 +20,8 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       }
     } catch (error) {
-      // 401 or invalid token - clean user state
+      // 401 or invalid token - clean user state and token
+      localStorage.removeItem('designspace_token');
       setUser(null);
     } finally {
       setLoading(false);
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     // Listen for auth:expired event from Axios interceptor
     const handleAuthExpired = (event) => {
+      localStorage.removeItem('designspace_token');
       setUser(null);
       showToast('Your session has expired. Please sign in again.', 'warning');
     };
@@ -45,6 +47,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await authAPI.login({ email, password });
       const authenticatedUser = res.data.data.user;
+      const token = res.data.data.token;
+      if (token) {
+        localStorage.setItem('designspace_token', token);
+      }
       setUser(authenticatedUser);
       showToast(`Welcome back, ${authenticatedUser.name}!`, 'success');
       return { success: true, user: authenticatedUser };
@@ -61,6 +67,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await authAPI.register(userData);
       const newUser = res.data.data.user;
+      const token = res.data.data.token;
+      if (token) {
+        localStorage.setItem('designspace_token', token);
+      }
       setUser(newUser);
       showToast('Registration successful! Welcome to DesignSpace.', 'success');
       return { success: true, user: newUser };
@@ -79,6 +89,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.warn('Logout API error:', error);
     } finally {
+      localStorage.removeItem('designspace_token');
       setUser(null);
       showToast('You have been signed out.', 'info');
     }

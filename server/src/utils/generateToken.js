@@ -18,7 +18,11 @@ export const generateToken = (res, user) => {
 
   // Set HTTP-only cookie
   if (res) {
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction =
+      process.env.NODE_ENV === 'production' ||
+      Boolean(process.env.RENDER) ||
+      Boolean(process.env.VERCEL);
+
     res.cookie('jwt', token, {
       httpOnly: true,
       secure: isProduction, // HTTPS in production
@@ -31,7 +35,11 @@ export const generateToken = (res, user) => {
 };
 
 export const clearTokenCookie = (res) => {
-  const isProduction = process.env.NODE_ENV === 'production';
+  const isProduction =
+    process.env.NODE_ENV === 'production' ||
+    Boolean(process.env.RENDER) ||
+    Boolean(process.env.VERCEL);
+
   res.cookie('jwt', '', {
     httpOnly: true,
     expires: new Date(0),
