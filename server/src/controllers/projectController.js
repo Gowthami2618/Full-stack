@@ -145,13 +145,26 @@ export const createProject = async (req, res, next) => {
 
     const clientId = req.user.role === 'ADMIN' && req.body.clientId ? req.body.clientId : req.user._id;
 
+    // Standard initial rooms if not customized
+    const initialRooms = (rooms && Array.isArray(rooms) && rooms.length > 0)
+      ? rooms
+      : [
+          { name: 'Living Room', category: 'Living', dimensions: '18 x 14 ft', area: 252, budget: Math.round(Number(totalBudget) * 0.2), style: preferredStyle || 'Modern' },
+          { name: 'Dining Room', category: 'Dining', dimensions: '14 x 12 ft', area: 168, budget: Math.round(Number(totalBudget) * 0.1), style: preferredStyle || 'Modern' },
+          { name: 'Kitchen', category: 'Kitchen', dimensions: '12 x 10 ft', area: 120, budget: Math.round(Number(totalBudget) * 0.2), style: preferredStyle || 'Modern', kitchenDetails: { layout: 'L-shaped', components: [] } },
+          { name: 'Master Bedroom', category: 'Bedroom', dimensions: '16 x 14 ft', area: 224, budget: Math.round(Number(totalBudget) * 0.2), style: preferredStyle || 'Modern' },
+          { name: 'Bedroom 2', category: 'Bedroom', dimensions: '14 x 12 ft', area: 168, budget: Math.round(Number(totalBudget) * 0.1), style: preferredStyle || 'Modern' },
+          { name: 'Bathroom 1', category: 'Bathroom', dimensions: '8 x 6 ft', area: 48, budget: Math.round(Number(totalBudget) * 0.08), style: preferredStyle || 'Modern' },
+          { name: 'Balcony', category: 'Outdoor', dimensions: '12 x 5 ft', area: 60, budget: Math.round(Number(totalBudget) * 0.05), style: preferredStyle || 'Modern' },
+        ];
+
     const project = await Project.create({
       title,
       description,
       client: clientId,
       designer: designerId || null,
-      projectType,
-      propertyType,
+      projectType: projectType || 'Full Home',
+      propertyType: propertyType || 'Villa',
       location,
       totalBudget: Number(totalBudget),
       startDate: startDate || Date.now(),
@@ -160,6 +173,17 @@ export const createProject = async (req, res, next) => {
       preferredStyle: preferredStyle || 'Modern',
       images: images || [],
       status: designerId ? 'DESIGNING' : 'REQUESTED',
+      propertyDetails: propertyDetails || {},
+      budgetAllocation: budgetAllocation || {
+        totalBudget: Number(totalBudget),
+        interior: Math.round(Number(totalBudget) * 0.4),
+        furniture: Math.round(Number(totalBudget) * 0.2),
+        kitchen: Math.round(Number(totalBudget) * 0.15),
+        bathrooms: Math.round(Number(totalBudget) * 0.1),
+        contingency: Math.round(Number(totalBudget) * 0.15),
+      },
+      housePhotos: housePhotos || [],
+      rooms: initialRooms,
     });
 
     // Notify admins & assigned designer if applicable
@@ -227,11 +251,6 @@ export const updateProject = async (req, res, next) => {
     // Prevent non-admins from changing project client
     if (!isAdmin) {
       delete updates.client;
-    }
-
-    // Client can edit specs if project not yet finished
-    if (isClient && !isAdmin) {
-      // Client shouldn't directly override contractor without workflow
     }
 
     project = await Project.findByIdAndUpdate(req.params.id, updates, {
@@ -379,6 +398,199 @@ export const updateProjectStatus = async (req, res, next) => {
   }
 };
 
+// @desc    Add a new room/space to a house project
+// @route   POST /api/projects/:id/rooms
+// @access  Private
+export const addRoom = async (req, res, next) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return sendError(res, 404, 'Project not found');
+    }
+
+    const { name, category, dimensions, area, budget, style } = req.body;
+    if (!name) {
+      return sendError(res, 400, 'Room name is required');
+    }
+
+    project.rooms.push({
+      name,
+      category: category || 'General',
+      dimensions: dimensions || '',
+      area: Number(area) || 0,
+      budget: Number(budget) || 0,
+      style: style || project.preferredStyle || 'Modern',
+      designStatus: 'Draft',
+      executionStatus: 'Pending',
+    });
+
+    await project.save();
+
+    return sendSuccess(res, 201, 'Room added successfully', project.rooms[project.rooms.length - 1]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Update a room's design, planner details, or execution progress
+// @route   PATCH /api/projects/:id/rooms/:roomId
+// @access  Private
+export const updateRoom = async (req, res, next) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return sendError(res, 404, 'Project not found');
+    }
+
+    const room = project.rooms.id(req.params.roomId);
+    if (!room) {
+      return sendError(res, 404, 'Room not found');
+    }
+
+    const updates = req.body;
+    Object.keys(updates).forEach((key) => {
+      if (key !== '_id') {
+        room[key] = updates[key];
+      }
+    });
+
+    // Automatically recalculate overall project progress from rooms if any
+    if (project.rooms.length > 0) {
+      const avgProgress = Math.round(
+        project.rooms.reduce((acc, r) => acc + (r.progress || 0), 0) / project.rooms.length
+      );
+      project.progress = avgProgress;
+    }
+
+    await project.save();
+
+    return sendSuccess(res, 200, 'Room updated successfully', room);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Delete a room from house project
+// @route   DELETE /api/projects/:id/rooms/:roomId
+// @access  Private
+export const deleteRoom = async (req, res, next) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return sendError(res, 404, 'Project not found');
+    }
+
+    project.rooms.pull({ _id: req.params.roomId });
+    await project.save();
+
+    return sendSuccess(res, 200, 'Room deleted successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Client approves or requests revision for a room design
+// @route   POST /api/projects/:id/rooms/:roomId/review
+// @access  Private (CLIENT, ADMIN)
+export const reviewRoomDesign = async (req, res, next) => {
+  try {
+    const { action, comments } = req.body; // action: 'APPROVE' | 'REQUEST_CHANGES'
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return sendError(res, 404, 'Project not found');
+    }
+
+    const room = project.rooms.id(req.params.roomId);
+    if (!room) {
+      return sendError(res, 404, 'Room not found');
+    }
+
+    if (action === 'APPROVE') {
+      room.designStatus = 'Approved';
+      room.clientFeedback = comments || 'Approved by client.';
+      
+      if (project.designer) {
+        await Notification.create({
+          recipient: project.designer,
+          type: 'PROPOSAL_APPROVED',
+          title: `Room Design Approved: ${room.name}`,
+          message: `The client has approved the design concepts for "${room.name}" in project "${project.title}".`,
+          relatedProject: project._id,
+        });
+      }
+    } else if (action === 'REQUEST_CHANGES') {
+      room.designStatus = 'Changes Requested';
+      room.clientFeedback = comments || 'Changes requested by client.';
+      
+      const revisionNumber = (room.revisions?.length || 0) + 1;
+      room.revisions.push({
+        revisionNumber,
+        requestedBy: req.user._id,
+        comments: comments || 'Please adjust the spatial concepts.',
+        date: new Date(),
+        status: 'Pending',
+      });
+
+      if (project.designer) {
+        await Notification.create({
+          recipient: project.designer,
+          type: 'REVISION_REQUESTED',
+          title: `Revision Requested: ${room.name}`,
+          message: `Client requested changes for "${room.name}" in "${project.title}": "${comments || 'See notes'}"`,
+          relatedProject: project._id,
+        });
+      }
+    } else {
+      return sendError(res, 400, 'Invalid review action. Use APPROVE or REQUEST_CHANGES.');
+    }
+
+    await project.save();
+
+    await logActivity({
+      user: req.user,
+      action: action === 'APPROVE' ? 'PROPOSAL_APPROVED' : 'REVISION_REQUESTED',
+      entityType: 'PROJECT',
+      entityId: project._id,
+      description: `Room "${room.name}" design ${action === 'APPROVE' ? 'approved' : 'revision requested'} by ${req.user.name}`,
+    });
+
+    return sendSuccess(res, 200, `Room design ${action === 'APPROVE' ? 'approved' : 'marked for changes'}`, room);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Add photo to house project gallery
+// @route   POST /api/projects/:id/photos
+// @access  Private
+export const addHousePhoto = async (req, res, next) => {
+  try {
+    const { url, caption, roomType, tag } = req.body;
+    if (!url) {
+      return sendError(res, 400, 'Photo URL is required');
+    }
+
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+      return sendError(res, 404, 'Project not found');
+    }
+
+    project.housePhotos.push({
+      url,
+      caption: caption || '',
+      roomType: roomType || 'Exterior',
+      tag: tag || 'current',
+      uploadedAt: new Date(),
+    });
+
+    await project.save();
+
+    return sendSuccess(res, 201, 'Photo added to house gallery', project.housePhotos[project.housePhotos.length - 1]);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Delete project
 // @route   DELETE /api/projects/:id
 // @access  Private (CLIENT / ADMIN)
@@ -412,3 +624,4 @@ export const deleteProject = async (req, res, next) => {
     next(error);
   }
 };
+

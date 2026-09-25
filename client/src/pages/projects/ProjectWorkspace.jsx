@@ -20,6 +20,10 @@ import {
   Paperclip,
   ExternalLink,
   Hammer,
+  Home,
+  Palette,
+  Eye,
+  Camera,
 } from 'lucide-react';
 import {
   projectsAPI,
@@ -47,6 +51,11 @@ import StatusBadge from '../../components/common/StatusBadge';
 import ProgressBar from '../../components/common/ProgressBar';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 import EmptyState from '../../components/common/EmptyState';
+import BeforeAfterSlider from '../../components/common/BeforeAfterSlider';
+import RoomDesignerModal from '../../components/common/RoomDesignerModal';
+import RoomApprovalModal from '../../components/common/RoomApprovalModal';
+import ContractorExecutionModal from '../../components/common/ContractorExecutionModal';
+
 
 export const ProjectWorkspace = () => {
   const { id } = useParams();
@@ -81,8 +90,90 @@ export const ProjectWorkspace = () => {
   const [showAssignContractorModal, setShowAssignContractorModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
 
+  // House Room Modals State
+  const [selectedRoomForDesign, setSelectedRoomForDesign] = useState(null);
+  const [selectedRoomForApproval, setSelectedRoomForApproval] = useState(null);
+  const [selectedRoomForExecution, setSelectedRoomForExecution] = useState(null);
+  const [showAddRoomModal, setShowAddRoomModal] = useState(false);
+  const [newRoomForm, setNewRoomForm] = useState({
+    name: '',
+    dimensions: '16 x 14 ft',
+    area: 224,
+    budget: 150000,
+    style: 'Modern',
+  });
+
   // Form Submissions State
   const [modalLoading, setModalLoading] = useState(false);
+
+  // Room Action Handlers
+  const handleSaveRoomDesign = async (roomId, roomData) => {
+    try {
+      await projectsAPI.updateRoom(id, roomId, roomData);
+      showToast('Room specifications updated!', 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to update room specifications', 'error');
+    }
+  };
+
+  const handleSubmitRoomForReview = async (roomId) => {
+    try {
+      await projectsAPI.updateRoom(id, roomId, { designStatus: 'Submitted' });
+      showToast('Room design submitted for client review!', 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to submit room design', 'error');
+    }
+  };
+
+  const handleApproveRoom = async (roomId, comments) => {
+    try {
+      await projectsAPI.reviewRoomDesign(id, roomId, { action: 'APPROVE', comments });
+      showToast('🎉 Room design approved!', 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to approve room design', 'error');
+    }
+  };
+
+  const handleRequestRoomChanges = async (roomId, comments) => {
+    try {
+      await projectsAPI.reviewRoomDesign(id, roomId, { action: 'REQUEST_CHANGES', comments });
+      showToast('Revision request sent to designer.', 'info');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to request changes', 'error');
+    }
+  };
+
+  const handleSaveRoomExecution = async (roomId, executionData) => {
+    try {
+      await projectsAPI.updateRoom(id, roomId, executionData);
+      showToast('Room execution progress updated!', 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to update execution progress', 'error');
+    }
+  };
+
+  const handleAddCustomRoom = async (e) => {
+    e.preventDefault();
+    if (!newRoomForm.name) return;
+    try {
+      setModalLoading(true);
+      await projectsAPI.addRoom(id, newRoomForm);
+      showToast('New room space added to house project!', 'success');
+      setShowAddRoomModal(false);
+      setNewRoomForm({ name: '', dimensions: '16 x 14 ft', area: 224, budget: 150000, style: 'Modern' });
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to add custom room', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
 
   // Proposal Form
   const [proposalForm, setProposalForm] = useState({
@@ -473,6 +564,7 @@ export const ProjectWorkspace = () => {
 
   const workspaceTabs = [
     { id: 'overview', label: 'Overview', icon: FolderKanban },
+    { id: 'rooms', label: `House Spaces (${project.rooms?.length || 0})`, icon: Home },
     { id: 'designs', label: 'Designs & Renders', icon: Sparkles },
     { id: 'proposals', label: 'Proposals & Revisions', icon: FileText, count: proposals.length },
     { id: 'tasks', label: 'Tasks Board', icon: ListTodo, count: tasks.length },
@@ -572,7 +664,7 @@ export const ProjectWorkspace = () => {
         </div>
       </GlassCard>
 
-      {/* 9 Workspace Tabs */}
+      {/* 10 Workspace Tabs */}
       <Tabs tabs={workspaceTabs} activeTab={activeTab} onChange={setActiveTab} />
 
       {/* TAB CONTENT AREAS */}
@@ -598,6 +690,21 @@ export const ProjectWorkspace = () => {
                   </p>
                 </div>
               )}
+            </GlassCard>
+
+            {/* Before / After Transformation Slider */}
+            <GlassCard>
+              <BeforeAfterSlider
+                beforeImage={
+                  project.housePhotos?.find((p) => p.tag === 'before')?.url ||
+                  'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80'
+                }
+                afterImage={
+                  project.images?.[0] ||
+                  'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80'
+                }
+                title={`${project.title} — Transformation Showcase`}
+              />
             </GlassCard>
 
             {/* Gallery Preview */}
@@ -696,7 +803,138 @@ export const ProjectWorkspace = () => {
         </div>
       )}
 
-      {/* 2. DESIGNS TAB */}
+      {/* 2. HOUSE SPACES & ROOMS TAB */}
+      {activeTab === 'rooms' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                House Spaces & Room Blueprint ({project.rooms?.length || 0})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Manage spatial concepts, color palettes, custom carpentry, loose furniture, and site build progress per space
+              </p>
+            </div>
+            {canEditProject && (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowAddRoomModal(true)}
+                icon={Plus}
+              >
+                Add Space
+              </Button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {(project.rooms || []).map((room) => (
+              <GlassCard
+                key={room._id}
+                className="p-5 border-sky-400/20 hover:border-sky-400/50 transition-all flex flex-col justify-between group shadow-xl"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2 mb-3">
+                    <div className="flex flex-col">
+                      <span className="text-sm font-serif font-bold text-slate-100 group-hover:text-sky-300 transition-colors">
+                        {room.name}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        {room.dimensions || `${room.area || 180} sq.ft`} • {room.category || 'General'}
+                      </span>
+                    </div>
+                    <StatusBadge status={room.designStatus || 'Draft'} />
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="flex flex-col gap-1 mb-3">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-slate-400">Execution</span>
+                      <span className="font-bold text-sky-400">{room.progress || 0}%</span>
+                    </div>
+                    <ProgressBar progress={room.progress || 0} size="sm" variant={room.progress === 100 ? 'emerald' : 'sky'} />
+                  </div>
+
+                  {/* Budget & Style */}
+                  <div className="grid grid-cols-2 gap-2 text-xs p-3 rounded-xl bg-charcoal-900/50 border border-sky-400/10 mb-3">
+                    <div>
+                      <span className="text-[9px] uppercase text-slate-400 block">Allocated Budget</span>
+                      <span className="font-semibold text-slate-200">${(room.budget || 0).toLocaleString()}</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] uppercase text-slate-400 block">Style</span>
+                      <span className="font-semibold text-sky-300 truncate block">{room.style || 'Modern'}</span>
+                    </div>
+                  </div>
+
+                  {/* Color Palette Swatches */}
+                  {room.colorPalette && (
+                    <div className="flex items-center gap-1.5 mb-3">
+                      <span className="text-[10px] text-slate-400 uppercase">Colors:</span>
+                      {[room.colorPalette.primary, room.colorPalette.secondary, room.colorPalette.accent, room.colorPalette.flooring].map((c, idx) => (
+                        <div
+                          key={idx}
+                          className="w-4 h-4 rounded-full border border-white/20 shadow-xs"
+                          style={{ backgroundColor: c }}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-3 text-[11px] text-slate-400 mb-3">
+                    <span>{room.furniture?.length || 0} Furniture</span>
+                    <span>•</span>
+                    <span>{room.materials?.length || 0} Materials</span>
+                    <span>•</span>
+                    <span>{room.sitePhotos?.length || 0} Photos</span>
+                  </div>
+                </div>
+
+                {/* Role-tailored Action Buttons */}
+                <div className="flex items-center gap-2 pt-3 border-t border-sky-400/15">
+                  {(isDesigner || isAdmin) && (
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      className="w-full text-xs"
+                      onClick={() => setSelectedRoomForDesign(room)}
+                      icon={Palette}
+                    >
+                      Design Space
+                    </Button>
+                  )}
+
+                  {(isClient || isAdmin) && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-full text-xs"
+                      onClick={() => setSelectedRoomForApproval(room)}
+                      icon={Eye}
+                    >
+                      Review & Approve
+                    </Button>
+                  )}
+
+                  {(isContractor || isAdmin) && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-xs"
+                      onClick={() => setSelectedRoomForExecution(room)}
+                      icon={Hammer}
+                    >
+                      Site Execution
+                    </Button>
+                  )}
+                </div>
+              </GlassCard>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 3. DESIGNS TAB */}
       {activeTab === 'designs' && (
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
@@ -1787,8 +2025,104 @@ export const ProjectWorkspace = () => {
           </div>
         </form>
       </Modal>
+
+      {/* Add Custom Space Modal */}
+      <Modal
+        isOpen={showAddRoomModal}
+        onClose={() => setShowAddRoomModal(false)}
+        title="Add House Space / Room"
+        subtitle="Initialize a new architectural room or landscape zone for this property."
+      >
+        <form onSubmit={handleAddCustomRoom} className="flex flex-col gap-4">
+          <Input
+            label="Room Name"
+            placeholder="e.g. Master Bedroom, Home Theater, Terrace Garden"
+            value={newRoomForm.name}
+            onChange={(e) => setNewRoomForm({ ...newRoomForm, name: e.target.value })}
+            required
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Dimensions"
+              placeholder="e.g. 18 x 14 ft"
+              value={newRoomForm.dimensions}
+              onChange={(e) => setNewRoomForm({ ...newRoomForm, dimensions: e.target.value })}
+            />
+            <Input
+              label="Area (Sq.Ft)"
+              type="number"
+              value={newRoomForm.area}
+              onChange={(e) => setNewRoomForm({ ...newRoomForm, area: Number(e.target.value) })}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Allocated Budget ($)"
+              type="number"
+              value={newRoomForm.budget}
+              onChange={(e) => setNewRoomForm({ ...newRoomForm, budget: Number(e.target.value) })}
+            />
+            <Select
+              label="Design Style"
+              value={newRoomForm.style}
+              onChange={(e) => setNewRoomForm({ ...newRoomForm, style: e.target.value })}
+              options={[
+                'Modern',
+                'Minimalist',
+                'Contemporary',
+                'Luxury',
+                'Scandinavian',
+                'Industrial',
+                'Rustic',
+                'Traditional',
+                'Japandi',
+                'Indian Contemporary',
+              ]}
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowAddRoomModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Plus}>
+              Add Room Space
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Designer Studio Room Modal */}
+      <RoomDesignerModal
+        isOpen={!!selectedRoomForDesign}
+        onClose={() => setSelectedRoomForDesign(null)}
+        room={selectedRoomForDesign}
+        projectId={id}
+        onSaveRoom={handleSaveRoomDesign}
+        onSubmitForReview={handleSubmitRoomForReview}
+      />
+
+      {/* Client Design Approval Modal */}
+      <RoomApprovalModal
+        isOpen={!!selectedRoomForApproval}
+        onClose={() => setSelectedRoomForApproval(null)}
+        room={selectedRoomForApproval}
+        onApprove={handleApproveRoom}
+        onRequestChanges={handleRequestRoomChanges}
+      />
+
+      {/* Contractor Execution Desk Modal */}
+      <ContractorExecutionModal
+        isOpen={!!selectedRoomForExecution}
+        onClose={() => setSelectedRoomForExecution(null)}
+        room={selectedRoomForExecution}
+        onSaveExecution={handleSaveRoomExecution}
+      />
     </div>
   );
 };
 
 export default ProjectWorkspace;
+

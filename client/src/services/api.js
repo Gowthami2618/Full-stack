@@ -78,6 +78,11 @@ export const projectsAPI = {
   assignProfessional: (id, data) => api.patch(`/projects/${id}/assign`, data),
   updateStatus: (id, data) => api.patch(`/projects/${id}/status`, data),
   deleteProject: (id) => api.delete(`/projects/${id}`),
+  addRoom: (id, data) => api.post(`/projects/${id}/rooms`, data),
+  updateRoom: (id, roomId, data) => api.patch(`/projects/${id}/rooms/${roomId}`, data),
+  deleteRoom: (id, roomId) => api.delete(`/projects/${id}/rooms/${roomId}`),
+  reviewRoomDesign: (id, roomId, data) => api.post(`/projects/${id}/rooms/${roomId}/review`, data),
+  addHousePhoto: (id, data) => api.post(`/projects/${id}/photos`, data),
 };
 
 // Proposals Service APIs

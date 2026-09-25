@@ -12,8 +12,15 @@ import Milestone from '../models/Milestone.js';
 import Notification from '../models/Notification.js';
 import AuditLog from '../models/AuditLog.js';
 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Load env from server root
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config({ path: path.resolve(process.cwd(), 'server/.env') });
 
 const connectDB = async () => {
   try {
@@ -149,18 +156,136 @@ const seedData = async () => {
       client: client1._id,
       designer: designer1._id,
       contractor: contractor1._id,
-      projectType: 'Living Room',
+      projectType: 'Full Home',
       propertyType: 'Apartment',
       location: '72 Franklin St, Tribeca, New York',
-      totalBudget: 125000,
-      spentAmount: 48500,
+      totalBudget: 150000,
+      spentAmount: 82500,
       startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
       expectedEndDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
       status: 'IN_PROGRESS',
-      progress: 45,
+      progress: 78,
       requirements:
         'Open layout flow, hidden acoustic ceiling panels, bespoke travertine fireplace, textured lime wash walls, custom oak library wall with rolling ladder.',
       preferredStyle: 'Luxury',
+      propertyDetails: {
+        city: 'New York, NY',
+        floors: 2,
+        totalArea: 2400,
+        bedrooms: 3,
+        bathrooms: 3,
+        constructionStatus: 'Under Renovation',
+      },
+      budgetAllocation: {
+        totalBudget: 150000,
+        interior: 60000,
+        furniture: 30000,
+        kitchen: 20000,
+        bathrooms: 10000,
+        electrical: 8000,
+        flooring: 8000,
+        paint: 4000,
+        garden: 5000,
+        exterior: 5000,
+        contingency: 10000,
+      },
+      housePhotos: [
+        {
+          url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Living Room Before Renovation',
+          roomType: 'Living Room',
+          tag: 'before',
+        },
+        {
+          url: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
+          caption: 'Living Room Concept Transformation',
+          roomType: 'Living Room',
+          tag: 'after',
+        },
+      ],
+      rooms: [
+        {
+          name: 'Living Room',
+          category: 'Living',
+          dimensions: '22 x 18 ft',
+          area: 396,
+          budget: 35000,
+          spent: 28000,
+          progress: 90,
+          designStatus: 'Approved',
+          executionStatus: 'In Progress',
+          style: 'Modern Luxury',
+          colorPalette: { primary: '#0F172A', secondary: '#334155', accent: '#38BDF8', ceiling: '#F8FAFC', flooring: '#1E293B' },
+          furniture: [
+            { name: 'Custom Sectional Sofa in Bouclé', quantity: 1, estimatedCost: 6500, vendor: 'B&B Italia', notes: 'Cream textured fabric' },
+            { name: 'Travertine Coffee Table Monolith', quantity: 1, estimatedCost: 3200, vendor: 'StoneSource' },
+          ],
+          materials: [
+            { name: 'Italian Calacatta Marble Slabs', category: 'Marble', price: 12000, supplier: 'StoneSource', finish: 'Honed' },
+            { name: 'Engineered Herringbone White Oak', category: 'Flooring', price: 9500, supplier: 'Havwoods', finish: 'Matte Lacquer' },
+          ],
+        },
+        {
+          name: 'Kitchen',
+          category: 'Kitchen',
+          dimensions: '16 x 14 ft',
+          area: 224,
+          budget: 28000,
+          spent: 19500,
+          progress: 65,
+          designStatus: 'Changes Requested',
+          executionStatus: 'In Progress',
+          style: 'Contemporary',
+          clientFeedback: 'Please adjust the kitchen island tapware to brushed gunmetal and revise cabinet veneer.',
+          kitchenDetails: {
+            layout: 'Island',
+            components: [
+              { name: 'Full Fluted Oak Cabinetry', specifiedMaterial: 'Rift Oak', cost: 14000, status: 'Ordered' },
+              { name: 'Monolith Quartz Waterfall Island', specifiedMaterial: 'Caesarstone', cost: 6500, status: 'Delivered' },
+            ],
+          },
+        },
+        {
+          name: 'Master Bedroom',
+          category: 'Bedroom',
+          dimensions: '18 x 16 ft',
+          area: 288,
+          budget: 25000,
+          spent: 18000,
+          progress: 75,
+          designStatus: 'Approved',
+          executionStatus: 'In Progress',
+          style: 'Japandi Earth',
+          colorPalette: { primary: '#FAF7F2', secondary: '#D3C5B4', accent: '#8C7A6B', ceiling: '#FAF7F2', flooring: '#654321' },
+          furniture: [
+            { name: 'Custom Fluted Oak Platform Bed', quantity: 1, estimatedCost: 4800, vendor: 'Custom Millwork' },
+          ],
+        },
+        {
+          name: 'Garden & Terrace',
+          category: 'Outdoor',
+          dimensions: '25 x 18 ft',
+          area: 450,
+          budget: 15000,
+          spent: 6000,
+          progress: 40,
+          designStatus: 'Submitted',
+          executionStatus: 'In Progress',
+          style: 'Contemporary Minimalist',
+        },
+        {
+          name: 'Master Ensuite Bathroom',
+          category: 'Bathroom',
+          dimensions: '12 x 10 ft',
+          area: 120,
+          budget: 18000,
+          spent: 11000,
+          progress: 80,
+          designStatus: 'Approved',
+          executionStatus: 'In Progress',
+          style: 'Modern Luxury',
+        },
+      ],
       images: [
         'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80',
         'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
