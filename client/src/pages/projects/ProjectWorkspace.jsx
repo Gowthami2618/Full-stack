@@ -24,6 +24,16 @@ import {
   Palette,
   Eye,
   Camera,
+  Zap,
+  Award,
+  AlertTriangle,
+  ShieldCheck,
+  ClipboardCheck,
+  Trash2,
+  ArrowRight,
+  Download,
+  UserCheck,
+  MessageSquare,
 } from 'lucide-react';
 import {
   projectsAPI,
@@ -103,6 +113,59 @@ export const ProjectWorkspace = () => {
     style: 'Modern',
   });
 
+  // AI Design Studio State
+  const [selectedRoomForAI, setSelectedRoomForAI] = useState('');
+  const [aiStyle, setAiStyle] = useState('Modern');
+  const [aiBudget, setAiBudget] = useState(500000);
+  const [aiRequirements, setAiRequirements] = useState('');
+  const [aiProposalData, setAiProposalData] = useState(null);
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+
+  // Quotation State
+  const [showCreateQuoteModal, setShowCreateQuoteModal] = useState(false);
+  const [quoteForm, setQuoteForm] = useState({
+    title: 'Complete Fit-out & Design Estimate',
+    items: [
+      { category: 'Civil & Architectural', description: 'Wall preparation, skim plastering and drywall false ceiling grid', quantity: 1, unit: 'Lump Sum', unitPrice: 120000, discount: 0, taxPercent: 18 },
+      { category: 'Flooring & Tiling', description: 'Italian vitrified slab supply and precision laser layment', quantity: 1, unit: 'Lump Sum', unitPrice: 95000, discount: 0, taxPercent: 18 },
+      { category: 'Modular Joinery & Furniture', description: 'Bespoke marine-ply modular cabinetry and wardrobes', quantity: 1, unit: 'Lump Sum', unitPrice: 240000, discount: 5000, taxPercent: 18 },
+    ],
+  });
+
+  // Issue & Snag State
+  const [showIssueModal, setShowIssueModal] = useState(false);
+  const [issueForm, setIssueForm] = useState({ title: '', description: '', room: 'General', priority: 'Medium' });
+  const [showSnagModal, setShowSnagModal] = useState(false);
+  const [snagForm, setSnagForm] = useState({ description: '', room: 'General', priority: 'Medium' });
+
+  // Site Visit & Survey State
+  const [showSiteVisitModal, setShowSiteVisitModal] = useState(false);
+  const [siteVisitForm, setSiteVisitForm] = useState({
+    measurements: 'Laser survey verified perimeter dimensions',
+    existingCondition: 'Bare shell with primed masonry',
+    electricalCondition: 'Conduit conduits laid; switchboard boxes placed',
+    plumbingCondition: 'PPR supply lines pressure tested',
+    notes: 'Access road clear for materials delivery',
+  });
+
+  // Procurement State
+  const [showProcurementModal, setShowProcurementModal] = useState(false);
+  const [procurementForm, setProcurementForm] = useState({
+    itemName: '',
+    category: 'Materials',
+    room: 'General',
+    supplier: '',
+    quantityRequired: '1',
+    unitCost: '',
+  });
+
+  // Handover State
+  const [showHandoverModal, setShowHandoverModal] = useState(false);
+  const [handoverForm, setHandoverForm] = useState({
+    inspectionNotes: 'All architectural specifications, light fittings, and cabinet alignments thoroughly inspected and verified.',
+    clientSignoffNotes: 'All milestone items verified and completed to satisfaction.',
+  });
+
   // Form Submissions State
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -130,7 +193,14 @@ export const ProjectWorkspace = () => {
   const handleApproveRoom = async (roomId, comments) => {
     try {
       await projectsAPI.reviewRoomDesign(id, roomId, { action: 'APPROVE', comments });
-      showToast('🎉 Room design approved!', 'success');
+      await projectsAPI.recordApproval(id, {
+        type: 'Design',
+        entityId: roomId,
+        entityTitle: `Room Design: ${project.rooms.find((r) => r._id === roomId)?.name || 'Space'}`,
+        status: 'Approved',
+        comment: comments || 'Client approved room design concept.',
+      });
+      showToast('🎉 Room design approved and logged to Audit Center!', 'success');
       fetchProjectDetails();
     } catch (err) {
       showToast('Failed to approve room design', 'error');
@@ -140,6 +210,13 @@ export const ProjectWorkspace = () => {
   const handleRequestRoomChanges = async (roomId, comments) => {
     try {
       await projectsAPI.reviewRoomDesign(id, roomId, { action: 'REQUEST_CHANGES', comments });
+      await projectsAPI.recordApproval(id, {
+        type: 'Design',
+        entityId: roomId,
+        entityTitle: `Room Design: ${project.rooms.find((r) => r._id === roomId)?.name || 'Space'}`,
+        status: 'Changes Requested',
+        comment: comments || 'Client requested design revision.',
+      });
       showToast('Revision request sent to designer.', 'info');
       fetchProjectDetails();
     } catch (err) {
@@ -169,6 +246,187 @@ export const ProjectWorkspace = () => {
       fetchProjectDetails();
     } catch (err) {
       showToast('Failed to add custom room', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  // AI Studio Handlers
+  const handleGenerateAIProposalWorkspace = async () => {
+    const targetRoomId = selectedRoomForAI || project?.rooms?.[0]?._id;
+    if (!targetRoomId) {
+      showToast('Please select a room space for AI generation.', 'warning');
+      return;
+    }
+    try {
+      setIsGeneratingAI(true);
+      const res = await projectsAPI.generateAIProposal(id, targetRoomId, {
+        style: aiStyle,
+        budgetAmount: Number(aiBudget),
+        requirements: aiRequirements,
+      });
+      if (res.data?.data) {
+        setAiProposalData(res.data.data);
+        showToast('✨ AI Architectural Design Proposal synthesized!', 'success');
+        fetchProjectDetails();
+      }
+    } catch (err) {
+      showToast('Failed to generate AI proposal', 'error');
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  const handleConvertAIRecommendations = async (roomId) => {
+    try {
+      setModalLoading(true);
+      await projectsAPI.convertAIToProjectData(id, roomId);
+      showToast('🎉 Converted AI recommendations into project Materials, Furniture & Execution Tasks!', 'success');
+      fetchProjectDetails();
+      fetchTabData('tasks');
+      fetchTabData('materials');
+    } catch (err) {
+      showToast(err.response?.data?.message || 'Failed to convert AI specs', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  // Quotation Handlers
+  const handleCreateQuotation = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.createQuotation(id, quoteForm);
+      showToast('Formal Fit-out Quotation generated & submitted!', 'success');
+      setShowCreateQuoteModal(false);
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to create quotation', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleReviewQuotation = async (quoteId, status, clientNotes) => {
+    try {
+      await projectsAPI.reviewQuotation(id, quoteId, { status, clientNotes });
+      await projectsAPI.recordApproval(id, {
+        type: 'Quotation',
+        entityId: quoteId,
+        entityTitle: `Quotation ${quoteId}`,
+        status,
+        comment: clientNotes || `Quotation ${status}`,
+      });
+      showToast(`Quotation ${status}!`, 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to review quotation', 'error');
+    }
+  };
+
+  // Issues & Snags Handlers
+  const handleAddProjectIssue = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.addIssue(id, issueForm);
+      showToast('Issue ticket logged!', 'success');
+      setShowIssueModal(false);
+      setIssueForm({ title: '', description: '', room: 'General', priority: 'Medium' });
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to log issue', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleUpdateIssueStatus = async (issueId, status, resolution) => {
+    try {
+      await projectsAPI.updateIssue(id, issueId, { status, resolution });
+      showToast(`Issue status updated to ${status}`, 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to update issue', 'error');
+    }
+  };
+
+  const handleAddProjectSnag = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.addSnag(id, snagForm);
+      showToast('Punch list snag logged!', 'success');
+      setShowSnagModal(false);
+      setSnagForm({ description: '', room: 'General', priority: 'Medium' });
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to log snag', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleUpdateSnagStatus = async (snagId, status) => {
+    try {
+      await projectsAPI.updateSnag(id, snagId, { status });
+      showToast(`Snag item marked as ${status}`, 'success');
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to update snag', 'error');
+    }
+  };
+
+  // Site Visit & Procurement Handlers
+  const handleAddSiteVisit = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.addSiteVisit(id, siteVisitForm);
+      showToast('Site survey record logged!', 'success');
+      setShowSiteVisitModal(false);
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to log site survey', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleAddProcurementItem = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.addProcurement(id, procurementForm);
+      showToast('Procurement line item added!', 'success');
+      setShowProcurementModal(false);
+      setProcurementForm({ itemName: '', category: 'Materials', room: 'General', supplier: '', quantityRequired: '1', unitCost: '' });
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to add procurement item', 'error');
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
+  const handleCompleteHandover = async (e) => {
+    e.preventDefault();
+    try {
+      setModalLoading(true);
+      await projectsAPI.completeHandover(id, handoverForm);
+      await projectsAPI.recordApproval(id, {
+        type: 'Final Handover',
+        entityId: id,
+        entityTitle: `Project Handover: ${project.title}`,
+        status: 'Approved',
+        comment: handoverForm.clientSignoffNotes || 'Official client handover completed.',
+      });
+      showToast('🏆 Project Handover officially completed & closed!', 'success');
+      setShowHandoverModal(false);
+      fetchProjectDetails();
+    } catch (err) {
+      showToast('Failed to finalize handover', 'error');
     } finally {
       setModalLoading(false);
     }
@@ -565,12 +823,19 @@ export const ProjectWorkspace = () => {
   const workspaceTabs = [
     { id: 'overview', label: 'Overview', icon: FolderKanban },
     { id: 'rooms', label: `House Spaces (${project.rooms?.length || 0})`, icon: Home },
+    { id: 'brief', label: 'Design Brief & Lifestyle', icon: Palette },
     { id: 'designs', label: 'Designs & Renders', icon: Sparkles },
     { id: 'proposals', label: 'Proposals & Revisions', icon: FileText, count: proposals.length },
+    { id: 'quotations', label: `Quotations (${project.quotations?.length || 0})`, icon: DollarSign },
+    { id: 'approvals', label: `Approval Center (${project.approvals?.length || 0})`, icon: ShieldCheck },
+    { id: 'quality_snags', label: `Quality & Snags (${(project.snags?.length || 0) + (project.issues?.length || 0)})`, icon: ClipboardCheck },
+    { id: 'procurement', label: `Procurement (${project.procurement?.length || 0})`, icon: Layers },
+    { id: 'site_surveys', label: `Site Surveys (${project.siteVisits?.length || 0})`, icon: Camera },
     { id: 'tasks', label: 'Tasks Board', icon: ListTodo, count: tasks.length },
     { id: 'materials', label: 'Materials & Specs', icon: Layers, count: materials.length },
     { id: 'budget', label: 'Budget & Expenses', icon: DollarSign },
     { id: 'timeline', label: 'Timeline & Milestones', icon: Calendar, count: milestones.length },
+    { id: 'handover', label: project.handoverDetails?.completed ? '🏆 Handover (Completed)' : 'Handover & Signoff', icon: Award },
     { id: 'files', label: 'Files & Blueprints', icon: Paperclip, count: files.length },
     { id: 'activity', label: 'Activity Logs', icon: History },
   ];
@@ -1558,6 +1823,598 @@ export const ProjectWorkspace = () => {
         </div>
       )}
 
+      {/* 10. DESIGN BRIEF & LIFESTYLE TAB */}
+      {activeTab === 'brief' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Spatial Brief, Family Lifestyle & Client Aspirations
+              </h3>
+              <p className="text-xs text-slate-400">
+                Foundational design inputs, daily family routines, and functional priorities.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <GlassCard className="lg:col-span-2 flex flex-col gap-5 border-sky-400/20">
+              <h4 className="text-sm font-semibold text-sky-400 uppercase tracking-wider">
+                Lifestyle & Household Parameters
+              </h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Family Structure</span>
+                  <span className="font-semibold text-slate-100 mt-1 block">
+                    {project.designBrief?.lifestyle?.familySize || 'Family (4 Members)'}
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Kids / Elderly</span>
+                  <span className="font-semibold text-slate-100 mt-1 block">
+                    {project.designBrief?.lifestyle?.children ? 'Children Friendly' : 'Adult Living'}
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Work From Home</span>
+                  <span className="font-semibold text-sky-300 mt-1 block">
+                    {project.designBrief?.lifestyle?.workFromHome ? 'Dedicated Office Area' : 'Standard'}
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Pets</span>
+                  <span className="font-semibold text-slate-100 mt-1 block">
+                    {project.designBrief?.lifestyle?.pets ? 'Pet-friendly Finishes' : 'None'}
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Entertainment</span>
+                  <span className="font-semibold text-slate-100 mt-1 block">
+                    {project.designBrief?.lifestyle?.entertainmentNeeds || 'Frequent Hosting'}
+                  </span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
+                  <span className="text-[10px] text-slate-400 uppercase block">Storage Scale</span>
+                  <span className="font-semibold text-sky-300 mt-1 block">
+                    {project.designBrief?.lifestyle?.storageNeeds || 'High Capacity Built-ins'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-2 pt-4 border-t border-sky-400/15">
+                <h4 className="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2">
+                  Functional Architectural Requirements
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {(project.designBrief?.functionalRequirements?.length > 0
+                    ? project.designBrief.functionalRequirements
+                    : ['Large Island Kitchen', 'Walk-in Wardrobe', 'Fluted Accent TV Wall', 'Prayer Room / Pooja Unit', 'Smart Lighting Automation']
+                  ).map((req, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-300 border border-sky-400/25 text-xs font-medium"
+                    >
+                      ✓ {req}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {project.designBrief?.freeTextNotes && (
+                <div className="mt-2 p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10 text-xs text-slate-300">
+                  <strong className="text-sky-400">Special Notes: </strong>
+                  {project.designBrief.freeTextNotes}
+                </div>
+              )}
+            </GlassCard>
+
+            <GlassCard className="flex flex-col gap-4 border-sky-400/20">
+              <h4 className="text-sm font-semibold text-sky-400 uppercase tracking-wider">
+                Aesthetic Vision & Style
+              </h4>
+              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
+                <span className="text-slate-400 block text-[10px] uppercase">Primary Style</span>
+                <span className="text-base font-serif font-bold text-slate-100 mt-0.5 block">
+                  {project.designBrief?.stylePreference || project.preferredStyle || 'Modern Contemporary'}
+                </span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
+                <span className="text-slate-400 block text-[10px] uppercase">Color Theme</span>
+                <span className="text-sm font-semibold text-sky-300 mt-0.5 block">
+                  {project.designBrief?.colorPalettePreference || 'Warm Neutral & Walnut Earthy'}
+                </span>
+              </div>
+              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
+                <span className="text-slate-400 block text-[10px] uppercase">Property Dimensions</span>
+                <span className="text-sm font-semibold text-slate-200 mt-0.5 block">
+                  {project.builtUpArea || project.propertyDetails?.builtUpArea || 2850} sq.ft Built-up • {project.floors || project.propertyDetails?.floors || 2} Floors
+                </span>
+              </div>
+            </GlassCard>
+          </div>
+        </div>
+      )}
+
+      {/* 11. QUOTATIONS & PRICING TAB */}
+      {activeTab === 'quotations' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Official Fit-out & Turnkey Quotations ({project.quotations?.length || 0})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Itemized trade costs, material schedules, civil scope, and tax breakdown.
+              </p>
+            </div>
+            {(isDesigner || isAdmin) && (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowCreateQuoteModal(true)}
+                icon={Plus}
+              >
+                Generate Quotation
+              </Button>
+            )}
+          </div>
+
+          {(project.quotations?.length || 0) === 0 ? (
+            <EmptyState
+              icon={DollarSign}
+              title="No quotations generated yet"
+              description="Lead designers can prepare itemized contractor fit-out quotations with tax and discounts."
+              actionText={(isDesigner || isAdmin) ? 'Create Fit-out Quotation' : undefined}
+              onAction={() => setShowCreateQuoteModal(true)}
+            />
+          ) : (
+            <div className="flex flex-col gap-6">
+              {project.quotations.map((quote) => (
+                <GlassCard key={quote._id} className="p-6 sm:p-8 border-sky-400/25">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-sky-400/15">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-3">
+                        <h4 className="text-lg sm:text-xl font-serif font-bold text-slate-100">
+                          {quote.title || 'Official Turnkey Interior Estimate'}
+                        </h4>
+                        <StatusBadge status={quote.status} />
+                      </div>
+                      <span className="text-xs text-slate-400">
+                        Version {quote.version || 1} • Prepared: {new Date(quote.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+
+                    <div className="text-left sm:text-right">
+                      <span className="text-xs text-slate-400 uppercase font-semibold">Grand Total (Incl. Tax)</span>
+                      <div className="text-2xl font-serif font-bold text-sky-400">
+                        ${(quote.grandTotal || 0).toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quotation Table */}
+                  <div className="py-4 overflow-x-auto">
+                    <table className="w-full text-left text-xs text-slate-300">
+                      <thead>
+                        <tr className="border-b border-sky-400/15 text-[11px] uppercase text-sky-400">
+                          <th className="pb-3 font-semibold">Trade / Category</th>
+                          <th className="pb-3 font-semibold">Description</th>
+                          <th className="pb-3 font-semibold text-right">Qty</th>
+                          <th className="pb-3 font-semibold text-right">Unit Price</th>
+                          <th className="pb-3 font-semibold text-right">Discount</th>
+                          <th className="pb-3 font-semibold text-right">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {(quote.items || []).map((item, idx) => (
+                          <tr key={idx} className="hover:bg-white/[0.02]">
+                            <td className="py-3 font-medium text-slate-100">{item.category}</td>
+                            <td className="py-3 text-slate-300">{item.description}</td>
+                            <td className="py-3 text-right">{item.quantity} {item.unit}</td>
+                            <td className="py-3 text-right">${item.unitPrice?.toLocaleString()}</td>
+                            <td className="py-3 text-right text-emerald-400">${item.discount || 0}</td>
+                            <td className="py-3 text-right font-semibold text-slate-100">${item.total?.toLocaleString()}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Pricing Summary Breakdown */}
+                  <div className="pt-4 border-t border-sky-400/15 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
+                    <div className="flex flex-col gap-1 text-slate-400">
+                      <div>Subtotal: <strong className="text-slate-200">${(quote.subtotal || 0).toLocaleString()}</strong></div>
+                      <div>Discount Applied: <strong className="text-emerald-400">-${(quote.discount || 0).toLocaleString()}</strong></div>
+                      <div>GST / Tax: <strong className="text-slate-200">${(quote.tax || 0).toLocaleString()}</strong></div>
+                    </div>
+
+                    {/* Client Approval Controls */}
+                    {(isClient || isAdmin) && quote.status === 'Sent' && (
+                      <div className="flex items-center gap-3">
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => handleReviewQuotation(quote._id, 'Changes Requested', 'Please adjust modular cabinetry unit sizes')}
+                          icon={RotateCcw}
+                        >
+                          Request Revisions
+                        </Button>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleReviewQuotation(quote._id, 'Approved', 'Client approved entire interior fit-out quotation')}
+                          icon={CheckCircle2}
+                        >
+                          Approve Quotation
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </GlassCard>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 12. APPROVAL CENTER TAB */}
+      {activeTab === 'approvals' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Central Client & Designer Approval Center ({project.approvals?.length || 0})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Official audit trail of design concepts, material selections, and budget approvals.
+              </p>
+            </div>
+          </div>
+
+          {(project.approvals?.length || 0) === 0 ? (
+            <EmptyState
+              icon={ShieldCheck}
+              title="No formal approval decisions recorded"
+              description="Design concepts, revisions, quotations, and room spaces approved by the client will be permanently logged here."
+            />
+          ) : (
+            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+              {project.approvals.map((app) => (
+                <div key={app._id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/20 shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-semibold text-sm text-slate-100">{app.entityTitle || app.type}</span>
+                        <StatusBadge status={app.status} />
+                      </div>
+                      <p className="text-slate-300">{app.comment || 'Verified and approved for execution phase.'}</p>
+                      <span className="text-[11px] text-slate-400">
+                        Decision by: <strong>{app.approvedBy?.name || 'Authorized User'}</strong> ({app.role || 'CLIENT'}) • {new Date(app.timestamp).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 13. QUALITY, ISSUES & SNAGS TAB */}
+      {activeTab === 'quality_snags' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Site Quality Assurance, Punch List & Snags
+              </h3>
+              <p className="text-xs text-slate-400">
+                Track pre-handover touch-ups, alignment issues, and site rectification items.
+              </p>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowIssueModal(true)}
+                icon={AlertTriangle}
+              >
+                Log Site Issue
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowSnagModal(true)}
+                icon={Plus}
+              >
+                Add Snag Item
+              </Button>
+            </div>
+          </div>
+
+          {/* Snag List Section */}
+          <GlassCard className="p-6 border-sky-400/20">
+            <h4 className="text-base font-serif font-bold text-slate-100 mb-4 flex items-center justify-between">
+              <span>Punch List Snags ({(project.snags?.length || 0)})</span>
+              <span className="text-xs font-normal text-slate-400">
+                {project.snags?.filter(s => s.status === 'Resolved' || s.status === 'Closed').length || 0} / {project.snags?.length || 0} Rectified
+              </span>
+            </h4>
+
+            {(project.snags?.length || 0) === 0 ? (
+              <p className="text-xs text-slate-400 italic py-4 text-center">No punch list items open. Site is defect-free.</p>
+            ) : (
+              <div className="divide-y divide-white/5 text-xs">
+                {project.snags.map((snag) => (
+                  <div key={snag._id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={snag.status === 'Resolved' || snag.status === 'Closed'}
+                        onChange={(e) => handleUpdateSnagStatus(snag._id, e.target.checked ? 'Resolved' : 'Open')}
+                        className="w-4 h-4 rounded accent-sky-400 cursor-pointer"
+                      />
+                      <div>
+                        <span className={`font-medium ${snag.status === 'Resolved' ? 'line-through text-slate-400' : 'text-slate-100'}`}>
+                          {snag.description}
+                        </span>
+                        <div className="text-[10px] text-slate-400 flex items-center gap-2 mt-0.5">
+                          <span>Room: {snag.room || 'General'}</span>
+                          <span>•</span>
+                          <span className="text-sky-300">Priority: {snag.priority}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <StatusBadge status={snag.status} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </GlassCard>
+
+          {/* Issues Section */}
+          <GlassCard className="p-6 border-sky-400/20">
+            <h4 className="text-base font-serif font-bold text-slate-100 mb-4">
+              Active Site Issues & Technical Blockers ({(project.issues?.length || 0)})
+            </h4>
+
+            {(project.issues?.length || 0) === 0 ? (
+              <p className="text-xs text-slate-400 italic py-4 text-center">No open site issues reported.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.issues.map((issue) => (
+                  <div key={issue._id} className="p-4 rounded-xl bg-charcoal-900/60 border border-sky-400/15 flex flex-col justify-between gap-3 text-xs">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs font-semibold text-rose-400">{issue.priority} Priority</span>
+                        <StatusBadge status={issue.status} />
+                      </div>
+                      <h5 className="font-semibold text-slate-100 text-sm">{issue.title}</h5>
+                      <p className="text-slate-300 mt-1">{issue.description}</p>
+                      <span className="text-[11px] text-slate-400 block mt-2">Space: {issue.room || 'General'}</span>
+                    </div>
+
+                    {issue.status !== 'Resolved' && (
+                      <div className="pt-3 border-t border-sky-400/15 flex justify-end">
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => handleUpdateIssueStatus(issue._id, 'Resolved', 'Rectified on site')}
+                          icon={CheckCircle2}
+                        >
+                          Mark Resolved
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </GlassCard>
+        </div>
+      )}
+
+      {/* 14. PROCUREMENT LIFECYCLE TAB */}
+      {activeTab === 'procurement' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Material & Furniture Procurement Lifecycle ({project.procurement?.length || 0})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Track ordering status: Required → Quoted → Approved → Ordered → Delivered → Installed.
+              </p>
+            </div>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setShowProcurementModal(true)}
+              icon={Plus}
+            >
+              Add Item
+            </Button>
+          </div>
+
+          {(project.procurement?.length || 0) === 0 ? (
+            <EmptyState
+              icon={Layers}
+              title="No procurement items logged"
+              description="Add materials, hardware, and furniture to track procurement pipelines from supplier to site installation."
+              actionText="Log First Item"
+              onAction={() => setShowProcurementModal(true)}
+            />
+          ) : (
+            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+              {project.procurement.map((p) => (
+                <div key={p._id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2.5">
+                      <span className="font-semibold text-sm text-slate-100">{p.itemName}</span>
+                      <StatusBadge status={p.status} />
+                    </div>
+                    <span className="text-slate-400">
+                      Category: {p.category} • Supplier: {p.supplier || 'To be selected'} • Room: {p.room || 'General'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-6">
+                    <span className="text-slate-300 font-medium">Qty: {p.quantityRequired}</span>
+                    <span className="font-semibold text-sky-400">${(p.totalCost || 0).toLocaleString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 15. SITE SURVEYS TAB */}
+      {activeTab === 'site_surveys' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Site Survey Visits & Condition Reports ({project.siteVisits?.length || 0})
+              </h3>
+              <p className="text-xs text-slate-400">
+                Record laser measurements, MEP condition, wall plastering, and site constraints.
+              </p>
+            </div>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => setShowSiteVisitModal(true)}
+              icon={Camera}
+            >
+              Log Site Survey
+            </Button>
+          </div>
+
+          {(project.siteVisits?.length || 0) === 0 ? (
+            <EmptyState
+              icon={Camera}
+              title="No site surveys recorded"
+              description="Log initial site measurements, laser audits, and structural inspections before beginning fit-outs."
+              actionText="Log Site Survey"
+              onAction={() => setShowSiteVisitModal(true)}
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {project.siteVisits.map((visit) => (
+                <GlassCard key={visit._id} className="p-6 border-sky-400/20 flex flex-col gap-4 text-xs">
+                  <div className="flex items-center justify-between pb-3 border-b border-sky-400/15">
+                    <span className="font-semibold text-sm text-slate-100">
+                      Visit Date: {new Date(visit.date).toLocaleDateString()}
+                    </span>
+                    <span className="text-[11px] text-sky-400 font-medium">Verified Survey</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div>
+                      <strong className="text-sky-300 block text-[10px] uppercase">Laser Measurements & Layout:</strong>
+                      <span className="text-slate-300">{visit.measurements}</span>
+                    </div>
+                    <div>
+                      <strong className="text-sky-300 block text-[10px] uppercase">Existing Architectural Shell:</strong>
+                      <span className="text-slate-300">{visit.existingCondition}</span>
+                    </div>
+                    <div>
+                      <strong className="text-sky-300 block text-[10px] uppercase">Electrical & Plumbing Grid:</strong>
+                      <span className="text-slate-300">{visit.electricalCondition || visit.plumbingCondition || 'Standard rough-in ready'}</span>
+                    </div>
+                    {visit.notes && (
+                      <div className="pt-2 text-slate-400 italic">
+                        Notes: {visit.notes}
+                      </div>
+                    )}
+                  </div>
+                </GlassCard>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* 16. FINAL HANDOVER & SIGNOFF TAB */}
+      {activeTab === 'handover' && (
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-serif font-bold text-slate-100">
+                Official Project Handover & Client Signoff Certificate
+              </h3>
+              <p className="text-xs text-slate-400">
+                Formal closure, snag list zero-defect verification, and lifetime guarantee signoff.
+              </p>
+            </div>
+            {!project.handoverDetails?.completed && (isClient || isAdmin) && (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => setShowHandoverModal(true)}
+                icon={Award}
+              >
+                Signoff Handover
+              </Button>
+            )}
+          </div>
+
+          <GlassCard className="p-8 border-sky-400/30 shadow-2xl relative overflow-hidden">
+            <div className="flex flex-col items-center text-center gap-4 max-w-2xl mx-auto py-6">
+              <div className="p-4 rounded-2xl bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                <Award className="w-12 h-12" />
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+                {project.handoverDetails?.completed
+                  ? 'Official Certificate of Completion & Handover'
+                  : 'Project Handover In Progress'}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {project.handoverDetails?.completed
+                  ? `This certifies that ${project.title} has undergone full architectural execution, site snag list clearance, and has been officially accepted by ${project.client?.name || 'the Client'}.`
+                  : 'Complete all site tasks, resolve punch list snags, and execute final client signoff to close this project.'}
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full mt-6 text-xs text-left">
+                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
+                  <span className="text-[10px] text-slate-400 uppercase block">Total Spaces</span>
+                  <span className="text-base font-bold text-slate-100 mt-0.5 block">{project.rooms?.length || 0} Spaces</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
+                  <span className="text-[10px] text-slate-400 uppercase block">Total Budget</span>
+                  <span className="text-base font-bold text-sky-400 mt-0.5 block">${(project.totalBudget || 0).toLocaleString()}</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
+                  <span className="text-[10px] text-slate-400 uppercase block">Actual Spent</span>
+                  <span className="text-base font-bold text-emerald-400 mt-0.5 block">${(project.spentAmount || 0).toLocaleString()}</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
+                  <span className="text-[10px] text-slate-400 uppercase block">Handover Date</span>
+                  <span className="text-base font-bold text-slate-100 mt-0.5 block">
+                    {project.handoverDetails?.handoverDate
+                      ? new Date(project.handoverDetails.handoverDate).toLocaleDateString()
+                      : 'Pending'}
+                  </span>
+                </div>
+              </div>
+
+              {project.handoverDetails?.inspectionNotes && (
+                <div className="mt-4 p-4 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs text-slate-300 text-left w-full">
+                  <strong className="text-sky-400 block mb-1">Architectural Inspection Summary:</strong>
+                  {project.handoverDetails.inspectionNotes}
+                </div>
+              )}
+            </div>
+          </GlassCard>
+        </div>
+      )}
+
       {/* ================= MODALS ================= */}
 
       {/* Create Proposal Modal */}
@@ -2112,6 +2969,357 @@ export const ProjectWorkspace = () => {
         onApprove={handleApproveRoom}
         onRequestChanges={handleRequestRoomChanges}
       />
+
+      {/* Create Turnkey Quotation Modal */}
+      <Modal
+        isOpen={showCreateQuoteModal}
+        onClose={() => setShowCreateQuoteModal(false)}
+        title="Generate Fit-out & Turnkey Quotation"
+        subtitle="Itemize civil, joinery, materials, and trade labor costs for formal client signoff."
+      >
+        <form onSubmit={handleCreateQuotation} className="flex flex-col gap-4">
+          <Input
+            label="Quotation Reference Title"
+            value={quoteForm.title}
+            onChange={(e) => setQuoteForm({ ...quoteForm, title: e.target.value })}
+            required
+          />
+
+          <div className="flex flex-col gap-3">
+            <label className="text-xs font-semibold text-sky-400 uppercase tracking-wider">Itemized Trade Scope</label>
+            {quoteForm.items.map((item, index) => (
+              <div key={index} className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <Input
+                  label="Category / Trade"
+                  value={item.category}
+                  onChange={(e) => {
+                    const newItems = [...quoteForm.items];
+                    newItems[index].category = e.target.value;
+                    setQuoteForm({ ...quoteForm, items: newItems });
+                  }}
+                  required
+                />
+                <div className="sm:col-span-2">
+                  <Input
+                    label="Description of Work / Specs"
+                    value={item.description}
+                    onChange={(e) => {
+                      const newItems = [...quoteForm.items];
+                      newItems[index].description = e.target.value;
+                      setQuoteForm({ ...quoteForm, items: newItems });
+                    }}
+                    required
+                  />
+                </div>
+                <Input
+                  label="Quantity & Unit"
+                  value={item.unit}
+                  onChange={(e) => {
+                    const newItems = [...quoteForm.items];
+                    newItems[index].unit = e.target.value;
+                    setQuoteForm({ ...quoteForm, items: newItems });
+                  }}
+                />
+                <Input
+                  label="Unit Price ($)"
+                  type="number"
+                  value={item.unitPrice}
+                  onChange={(e) => {
+                    const newItems = [...quoteForm.items];
+                    newItems[index].unitPrice = Number(e.target.value);
+                    setQuoteForm({ ...quoteForm, items: newItems });
+                  }}
+                  required
+                />
+                <Input
+                  label="Discount ($)"
+                  type="number"
+                  value={item.discount}
+                  onChange={(e) => {
+                    const newItems = [...quoteForm.items];
+                    newItems[index].discount = Number(e.target.value);
+                    setQuoteForm({ ...quoteForm, items: newItems });
+                  }}
+                />
+              </div>
+            ))}
+
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                setQuoteForm({
+                  ...quoteForm,
+                  items: [
+                    ...quoteForm.items,
+                    { category: 'Lighting & Fixtures', description: 'Architectural recessed downlights and cove tracks', quantity: 1, unit: 'Lump Sum', unitPrice: 35000, discount: 0, taxPercent: 18 },
+                  ],
+                })
+              }
+              icon={Plus}
+            >
+              Add Line Item
+            </Button>
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowCreateQuoteModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Send}>
+              Submit Quotation
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Log Site Issue Modal */}
+      <Modal
+        isOpen={showIssueModal}
+        onClose={() => setShowIssueModal(false)}
+        title="Log Site Issue / Blocker"
+        subtitle="Report a construction or design discrepancy requiring resolution."
+      >
+        <form onSubmit={handleAddProjectIssue} className="flex flex-col gap-4">
+          <Input
+            label="Issue Title"
+            placeholder="e.g. Plumbing conduit alignment clash with master vanity"
+            value={issueForm.title}
+            onChange={(e) => setIssueForm({ ...issueForm, title: e.target.value })}
+            required
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Select
+              label="Space / Room"
+              value={issueForm.room}
+              onChange={(e) => setIssueForm({ ...issueForm, room: e.target.value })}
+            >
+              <option value="General">Entire Site / General</option>
+              {(project.rooms || []).map((r) => (
+                <option key={r._id} value={r.name}>{r.name}</option>
+              ))}
+            </Select>
+            <Select
+              label="Priority Level"
+              value={issueForm.priority}
+              onChange={(e) => setIssueForm({ ...issueForm, priority: e.target.value })}
+              options={['Low', 'Medium', 'High', 'Critical']}
+            />
+          </div>
+
+          <Textarea
+            label="Detailed Description"
+            rows={3}
+            placeholder="Describe the issue observed and recommended resolution..."
+            value={issueForm.description}
+            onChange={(e) => setIssueForm({ ...issueForm, description: e.target.value })}
+            required
+          />
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowIssueModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={AlertTriangle}>
+              Log Site Issue
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Add Snag Modal */}
+      <Modal
+        isOpen={showSnagModal}
+        onClose={() => setShowSnagModal(false)}
+        title="Add Punch List Snag"
+        subtitle="Record pre-handover aesthetic adjustments or hardware touch-ups."
+      >
+        <form onSubmit={handleAddProjectSnag} className="flex flex-col gap-4">
+          <Input
+            label="Snag / Touch-up Description"
+            placeholder="e.g. Minor paint scuff near dining switchboard plate"
+            value={snagForm.description}
+            onChange={(e) => setSnagForm({ ...snagForm, description: e.target.value })}
+            required
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Select
+              label="Space / Room"
+              value={snagForm.room}
+              onChange={(e) => setSnagForm({ ...snagForm, room: e.target.value })}
+            >
+              <option value="General">Entire Site / General</option>
+              {(project.rooms || []).map((r) => (
+                <option key={r._id} value={r.name}>{r.name}</option>
+              ))}
+            </Select>
+            <Select
+              label="Priority Level"
+              value={snagForm.priority}
+              onChange={(e) => setSnagForm({ ...snagForm, priority: e.target.value })}
+              options={['Low', 'Medium', 'High']}
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowSnagModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Plus}>
+              Log Snag Item
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Log Site Survey Modal */}
+      <Modal
+        isOpen={showSiteVisitModal}
+        onClose={() => setShowSiteVisitModal(false)}
+        title="Record Site Survey & Laser Audit"
+        subtitle="Capture structural conditions and site measurements."
+      >
+        <form onSubmit={handleAddSiteVisit} className="flex flex-col gap-4">
+          <Input
+            label="Laser Measurements & Dimensions Audit"
+            value={siteVisitForm.measurements}
+            onChange={(e) => setSiteVisitForm({ ...siteVisitForm, measurements: e.target.value })}
+            required
+          />
+
+          <Input
+            label="Existing Structural Shell Condition"
+            value={siteVisitForm.existingCondition}
+            onChange={(e) => setSiteVisitForm({ ...siteVisitForm, existingCondition: e.target.value })}
+            required
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Electrical Grid Condition"
+              value={siteVisitForm.electricalCondition}
+              onChange={(e) => setSiteVisitForm({ ...siteVisitForm, electricalCondition: e.target.value })}
+            />
+            <Input
+              label="Plumbing & Wet Lines"
+              value={siteVisitForm.plumbingCondition}
+              onChange={(e) => setSiteVisitForm({ ...siteVisitForm, plumbingCondition: e.target.value })}
+            />
+          </div>
+
+          <Textarea
+            label="Surveyor Notes & Site Access Constraints"
+            rows={2}
+            value={siteVisitForm.notes}
+            onChange={(e) => setSiteVisitForm({ ...siteVisitForm, notes: e.target.value })}
+          />
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowSiteVisitModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Camera}>
+              Save Survey Record
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Add Procurement Modal */}
+      <Modal
+        isOpen={showProcurementModal}
+        onClose={() => setShowProcurementModal(false)}
+        title="Add Procurement Line Item"
+        subtitle="Track material purchasing, supplier commitments, and site delivery."
+      >
+        <form onSubmit={handleAddProcurementItem} className="flex flex-col gap-4">
+          <Input
+            label="Item / Material Name"
+            placeholder="e.g. Solid Brass Cabinet Handles or Quartz Slab"
+            value={procurementForm.itemName}
+            onChange={(e) => setProcurementForm({ ...procurementForm, itemName: e.target.value })}
+            required
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Select
+              label="Category"
+              value={procurementForm.category}
+              onChange={(e) => setProcurementForm({ ...procurementForm, category: e.target.value })}
+              options={['Materials', 'Furniture', 'Lighting', 'Appliances', 'Fixtures', 'Hardware', 'Decor']}
+            />
+            <Input
+              label="Supplier / Vendor"
+              placeholder="e.g. Hafele, Kohler, Saint Gobain"
+              value={procurementForm.supplier}
+              onChange={(e) => setProcurementForm({ ...procurementForm, supplier: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Input
+              label="Quantity Required"
+              value={procurementForm.quantityRequired}
+              onChange={(e) => setProcurementForm({ ...procurementForm, quantityRequired: e.target.value })}
+              required
+            />
+            <Input
+              label="Unit Cost ($)"
+              type="number"
+              placeholder="e.g. 450"
+              value={procurementForm.unitCost}
+              onChange={(e) => setProcurementForm({ ...procurementForm, unitCost: e.target.value })}
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowProcurementModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Plus}>
+              Save Procurement Item
+            </Button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Handover Modal */}
+      <Modal
+        isOpen={showHandoverModal}
+        onClose={() => setShowHandoverModal(false)}
+        title="Execute Project Final Handover"
+        subtitle="Sign off completion certificate and lock project execution."
+      >
+        <form onSubmit={handleCompleteHandover} className="flex flex-col gap-4">
+          <Textarea
+            label="Architectural Final Inspection Report"
+            rows={3}
+            value={handoverForm.inspectionNotes}
+            onChange={(e) => setHandoverForm({ ...handoverForm, inspectionNotes: e.target.value })}
+            required
+          />
+
+          <Textarea
+            label="Client Signoff & Acceptance Statement"
+            rows={3}
+            value={handoverForm.clientSignoffNotes}
+            onChange={(e) => setHandoverForm({ ...handoverForm, clientSignoffNotes: e.target.value })}
+            required
+          />
+
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/15">
+            <Button variant="ghost" onClick={() => setShowHandoverModal(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" isLoading={modalLoading} icon={Award}>
+              Confirm Handover & Signoff
+            </Button>
+          </div>
+        </form>
+      </Modal>
 
       {/* Contractor Execution Desk Modal */}
       <ContractorExecutionModal

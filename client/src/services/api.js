@@ -83,6 +83,21 @@ export const projectsAPI = {
   deleteRoom: (id, roomId) => api.delete(`/projects/${id}/rooms/${roomId}`),
   reviewRoomDesign: (id, roomId, data) => api.post(`/projects/${id}/rooms/${roomId}/review`, data),
   addHousePhoto: (id, data) => api.post(`/projects/${id}/photos`, data),
+  // AI & Moodboard
+  generateAIProposal: (id, roomId, data) => api.post(`/projects/${id}/rooms/${roomId}/ai-proposal`, data),
+  convertAIToProjectData: (id, roomId) => api.post(`/projects/${id}/rooms/${roomId}/convert-ai`),
+  addMoodboardItem: (id, roomId, data) => api.post(`/projects/${id}/rooms/${roomId}/moodboard`, data),
+  // Quotations, Approvals & Quality
+  createQuotation: (id, data) => api.post(`/projects/${id}/quotations`, data),
+  reviewQuotation: (id, quoteId, data) => api.post(`/projects/${id}/quotations/${quoteId}/review`, data),
+  recordApproval: (id, data) => api.post(`/projects/${id}/approvals`, data),
+  addSiteVisit: (id, data) => api.post(`/projects/${id}/site-visits`, data),
+  addIssue: (id, data) => api.post(`/projects/${id}/issues`, data),
+  updateIssue: (id, issueId, data) => api.patch(`/projects/${id}/issues/${issueId}`, data),
+  addSnag: (id, data) => api.post(`/projects/${id}/snags`, data),
+  updateSnag: (id, snagId, data) => api.patch(`/projects/${id}/snags/${snagId}`, data),
+  addProcurement: (id, data) => api.post(`/projects/${id}/procurement`, data),
+  completeHandover: (id, data) => api.post(`/projects/${id}/handover`, data),
 };
 
 // Proposals Service APIs

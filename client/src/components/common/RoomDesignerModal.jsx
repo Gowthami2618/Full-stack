@@ -15,6 +15,11 @@ import {
   Image as ImageIcon,
   DollarSign,
   HelpCircle,
+  Zap,
+  Lightbulb,
+  Compass,
+  ArrowRight,
+  Download,
 } from 'lucide-react';
 import Modal from './Modal';
 import Button from './Button';
@@ -23,6 +28,8 @@ import Select from './Select';
 import Textarea from './Textarea';
 import Tabs from './Tabs';
 import StatusBadge from './StatusBadge';
+import { projectsAPI } from '../../services/api';
+import { useToast } from '../../context/ToastContext';
 
 const DESIGN_STYLES = [
   'Modern',
@@ -80,8 +87,12 @@ export const RoomDesignerModal = ({
   onSubmitForReview,
 }) => {
   if (!room) return null;
+  const { showToast } = useToast();
 
   const [activeTab, setActiveTab] = useState('concept');
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [aiProposal, setAiProposal] = useState(room.aiProposal || null);
+
   const [formData, setFormData] = useState({
     name: room.name || '',
     category: room.category || 'General',
@@ -99,11 +110,19 @@ export const RoomDesignerModal = ({
     designerNotes: room.designerNotes || '',
     furniture: room.furniture || [],
     materials: room.materials || [],
+    photos: room.photos || [],
+    moodboard: room.moodboard || [],
+    lightingPlan: room.lightingPlan || [
+      { fixture: 'Recessed LED Downlights (12W)', type: 'Ambient', quantity: 6, wattage: '12W', colorTemp: '3000K', location: 'Ceiling Grid', estimatedCost: 12000 },
+      { fixture: 'Cove Accent LED Strip (Warm White)', type: 'Accent', quantity: 1, wattage: '24W', colorTemp: '2700K', location: 'Ceiling Drop', estimatedCost: 6500 },
+    ],
+    electricalPlan: room.electricalPlan || [
+      { pointType: 'Universal 16A Power Socket', quantity: 4, location: 'Bedside & Media Wall', notes: 'Surge protected' },
+      { pointType: 'CAT-6 Gigabit Data & TV Point', quantity: 2, location: 'Media Wall', notes: 'Concealed conduit' },
+    ],
     kitchenDetails: room.kitchenDetails || { layout: 'L-shaped', components: [] },
     bathroomDetails: room.bathroomDetails || { fixtures: [] },
     gardenDetails: room.gardenDetails || { features: [] },
-    exteriorDetails: room.exteriorDetails || { features: [] },
-    photos: room.photos || [],
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -227,11 +246,75 @@ export const RoomDesignerModal = ({
     setNewKitchenComp({ name: 'Countertop', specifiedMaterial: '', cost: '' });
   };
 
+  const handleGenerateAIProposal = async () => {
+    try {
+      setIsGeneratingAI(true);
+      const res = await projectsAPI.generateAIProposal(projectId, room._id, {
+        style: formData.style,
+        budgetAmount: formData.budget,
+        requirements: formData.designerNotes,
+      });
+      if (res.data?.data) {
+        setAiProposal(res.data.data);
+        showToast('AI Architectural Design Proposal generated!', 'success');
+      }
+    } catch (err) {
+      showToast('Failed to generate AI proposal', 'error');
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  const handleApplyAIRecommendations = () => {
+    if (!aiProposal) return;
+    setFormData((prev) => {
+      const newFurniture = [...prev.furniture];
+      (aiProposal.furnitureRecommendations || []).forEach((item) => {
+        if (!newFurniture.some((f) => f.name === item.name)) {
+          newFurniture.push({
+            name: item.name,
+            quantity: item.quantity || 1,
+            estimatedCost: item.estimatedCost || 0,
+            vendor: item.supplier || '',
+            notes: `${item.material || ''} - ${item.finish || ''}`,
+            status: 'Selected',
+          });
+        }
+      });
+
+      const newMaterials = [...prev.materials];
+      (aiProposal.materialRecommendations || []).forEach((item) => {
+        if (!newMaterials.some((m) => m.name === item.name)) {
+          newMaterials.push({
+            name: item.name,
+            category: item.category || 'Other',
+            price: item.estimatedPrice || 0,
+            supplier: item.supplier || '',
+            finish: item.finish || '',
+            notes: item.notes || '',
+            status: 'Specified',
+          });
+        }
+      });
+
+      return {
+        ...prev,
+        style: aiProposal.style || prev.style,
+        colorPalette: aiProposal.colorPalette || prev.colorPalette,
+        furniture: newFurniture,
+        materials: newMaterials,
+      };
+    });
+    showToast('Applied AI Color Palette, Furniture & Materials to Studio Workspace!', 'success');
+    setActiveTab('concept');
+  };
+
   const handleSave = async (submitReview = false) => {
     try {
       setIsSubmitting(true);
       const payload = {
         ...formData,
+        aiProposal,
         designStatus: submitReview ? 'Submitted' : formData.designStatus || 'Draft',
       };
       await onSaveRoom(room._id, payload);
@@ -248,8 +331,10 @@ export const RoomDesignerModal = ({
 
   const tabs = [
     { id: 'concept', label: 'Concept & Palette', icon: Palette },
+    { id: 'ai_proposal', label: 'AI Design Proposal', icon: Sparkles },
     { id: 'furniture', label: `Furniture (${formData.furniture.length})`, icon: Armchair },
     { id: 'materials', label: `Materials (${formData.materials.length})`, icon: Layers },
+    { id: 'lighting_electrical', label: 'Lighting & Electrical', icon: Zap },
     ...(formData.name.toLowerCase().includes('kitchen')
       ? [{ id: 'kitchen', label: 'Kitchen Planner', icon: Utensils }]
       : []),
@@ -396,6 +481,175 @@ export const RoomDesignerModal = ({
               placeholder="Describe the architectural concept, natural lighting considerations, custom carpentry, and focal points..."
               rows={3}
             />
+          </div>
+        )}
+
+        {/* TAB: AI DESIGN PROPOSAL */}
+        {activeTab === 'ai_proposal' && (
+          <div className="flex flex-col gap-6">
+            <div className="p-5 rounded-2xl glass-panel border border-sky-400/30 bg-gradient-to-r from-sky-950/30 via-charcoal-900/80 to-charcoal-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+              <div className="flex items-start gap-3">
+                <div className="p-3 rounded-2xl bg-sky-500/20 text-sky-300 border border-sky-400/40">
+                  <Sparkles className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-base font-serif font-bold text-slate-100">
+                    Architectural AI Space & Proposal Engine
+                  </h4>
+                  <p className="text-xs text-slate-300 mt-1 max-w-xl">
+                    Synthesize spatial dimensions ({formData.dimensions || '16 x 14 ft'}), requested style ({formData.style}), and allocated budget (${formData.budget?.toLocaleString()}) into a complete turnkey design proposal.
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="primary"
+                size="md"
+                loading={isGeneratingAI}
+                onClick={handleGenerateAIProposal}
+                icon={Sparkles}
+                className="shrink-0"
+              >
+                {aiProposal ? 'Regenerate AI Proposal' : 'Generate AI Proposal'}
+              </Button>
+            </div>
+
+            {aiProposal ? (
+              <div className="flex flex-col gap-5">
+                {/* Proposal Overview Card */}
+                <div className="p-5 rounded-2xl glass-panel border border-sky-400/25 flex flex-col gap-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold">
+                        AI Design Proposal • {aiProposal.style}
+                      </span>
+                      <h3 className="text-lg font-serif font-bold text-slate-100 mt-0.5">
+                        {aiProposal.designConcept?.name}
+                      </h3>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={handleApplyAIRecommendations}
+                      icon={Download}
+                    >
+                      Apply AI Specs to Studio Workspace
+                    </Button>
+                  </div>
+
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {aiProposal.designConcept?.description}
+                  </p>
+
+                  {/* Proposed Color Palette Swatches */}
+                  <div className="flex flex-col gap-2">
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                      Proposed Color Harmonization
+                    </span>
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                      {Object.entries(aiProposal.colorPalette || {}).map(([key, hex]) => (
+                        <div key={key} className="p-2.5 rounded-xl bg-charcoal-900 border border-white/10 flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-full border border-white/20 shadow-sm shrink-0" style={{ backgroundColor: hex }} />
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] text-slate-400 capitalize truncate">{key}</span>
+                            <span className="text-xs font-mono font-semibold text-slate-200">{hex}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recommended Furniture & Materials Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Furniture */}
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 flex flex-col gap-3">
+                    <span className="text-xs font-semibold text-sky-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <Armchair className="w-4 h-4" /> Recommended Furniture ({aiProposal.furnitureRecommendations?.length || 0})
+                    </span>
+                    <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
+                      {(aiProposal.furnitureRecommendations || []).map((item, idx) => (
+                        <div key={idx} className="p-2.5 rounded-lg bg-charcoal-900/70 border border-white/5 flex items-center justify-between text-xs">
+                          <div>
+                            <p className="font-semibold text-slate-200">{item.name}</p>
+                            <p className="text-[10px] text-slate-400">{item.dimensions} • {item.material}</p>
+                          </div>
+                          <span className="text-sky-400 font-semibold font-mono">${(item.estimatedCost || 0).toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Materials */}
+                  <div className="p-4 rounded-xl glass-panel border border-white/10 flex flex-col gap-3">
+                    <span className="text-xs font-semibold text-sky-300 uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-4 h-4" /> Recommended Materials ({aiProposal.materialRecommendations?.length || 0})
+                    </span>
+                    <div className="flex flex-col gap-2 max-h-60 overflow-y-auto">
+                      {(aiProposal.materialRecommendations || []).map((item, idx) => (
+                        <div key={idx} className="p-2.5 rounded-lg bg-charcoal-900/70 border border-white/5 flex items-center justify-between text-xs">
+                          <div>
+                            <p className="font-semibold text-slate-200">{item.name}</p>
+                            <p className="text-[10px] text-slate-400">{item.category} • {item.finish}</p>
+                          </div>
+                          <span className="text-sky-400 font-semibold font-mono">${(item.estimatedPrice || 0).toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="p-8 rounded-2xl glass-panel border border-dashed border-sky-400/30 text-center flex flex-col items-center justify-center gap-3">
+                <Sparkles className="w-8 h-8 text-sky-400/60" />
+                <p className="text-sm font-semibold text-slate-200">No AI Proposal Generated Yet</p>
+                <p className="text-xs text-slate-400 max-w-sm">
+                  Click the button above to synthesize a structured architectural proposal for this room.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB: LIGHTING & ELECTRICAL */}
+        {activeTab === 'lighting_electrical' && (
+          <div className="flex flex-col gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Lighting Plan */}
+              <div className="p-4 rounded-xl glass-panel border border-sky-400/25 flex flex-col gap-3">
+                <span className="text-xs font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Lightbulb className="w-4 h-4" /> Lighting Layout Schedule
+                </span>
+                <div className="flex flex-col gap-2">
+                  {formData.lightingPlan.map((l, idx) => (
+                    <div key={idx} className="p-3 rounded-lg bg-charcoal-900 border border-white/5 flex items-center justify-between text-xs">
+                      <div>
+                        <p className="font-semibold text-slate-200">{l.fixture}</p>
+                        <p className="text-[10px] text-slate-400">{l.type} • {l.wattage} • {l.colorTemp}</p>
+                      </div>
+                      <span className="text-sky-400 font-mono">${(l.estimatedCost || 0).toLocaleString()}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Electrical Points */}
+              <div className="p-4 rounded-xl glass-panel border border-sky-400/25 flex flex-col gap-3">
+                <span className="text-xs font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <Zap className="w-4 h-4" /> Electrical & Automation Points
+                </span>
+                <div className="flex flex-col gap-2">
+                  {formData.electricalPlan.map((e, idx) => (
+                    <div key={idx} className="p-3 rounded-lg bg-charcoal-900 border border-white/5 flex items-center justify-between text-xs">
+                      <div>
+                        <p className="font-semibold text-slate-200">{e.pointType}</p>
+                        <p className="text-[10px] text-slate-400">Qty: {e.quantity} • {e.location}</p>
+                      </div>
+                      <span className="text-[10px] text-slate-400 italic">{e.notes}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
 

@@ -150,6 +150,65 @@ const roomSchema = new mongoose.Schema(
         },
       ],
     },
+    floor: {
+      type: String,
+      enum: ['Ground Floor', 'First Floor', 'Second Floor', 'Basement', 'Terrace', 'Outdoor', 'General'],
+      default: 'Ground Floor',
+    },
+    length: { type: Number, default: 15 },
+    width: { type: Number, default: 12 },
+    height: { type: Number, default: 10 },
+    existingCondition: {
+      type: String,
+      enum: ['Bare Shell', 'Fair', 'Requires Full Renovation', 'Good'],
+      default: 'Bare Shell',
+    },
+    priority: {
+      type: String,
+      enum: ['High', 'Medium', 'Low'],
+      default: 'High',
+    },
+    lightingPlan: [
+      {
+        fixture: { type: String, required: true },
+        type: { type: String, enum: ['Ambient', 'Task', 'Accent', 'Decorative', 'Landscape'], default: 'Ambient' },
+        quantity: { type: Number, default: 1 },
+        wattage: { type: String, default: '12W' },
+        colorTemp: { type: String, default: '3000K Warm White' },
+        location: { type: String, default: 'Ceiling' },
+        estimatedCost: { type: Number, default: 0 },
+      },
+    ],
+    electricalPlan: [
+      {
+        pointType: { type: String, required: true },
+        quantity: { type: Number, default: 1 },
+        location: { type: String, default: '' },
+        notes: { type: String, default: '' },
+      },
+    ],
+    moodboard: [
+      {
+        imageUrl: { type: String, required: true },
+        title: { type: String, default: '' },
+        tags: [{ type: String }],
+        notes: { type: String, default: '' },
+        addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        likes: { type: Number, default: 0 },
+        comments: [
+          {
+            user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+            text: { type: String, required: true },
+            createdAt: { type: Date, default: Date.now },
+          },
+        ],
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+    aiProposal: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
+    },
     photos: [
       {
         url: { type: String, required: true },
@@ -300,6 +359,7 @@ const projectSchema = new mongoose.Schema(
         'Contemporary',
         'Traditional',
         'Luxury',
+        'Modern Luxury',
         'Scandinavian',
         'Industrial',
         'Rustic',
@@ -364,6 +424,178 @@ const projectSchema = new mongoose.Schema(
     ],
     // Independent Rooms & Spaces
     rooms: [roomSchema],
+    // Client Lifestyle & Design Brief
+    designBrief: {
+      familySize: { type: Number, default: 4 },
+      children: { type: Boolean, default: false },
+      elderly: { type: Boolean, default: false },
+      pets: { type: Boolean, default: false },
+      workFromHome: { type: Boolean, default: true },
+      entertainmentNeeds: { type: String, default: 'Living & Dining gathering focus' },
+      storageNeeds: { type: String, default: 'Maximum concealed storage' },
+      colorScheme: {
+        type: String,
+        enum: ['Warm', 'Cool', 'Neutral', 'Earthy', 'Monochrome', 'Custom'],
+        default: 'Warm',
+      },
+      customColors: [{ type: String }],
+      functionalRequirements: [{ type: String }],
+      specialInstructions: { type: String, default: '' },
+    },
+    // Project Quotations
+    quotations: [
+      {
+        quoteNumber: { type: String, default: () => 'QT-' + Date.now().toString().slice(-6) },
+        title: { type: String, default: 'Interior Design & Fit-out Estimate' },
+        createdAt: { type: Date, default: Date.now },
+        status: {
+          type: String,
+          enum: ['Draft', 'Sent', 'Submitted', 'Approved', 'Changes Requested'],
+          default: 'Draft',
+        },
+        items: [
+          {
+            category: { type: String, default: 'Civil & Interior' },
+            description: { type: String, required: true },
+            quantity: { type: Number, default: 1 },
+            unit: { type: String, default: 'Lump Sum' },
+            unitPrice: { type: Number, default: 0 },
+            discount: { type: Number, default: 0 },
+            taxPercent: { type: Number, default: 18 },
+            total: { type: Number, default: 0 },
+          },
+        ],
+        subtotal: { type: Number, default: 0 },
+        discountTotal: { type: Number, default: 0 },
+        taxTotal: { type: Number, default: 0 },
+        grandTotal: { type: Number, default: 0 },
+        clientNotes: { type: String, default: '' },
+        approvedAt: { type: Date, default: null },
+        approvedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      },
+    ],
+    // Central Approval Audit Register
+    approvals: [
+      {
+        type: {
+          type: String,
+          enum: ['Design', 'Design Brief', 'Material', 'Furniture', 'Color', 'Quotation', 'Final Handover'],
+          required: true,
+        },
+        entityId: { type: String, default: '' },
+        entityTitle: { type: String, required: true },
+        requestedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        reviewer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        status: {
+          type: String,
+          enum: ['Pending', 'Approved', 'Changes Requested', 'Rejected'],
+          default: 'Pending',
+        },
+        version: { type: Number, default: 1 },
+        comment: { type: String, default: '' },
+        decisionDate: { type: Date, default: Date.now },
+      },
+    ],
+    // Site Surveys & Measurements Log
+    siteVisits: [
+      {
+        visitDate: { type: Date, default: Date.now },
+        inspector: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        measurements: { type: String, default: '' },
+        existingCondition: { type: String, default: '' },
+        electricalCondition: { type: String, default: 'Normal wiring requiring modification' },
+        plumbingCondition: { type: String, default: 'Standard builder points' },
+        wallCondition: { type: String, default: 'Plastered with primer' },
+        floorCondition: { type: String, default: 'Bare screed ready for tiling' },
+        ceilingCondition: { type: String, default: 'RCC slab' },
+        constraints: { type: String, default: '' },
+        notes: { type: String, default: '' },
+        photos: [{ type: String }],
+      },
+    ],
+    // Issue Ticket Management
+    issues: [
+      {
+        title: { type: String, required: true },
+        description: { type: String, default: '' },
+        room: { type: String, default: 'General' },
+        priority: {
+          type: String,
+          enum: ['High', 'Medium', 'Low', 'Critical'],
+          default: 'Medium',
+        },
+        createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        photos: [{ type: String }],
+        status: {
+          type: String,
+          enum: ['Open', 'In Review', 'In Progress', 'Resolved', 'Closed'],
+          default: 'Open',
+        },
+        resolution: { type: String, default: '' },
+        createdAt: { type: Date, default: Date.now },
+        resolvedAt: { type: Date, default: null },
+      },
+    ],
+    // Snag / Punch List
+    snags: [
+      {
+        description: { type: String, required: true },
+        room: { type: String, default: 'General' },
+        priority: {
+          type: String,
+          enum: ['High', 'Medium', 'Low'],
+          default: 'Medium',
+        },
+        assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        dueDate: { type: Date },
+        status: {
+          type: String,
+          enum: ['Open', 'In Progress', 'Resolved', 'Completed', 'Closed'],
+          default: 'Open',
+        },
+        photo: { type: String, default: '' },
+        verifiedAt: { type: Date, default: null },
+      },
+    ],
+    // Procurement Register
+    procurement: [
+      {
+        itemName: { type: String, required: true },
+        category: { type: String, default: 'Materials' },
+        room: { type: String, default: 'General' },
+        supplier: { type: String, default: '' },
+        orderDate: { type: Date, default: Date.now },
+        expectedDelivery: { type: Date },
+        actualDelivery: { type: Date },
+        quantityRequired: { type: String, default: '1' },
+        quantityDelivered: { type: String, default: '0' },
+        unitCost: { type: Number, default: 0 },
+        totalCost: { type: Number, default: 0 },
+        status: {
+          type: String,
+          enum: [
+            'Required',
+            'Quoted',
+            'Approved',
+            'Ordered',
+            'Partially Delivered',
+            'Delivered',
+            'Installed',
+          ],
+          default: 'Required',
+        },
+      },
+    ],
+    // Final Project Handover Details
+    handoverDetails: {
+      isHandoverCompleted: { type: Boolean, default: false },
+      handoverDate: { type: Date, default: null },
+      approvedByClient: { type: Boolean, default: false },
+      finalInspectionDate: { type: Date, default: null },
+      inspectionNotes: { type: String, default: '' },
+      clientSignoffNotes: { type: String, default: '' },
+    },
   },
   {
     timestamps: true,
