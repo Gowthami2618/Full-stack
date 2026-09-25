@@ -293,10 +293,10 @@ export const NewProjectPage = () => {
               <FolderPlus className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
                 Create Complete House Project
               </h1>
-              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-0.5">
                 Define property blueprint, initial site photos, financial allocations, and individual spaces
               </p>
             </div>
@@ -446,10 +446,10 @@ export const NewProjectPage = () => {
         {/* STEP 2: HOUSE PHOTOS */}
         {currentStep === 2 && (
           <div className="flex flex-col gap-6">
-            <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
               <Camera className="w-4 h-4" /> 2. House & Site Photos (Before & Inspiration)
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
               Upload or link original site photos, current conditions, and inspirational references.
             </p>
 
@@ -546,7 +546,7 @@ export const NewProjectPage = () => {
                 <span className="text-xs font-semibold text-sky-600 dark:text-sky-300 uppercase tracking-widest">
                   Total House Fit-out Budget
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mt-1">
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-950 dark:text-white mt-1">
                   ${totalBudget.toLocaleString()}
                 </h2>
               </div>
@@ -575,7 +575,7 @@ export const NewProjectPage = () => {
                 { key: 'contingency', label: 'Contingency Reserve' },
               ].map((item) => (
                 <div key={item.key} className="p-3.5 rounded-xl glass-panel border border-sky-400/20 flex flex-col gap-1.5">
-                  <span className="text-[11px] font-medium text-slate-700 dark:text-slate-300 truncate">{item.label}</span>
+                  <span className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate">{item.label}</span>
                   <input
                     type="number"
                     value={budgetAllocation[item.key] || 0}
@@ -585,9 +585,9 @@ export const NewProjectPage = () => {
                         [item.key]: Number(e.target.value),
                       })
                     }
-                    className="w-full text-xs glass-input border border-sky-400/30 rounded px-2 py-1 text-slate-900 dark:text-slate-100 font-semibold"
+                    className="w-full text-xs glass-input border border-sky-400/30 rounded px-2 py-1 text-slate-950 dark:text-white font-semibold"
                   />
-                  <span className="text-[10px] text-sky-500 dark:text-sky-400">
+                  <span className="text-[10px] text-sky-500 dark:text-sky-400 font-medium">
                     {totalBudget > 0
                       ? `${Math.round(((budgetAllocation[item.key] || 0) / totalBudget) * 100)}% of total`
                       : '0%'}
@@ -606,7 +606,7 @@ export const NewProjectPage = () => {
                 <h3 className="text-sm font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
                   <Grid className="w-4 h-4" /> 4. House Spaces & Room Breakdown
                 </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-0.5">
                   Select all rooms and architectural zones present in your property. Each will be independently planned and executed.
                 </p>
               </div>

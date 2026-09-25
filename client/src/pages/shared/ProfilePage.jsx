@@ -73,17 +73,17 @@ export const ProfilePage = () => {
           <Avatar src={user?.profileImage} name={user?.name} size="lg" />
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-serif font-bold text-slate-900 dark:text-slate-100">{user?.name}</h1>
+              <h1 className="text-2xl font-serif font-bold text-slate-950 dark:text-white">{user?.name}</h1>
               {user?.isVerified && (
                 <Badge variant="sky" size="sm">
                   Verified
                 </Badge>
               )}
             </div>
-            <span className="text-xs text-sky-500 dark:text-sky-400 font-semibold uppercase tracking-wider mt-0.5">
+            <span className="text-xs text-sky-700 dark:text-sky-300 font-bold uppercase tracking-wider mt-0.5">
               {user?.role} Workspace
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400 mt-1">{user?.email}</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">{user?.email}</span>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@ export const ProfilePage = () => {
         {/* Profile Details Form */}
         <div className="lg:col-span-2">
           <GlassCard className="p-6 sm:p-8">
-            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100 mb-6">
+            <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-6">
               Personal & Professional Profile
             </h3>
 
@@ -149,8 +149,8 @@ export const ProfilePage = () => {
         <div>
           <GlassCard className="p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Lock className="w-5 h-5 text-sky-500 dark:text-sky-400" />
-              <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
+              <Lock className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white">
                 Account Security
               </h3>
             </div>

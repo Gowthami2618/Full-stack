@@ -847,32 +847,32 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="text-xs font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
+              <span className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-widest">
                 {project.projectType} • {project.propertyType}
               </span>
               <StatusBadge status={project.status} />
-              <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400" />
+              <span className="text-xs text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
                 {project.location}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-950 dark:text-white">
               {project.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-xs text-slate-600 dark:text-slate-300 pt-1">
+            <div className="flex flex-wrap items-center gap-6 text-xs text-slate-800 dark:text-slate-200 font-medium pt-1">
               <div className="flex items-center gap-2">
                 <Avatar src={project.client?.profileImage} name={project.client?.name} size="sm" />
-                <span>Client: <strong>{project.client?.name}</strong></span>
+                <span>Client: <strong className="text-slate-950 dark:text-white">{project.client?.name}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <Avatar src={project.designer?.profileImage} name={project.designer?.name || 'Open'} size="sm" />
-                <span>Designer: <strong>{project.designer?.name || 'Unassigned'}</strong></span>
+                <span>Designer: <strong className="text-slate-950 dark:text-white">{project.designer?.name || 'Unassigned'}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <Avatar src={project.contractor?.profileImage} name={project.contractor?.name || 'Open'} size="sm" />
-                <span>Contractor: <strong>{project.contractor?.name || 'Unassigned'}</strong></span>
+                <span>Contractor: <strong className="text-slate-950 dark:text-white">{project.contractor?.name || 'Unassigned'}</strong></span>
               </div>
             </div>
           </div>
@@ -880,12 +880,12 @@ export const ProjectWorkspace = () => {
           {/* Quick Metrics & Actions Widget */}
           <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-4 p-4 rounded-xl glass-panel border border-sky-400/20 shrink-0">
             <div className="flex flex-col lg:items-end">
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">
+              <span className="text-[11px] text-slate-700 dark:text-slate-300 uppercase font-bold">
                 Committed Budget / Spent
               </span>
-              <div className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100 mt-0.5">
+              <div className="text-lg font-serif font-bold text-slate-950 dark:text-white mt-0.5">
                 <span className="text-sky-600 dark:text-sky-400">${(project.spentAmount || 0).toLocaleString()}</span>
-                <span className="text-slate-500 dark:text-slate-400 text-sm"> / ${(project.totalBudget || 0).toLocaleString()}</span>
+                <span className="text-slate-700 dark:text-slate-300 text-sm font-medium"> / ${(project.totalBudget || 0).toLocaleString()}</span>
               </div>
             </div>
 
@@ -938,19 +938,19 @@ export const ProjectWorkspace = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 flex flex-col gap-6">
             <GlassCard>
-              <h3 className="text-base font-serif font-bold text-slate-100 mb-3">
+              <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-3">
                 Spatial Brief & Vision
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed whitespace-pre-line">
                 {project.description}
               </p>
 
               {project.requirements && (
                 <div className="mt-6 pt-6 border-t border-sky-400/15">
-                  <h4 className="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2">
+                  <h4 className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-2">
                     Architectural & Material Requirements
                   </h4>
-                  <p className="text-xs text-slate-300 leading-relaxed bg-charcoal-900/60 p-4 rounded-xl border border-sky-400/15">
+                  <p className="text-xs text-slate-800 dark:text-slate-200 font-medium leading-relaxed bg-slate-100/90 dark:bg-charcoal-900/60 p-4 rounded-xl border border-slate-200 dark:border-sky-400/15">
                     {project.requirements}
                   </p>
                 </div>
@@ -975,7 +975,7 @@ export const ProjectWorkspace = () => {
             {/* Gallery Preview */}
             {project.images?.length > 0 && (
               <GlassCard>
-                <h3 className="text-base font-serif font-bold text-slate-100 mb-3">
+                <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-3">
                   Site & Inspiration Photos
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -995,32 +995,32 @@ export const ProjectWorkspace = () => {
           {/* Sidebar Info Cards */}
           <div className="flex flex-col gap-6">
             <GlassCard>
-              <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-4">
                 Project Parameters
               </h3>
-              <div className="divide-y divide-white/5 text-xs">
+              <div className="divide-y divide-slate-200/60 dark:divide-white/5 text-xs">
                 <div className="py-2.5 flex justify-between">
-                  <span className="text-slate-400">Preferred Style</span>
-                  <span className="font-semibold text-slate-100">{project.preferredStyle}</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">Preferred Style</span>
+                  <span className="font-bold text-slate-950 dark:text-white">{project.preferredStyle}</span>
                 </div>
                 <div className="py-2.5 flex justify-between">
-                  <span className="text-slate-400">Space Type</span>
-                  <span className="font-semibold text-slate-100">{project.projectType}</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">Space Type</span>
+                  <span className="font-bold text-slate-950 dark:text-white">{project.projectType}</span>
                 </div>
                 <div className="py-2.5 flex justify-between">
-                  <span className="text-slate-400">Property Type</span>
-                  <span className="font-semibold text-slate-100">{project.propertyType}</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">Property Type</span>
+                  <span className="font-bold text-slate-950 dark:text-white">{project.propertyType}</span>
                 </div>
                 <div className="py-2.5 flex justify-between">
-                  <span className="text-slate-400">Start Date</span>
-                  <span className="font-semibold text-slate-100">
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">Start Date</span>
+                  <span className="font-bold text-slate-950 dark:text-white">
                     {new Date(project.startDate).toLocaleDateString()}
                   </span>
                 </div>
                 {project.expectedEndDate && (
                   <div className="py-2.5 flex justify-between">
-                    <span className="text-slate-400">Target Handover</span>
-                    <span className="font-semibold text-slate-100">
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">Target Handover</span>
+                    <span className="font-bold text-slate-950 dark:text-white">
                       {new Date(project.expectedEndDate).toLocaleDateString()}
                     </span>
                   </div>
@@ -1029,36 +1029,36 @@ export const ProjectWorkspace = () => {
             </GlassCard>
 
             <GlassCard>
-              <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider mb-4">
+              <h3 className="text-sm font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-4">
                 Stakeholders Directory
               </h3>
               <div className="flex flex-col gap-3 text-xs">
-                <div className="p-3 rounded-xl bg-charcoal-900/60 border border-sky-400/15 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <Avatar src={project.client?.profileImage} name={project.client?.name} size="sm" />
                     <div>
-                      <div className="font-semibold text-slate-100">{project.client?.name}</div>
-                      <div className="text-[11px] text-slate-400">Client / Owner</div>
+                      <div className="font-bold text-slate-950 dark:text-white">{project.client?.name}</div>
+                      <div className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">Client / Owner</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-charcoal-900/60 border border-sky-400/15 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <Avatar src={project.designer?.profileImage} name={project.designer?.name || 'Designer'} size="sm" />
                     <div>
-                      <div className="font-semibold text-slate-100">{project.designer?.name || 'Awaiting Assignment'}</div>
-                      <div className="text-[11px] text-sky-400">Lead Interior Designer</div>
+                      <div className="font-bold text-slate-950 dark:text-white">{project.designer?.name || 'Awaiting Assignment'}</div>
+                      <div className="text-[11px] text-sky-700 dark:text-sky-400 font-semibold">Lead Interior Designer</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-charcoal-900/60 border border-sky-400/15 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <Avatar src={project.contractor?.profileImage} name={project.contractor?.name || 'Contractor'} size="sm" />
                     <div>
-                      <div className="font-semibold text-slate-100">{project.contractor?.name || 'Awaiting Assignment'}</div>
-                      <div className="text-[11px] text-sky-300">Master Contractor</div>
+                      <div className="font-bold text-slate-950 dark:text-white">{project.contractor?.name || 'Awaiting Assignment'}</div>
+                      <div className="text-[11px] text-amber-700 dark:text-amber-300 font-semibold">Master Contractor</div>
                     </div>
                   </div>
                 </div>
@@ -1073,10 +1073,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 House Spaces & Room Blueprint ({project.rooms?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Manage spatial concepts, color palettes, custom carpentry, loose furniture, and site build progress per space
               </p>
             </div>
@@ -1101,10 +1101,10 @@ export const ProjectWorkspace = () => {
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div className="flex flex-col">
-                      <span className="text-sm font-serif font-bold text-slate-100 group-hover:text-sky-300 transition-colors">
+                      <span className="text-sm font-serif font-bold text-slate-950 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-300 transition-colors">
                         {room.name}
                       </span>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
                         {room.dimensions || `${room.area || 180} sq.ft`} • {room.category || 'General'}
                       </span>
                     </div>
@@ -1114,39 +1114,39 @@ export const ProjectWorkspace = () => {
                   {/* Progress bar */}
                   <div className="flex flex-col gap-1 mb-3">
                     <div className="flex items-center justify-between text-[11px]">
-                      <span className="text-slate-400">Execution</span>
-                      <span className="font-bold text-sky-400">{room.progress || 0}%</span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">Execution</span>
+                      <span className="font-bold text-sky-600 dark:text-sky-400">{room.progress || 0}%</span>
                     </div>
                     <ProgressBar progress={room.progress || 0} size="sm" variant={room.progress === 100 ? 'emerald' : 'sky'} />
                   </div>
 
                   {/* Budget & Style */}
-                  <div className="grid grid-cols-2 gap-2 text-xs p-3 rounded-xl bg-charcoal-900/50 border border-sky-400/10 mb-3">
+                  <div className="grid grid-cols-2 gap-2 text-xs p-3 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/50 border border-slate-200 dark:border-sky-400/10 mb-3">
                     <div>
-                      <span className="text-[9px] uppercase text-slate-400 block">Allocated Budget</span>
-                      <span className="font-semibold text-slate-200">${(room.budget || 0).toLocaleString()}</span>
+                      <span className="text-[9px] uppercase text-slate-700 dark:text-slate-300 font-bold block">Allocated Budget</span>
+                      <span className="font-bold text-slate-950 dark:text-white">${(room.budget || 0).toLocaleString()}</span>
                     </div>
                     <div>
-                      <span className="text-[9px] uppercase text-slate-400 block">Style</span>
-                      <span className="font-semibold text-sky-300 truncate block">{room.style || 'Modern'}</span>
+                      <span className="text-[9px] uppercase text-slate-700 dark:text-slate-300 font-bold block">Style</span>
+                      <span className="font-bold text-sky-700 dark:text-sky-300 truncate block">{room.style || 'Modern'}</span>
                     </div>
                   </div>
 
                   {/* Color Palette Swatches */}
                   {room.colorPalette && (
                     <div className="flex items-center gap-1.5 mb-3">
-                      <span className="text-[10px] text-slate-400 uppercase">Colors:</span>
+                      <span className="text-[10px] text-slate-700 dark:text-slate-300 font-bold uppercase">Colors:</span>
                       {[room.colorPalette.primary, room.colorPalette.secondary, room.colorPalette.accent, room.colorPalette.flooring].map((c, idx) => (
                         <div
                           key={idx}
-                          className="w-4 h-4 rounded-full border border-white/20 shadow-xs"
+                          className="w-4 h-4 rounded-full border border-black/15 dark:border-white/20 shadow-xs"
                           style={{ backgroundColor: c }}
                         />
                       ))}
                     </div>
                   )}
 
-                  <div className="flex items-center gap-3 text-[11px] text-slate-400 mb-3">
+                  <div className="flex items-center gap-3 text-[11px] text-slate-700 dark:text-slate-300 font-medium mb-3">
                     <span>{room.furniture?.length || 0} Furniture</span>
                     <span>•</span>
                     <span>{room.materials?.length || 0} Materials</span>
@@ -1204,10 +1204,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Design Concepts & 3D Visualizations
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Architectural renderings, material palettes, and floor plan schemes.
               </p>
             </div>
@@ -1236,18 +1236,18 @@ export const ProjectWorkspace = () => {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-2.5 right-2.5">
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-charcoal-950/85 backdrop-blur-md text-sky-300 border border-sky-400/20 font-medium">
+                      <span className="text-[10px] px-2.5 py-1 rounded-full bg-slate-900/90 backdrop-blur-md text-sky-300 border border-sky-400/30 font-bold">
                         {file.fileType}
                       </span>
                     </div>
                   </div>
                   <div className="p-4 flex items-center justify-between text-xs">
-                    <span className="font-semibold text-slate-100 truncate">{file.name}</span>
+                    <span className="font-bold text-slate-950 dark:text-white truncate">{file.name}</span>
                     <a
                       href={file.filePath}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sky-400 hover:underline flex items-center gap-1 font-medium"
+                      className="text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 font-bold"
                     >
                       View <ExternalLink className="w-3 h-3" />
                     </a>
@@ -1276,10 +1276,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Design Proposals & Revision Tracking
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Review estimated costs, materials, and request iterative design revisions.
               </p>
             </div>
@@ -1310,21 +1310,21 @@ export const ProjectWorkspace = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-sky-400/15">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-3">
-                        <h4 className="text-lg sm:text-xl font-serif font-bold text-slate-100">
+                        <h4 className="text-lg sm:text-xl font-serif font-bold text-slate-950 dark:text-white">
                           {prop.title}
                         </h4>
                         <StatusBadge status={prop.status} />
                       </div>
-                      <span className="text-xs text-slate-400">
-                        Submitted by: <strong>{prop.designer?.name}</strong> • Style: {prop.designStyle} • Est. Duration: {prop.estimatedDuration}
+                      <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                        Submitted by: <strong className="text-slate-950 dark:text-white">{prop.designer?.name}</strong> • Style: {prop.designStyle} • Est. Duration: {prop.estimatedDuration}
                       </span>
                     </div>
 
                     <div className="text-left sm:text-right">
-                      <span className="text-xs text-slate-400 uppercase font-semibold">
+                      <span className="text-xs text-slate-700 dark:text-slate-300 uppercase font-bold">
                         Estimated Concept Cost
                       </span>
-                      <div className="text-2xl font-serif font-bold text-sky-400">
+                      <div className="text-2xl font-serif font-bold text-sky-600 dark:text-sky-400">
                         ${prop.estimatedCost?.toLocaleString()}
                       </div>
                     </div>
@@ -1332,20 +1332,20 @@ export const ProjectWorkspace = () => {
 
                   {/* Proposal Concept Details */}
                   <div className="py-6 flex flex-col gap-4">
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
+                    <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed whitespace-pre-line">
                       {prop.description}
                     </p>
 
                     {prop.notes && (
-                      <div className="text-xs text-slate-400 bg-charcoal-900/60 p-3.5 rounded-xl border border-sky-400/15">
-                        <strong className="text-sky-400">Designer Notes:</strong> {prop.notes}
+                      <div className="text-xs text-slate-800 dark:text-slate-200 bg-slate-100/90 dark:bg-charcoal-900/60 p-3.5 rounded-xl border border-slate-200 dark:border-sky-400/15">
+                        <strong className="text-sky-700 dark:text-sky-400">Designer Notes:</strong> {prop.notes}
                       </div>
                     )}
                   </div>
 
                   {/* Client Action Buttons */}
                   <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-sky-400/15">
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                       Created: {new Date(prop.createdAt).toLocaleDateString()}
                     </span>
 
@@ -1391,7 +1391,7 @@ export const ProjectWorkspace = () => {
           {/* Revisions History Sub-section */}
           {revisions.length > 0 && (
             <div className="mt-8">
-              <h4 className="text-base font-serif font-bold text-slate-100 mb-4">
+              <h4 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-4">
                 Revision Feedback History ({revisions.length})
               </h4>
               <div className="flex flex-col gap-3">
@@ -1401,14 +1401,14 @@ export const ProjectWorkspace = () => {
                     className="p-4 rounded-xl glass-panel border-sky-400/20 flex flex-col gap-2"
                   >
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-semibold text-sky-300">
+                      <span className="font-bold text-sky-700 dark:text-sky-300">
                         Requested by: {rev.requestedBy?.name}
                       </span>
                       <StatusBadge status={rev.status} />
                     </div>
-                    <p className="text-xs text-slate-300">{rev.message}</p>
+                    <p className="text-xs text-slate-800 dark:text-slate-200 font-medium">{rev.message}</p>
                     {rev.requestedChanges?.length > 0 && (
-                      <ul className="list-disc list-inside text-xs text-slate-400 space-y-1">
+                      <ul className="list-disc list-inside text-xs text-slate-700 dark:text-slate-300 font-medium space-y-1">
                         {rev.requestedChanges.map((c, i) => (
                           <li key={i}>{c}</li>
                         ))}
@@ -1427,10 +1427,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Site & Architectural Tasks
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Collaborative action items for designers and site contracting teams.
               </p>
             </div>
@@ -1463,7 +1463,7 @@ export const ProjectWorkspace = () => {
                         <select
                           value={task.status}
                           onChange={(e) => handleTaskStatusToggle(task._id, e.target.value)}
-                          className="glass-input text-xs py-1 px-2.5 rounded-lg bg-charcoal-900 border-sky-400/20 text-slate-200 cursor-pointer"
+                          className="glass-input text-xs py-1 px-2.5 rounded-lg bg-slate-100 dark:bg-charcoal-900 border-slate-300 dark:border-sky-400/20 text-slate-900 dark:text-slate-100 font-medium cursor-pointer"
                         >
                           <option value="TODO">To Do</option>
                           <option value="IN_PROGRESS">In Progress</option>
@@ -1473,25 +1473,25 @@ export const ProjectWorkspace = () => {
                       </div>
                     </div>
 
-                    <h4 className="text-sm font-semibold text-slate-100">{task.title}</h4>
+                    <h4 className="text-sm font-bold text-slate-950 dark:text-white">{task.title}</h4>
                     {task.description && (
-                      <p className="text-xs text-slate-400 mt-1">{task.description}</p>
+                      <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">{task.description}</p>
                     )}
                   </div>
 
                   {/* Task Meta & Comments */}
                   <div className="pt-3 border-t border-sky-400/15 flex flex-col gap-3 text-xs">
-                    <div className="flex items-center justify-between text-slate-400">
-                      <span>Assigned to: <strong>{task.assignedTo?.name || 'Unassigned'}</strong></span>
+                    <div className="flex items-center justify-between text-slate-700 dark:text-slate-300 font-medium">
+                      <span>Assigned to: <strong className="text-slate-950 dark:text-white">{task.assignedTo?.name || 'Unassigned'}</strong></span>
                       {task.dueDate && <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>}
                     </div>
 
                     {/* Comments Thread */}
                     {task.comments?.length > 0 && (
-                      <div className="bg-charcoal-900/60 p-2.5 rounded-lg border border-sky-400/15 flex flex-col gap-1.5 max-h-32 overflow-y-auto">
+                      <div className="bg-slate-100/90 dark:bg-charcoal-900/60 p-2.5 rounded-lg border border-slate-200 dark:border-sky-400/15 flex flex-col gap-1.5 max-h-32 overflow-y-auto">
                         {task.comments.map((c, i) => (
-                          <div key={i} className="text-[11px] text-slate-300">
-                            <strong className="text-sky-400">{c.user?.name || 'User'}:</strong> {c.text}
+                          <div key={i} className="text-[11px] text-slate-800 dark:text-slate-200">
+                            <strong className="text-sky-700 dark:text-sky-400 font-bold">{c.user?.name || 'User'}:</strong> {c.text}
                           </div>
                         ))}
                       </div>
@@ -1507,7 +1507,7 @@ export const ProjectWorkspace = () => {
                           setCommentText({ ...commentText, [task._id]: e.target.value })
                         }
                         onKeyDown={(e) => e.key === 'Enter' && handleAddComment(task._id)}
-                        className="glass-input text-xs py-1.5 px-3 rounded-lg flex-1 border-sky-400/20"
+                        className="glass-input text-xs py-1.5 px-3 rounded-lg flex-1 border-slate-300 dark:border-sky-400/20 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-300"
                       />
                       <Button
                         variant="secondary"
@@ -1530,10 +1530,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Material Specifications & Procurement
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Track flooring, lighting fixtures, custom millwork, and stone finishes.
               </p>
             </div>
@@ -1561,23 +1561,23 @@ export const ProjectWorkspace = () => {
                 <GlassCard key={mat._id} className="p-5 flex flex-col justify-between gap-3 border-sky-400/20">
                   <div>
                     <div className="flex items-center justify-between text-xs mb-1">
-                      <span className="font-semibold text-sky-400">{mat.category}</span>
+                      <span className="font-bold text-sky-700 dark:text-sky-300">{mat.category}</span>
                       <StatusBadge status={mat.status} />
                     </div>
-                    <h4 className="text-sm font-semibold text-slate-100">{mat.name}</h4>
+                    <h4 className="text-sm font-bold text-slate-950 dark:text-white">{mat.name}</h4>
                     {mat.supplier && (
-                      <span className="text-[11px] text-slate-400 block mt-0.5">
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium block mt-0.5">
                         Supplier: {mat.supplier}
                       </span>
                     )}
                   </div>
 
-                  <div className="pt-3 border-t border-sky-400/15 flex items-center justify-between text-xs text-slate-300">
+                  <div className="pt-3 border-t border-sky-400/15 flex items-center justify-between text-xs text-slate-800 dark:text-slate-200">
                     <span>
-                      Qty: <strong>{mat.quantity} {mat.unit}</strong>
+                      Qty: <strong className="text-slate-950 dark:text-white">{mat.quantity} {mat.unit}</strong>
                     </span>
                     <span>
-                      Est: <strong className="text-sky-400">${mat.estimatedCost?.toLocaleString()}</strong>
+                      Est: <strong className="text-sky-600 dark:text-sky-400">${mat.estimatedCost?.toLocaleString()}</strong>
                     </span>
                   </div>
                 </GlassCard>
@@ -1594,26 +1594,26 @@ export const ProjectWorkspace = () => {
           {expensesData.budgetSummary && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               <GlassCard className="border-sky-400/25">
-                <span className="text-xs text-slate-400 uppercase font-semibold">
+                <span className="text-xs text-slate-700 dark:text-slate-300 uppercase font-bold">
                   Total Project Budget
                 </span>
-                <div className="text-2xl font-serif font-bold text-slate-100 mt-1">
+                <div className="text-2xl font-serif font-bold text-slate-950 dark:text-white mt-1">
                   ${expensesData.budgetSummary.totalBudget?.toLocaleString()}
                 </div>
               </GlassCard>
               <GlassCard className="border-emerald-500/20">
-                <span className="text-xs text-slate-400 uppercase font-semibold">
+                <span className="text-xs text-slate-700 dark:text-slate-300 uppercase font-bold">
                   Total Spent to Date
                 </span>
-                <div className="text-2xl font-serif font-bold text-emerald-400 mt-1">
+                <div className="text-2xl font-serif font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                   ${expensesData.budgetSummary.spentAmount?.toLocaleString()}
                 </div>
               </GlassCard>
               <GlassCard className="border-sky-500/25">
-                <span className="text-xs text-slate-400 uppercase font-semibold">
+                <span className="text-xs text-slate-700 dark:text-slate-300 uppercase font-bold">
                   Remaining Capital
                 </span>
-                <div className="text-2xl font-serif font-bold text-sky-400 mt-1">
+                <div className="text-2xl font-serif font-bold text-sky-600 dark:text-sky-400 mt-1">
                   ${expensesData.budgetSummary.remainingBudget?.toLocaleString()}
                 </div>
               </GlassCard>
@@ -1622,10 +1622,10 @@ export const ProjectWorkspace = () => {
 
           <div className="flex items-center justify-between mt-2">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Verified Site Expenses & Invoices
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Itemized expense receipts and labor payouts.
               </p>
             </div>
@@ -1648,20 +1648,20 @@ export const ProjectWorkspace = () => {
               onAction={() => setShowExpenseModal(true)}
             />
           ) : (
-            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+            <div className="divide-y divide-slate-200/60 dark:divide-white/5 glass-card overflow-hidden border-sky-400/20">
               {expensesData.expenses.map((exp) => (
                 <div key={exp._id} className="p-4 flex items-center justify-between text-xs">
                   <div className="flex flex-col gap-0.5">
-                    <span className="font-semibold text-slate-100">{exp.description}</span>
-                    <span className="text-[11px] text-slate-400">
+                    <span className="font-bold text-slate-950 dark:text-white">{exp.description}</span>
+                    <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
                       Category: {exp.category} • Logged by: {exp.addedBy?.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-6">
-                    <span className="text-slate-400">
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">
                       {new Date(exp.date).toLocaleDateString()}
                     </span>
-                    <span className="text-sm font-semibold text-sky-400">
+                    <span className="text-sm font-bold text-sky-600 dark:text-sky-400">
                       ${exp.amount?.toLocaleString()}
                     </span>
                   </div>
@@ -1677,10 +1677,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Project Roadmap & Milestones
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Key handover phases and completion schedules.
               </p>
             </div>
@@ -1708,18 +1708,18 @@ export const ProjectWorkspace = () => {
                 <GlassCard key={m._id} className="p-5 flex flex-col gap-3 border-sky-400/20">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-xs font-bold text-sky-400">Phase 0{index + 1}</span>
-                      <h4 className="text-sm font-semibold text-slate-100">{m.title}</h4>
+                      <span className="text-xs font-bold text-sky-700 dark:text-sky-400">Phase 0{index + 1}</span>
+                      <h4 className="text-sm font-bold text-slate-950 dark:text-white">{m.title}</h4>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                         Due: {new Date(m.dueDate).toLocaleDateString()}
                       </span>
                       <StatusBadge status={m.status} />
                     </div>
                   </div>
 
-                  {m.description && <p className="text-xs text-slate-400">{m.description}</p>}
+                  {m.description && <p className="text-xs text-slate-800 dark:text-slate-200 font-medium">{m.description}</p>}
 
                   <ProgressBar progress={m.completionPercentage || 0} size="sm" />
                 </GlassCard>
@@ -1737,7 +1737,7 @@ export const ProjectWorkspace = () => {
               <h3 className="text-xl font-serif font-bold text-slate-100">
                 Blueprints, Quotations & Documents
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Centralized architectural file repository with secure storage.
               </p>
             </div>
@@ -1760,16 +1760,16 @@ export const ProjectWorkspace = () => {
               onAction={() => setShowFileUploadModal(true)}
             />
           ) : (
-            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+            <div className="divide-y divide-slate-200/60 dark:divide-white/5 glass-card overflow-hidden border-sky-400/20">
               {files.map((file) => (
                 <div key={file._id} className="p-4 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-400/20">
+                    <div className="p-2 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-400/20">
                       <FileText className="w-4 h-4" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-semibold text-slate-100">{file.name}</span>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="font-bold text-slate-950 dark:text-white">{file.name}</span>
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
                         {file.fileType} • {(file.size / 1024).toFixed(0)} KB
                       </span>
                     </div>
@@ -1779,7 +1779,7 @@ export const ProjectWorkspace = () => {
                     href={file.filePath}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sky-400 hover:underline flex items-center gap-1.5 font-medium"
+                    className="text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1.5 font-bold"
                   >
                     Download <ExternalLink className="w-3.5 h-3.5" />
                   </a>
@@ -1793,29 +1793,29 @@ export const ProjectWorkspace = () => {
       {/* 9. ACTIVITY LOGS TAB */}
       {activeTab === 'activity' && (
         <div className="flex flex-col gap-6">
-          <h3 className="text-xl font-serif font-bold text-slate-100">
+          <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
             Project Audit & Verification Timeline
           </h3>
 
-          <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+          <div className="divide-y divide-slate-200/60 dark:divide-white/5 glass-card overflow-hidden border-sky-400/20">
             {auditLogs.map((log) => (
               <div key={log._id} className="p-4 flex items-start gap-3 text-xs">
-                <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-400/20 shrink-0 mt-0.5">
+                <div className="p-2 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-400/20 shrink-0 mt-0.5">
                   <History className="w-4 h-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-100">{log.action}</span>
-                    <span className="text-[11px] text-slate-400">
+                    <span className="font-bold text-slate-950 dark:text-white">{log.action}</span>
+                    <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
                       {new Date(log.timestamp).toLocaleString()}
                     </span>
                   </div>
-                  <p className="text-slate-300">{log.description}</p>
+                  <p className="text-slate-800 dark:text-slate-200 font-medium">{log.description}</p>
                 </div>
               </div>
             ))}
             {auditLogs.length === 0 && (
-              <div className="p-8 text-center text-xs text-slate-400">
+              <div className="p-8 text-center text-xs text-slate-700 dark:text-slate-300 font-medium">
                 No activity logs recorded for this project yet.
               </div>
             )}
@@ -1828,10 +1828,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Spatial Brief, Family Lifestyle & Client Aspirations
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Foundational design inputs, daily family routines, and functional priorities.
               </p>
             </div>
@@ -1839,50 +1839,50 @@ export const ProjectWorkspace = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <GlassCard className="lg:col-span-2 flex flex-col gap-5 border-sky-400/20">
-              <h4 className="text-sm font-semibold text-sky-400 uppercase tracking-wider">
+              <h4 className="text-sm font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider">
                 Lifestyle & Household Parameters
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Family Structure</span>
-                  <span className="font-semibold text-slate-100 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Family Structure</span>
+                  <span className="font-bold text-slate-950 dark:text-white mt-1 block">
                     {project.designBrief?.lifestyle?.familySize || 'Family (4 Members)'}
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Kids / Elderly</span>
-                  <span className="font-semibold text-slate-100 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Kids / Elderly</span>
+                  <span className="font-bold text-slate-950 dark:text-white mt-1 block">
                     {project.designBrief?.lifestyle?.children ? 'Children Friendly' : 'Adult Living'}
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Work From Home</span>
-                  <span className="font-semibold text-sky-300 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Work From Home</span>
+                  <span className="font-bold text-sky-700 dark:text-sky-300 mt-1 block">
                     {project.designBrief?.lifestyle?.workFromHome ? 'Dedicated Office Area' : 'Standard'}
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Pets</span>
-                  <span className="font-semibold text-slate-100 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Pets</span>
+                  <span className="font-bold text-slate-950 dark:text-white mt-1 block">
                     {project.designBrief?.lifestyle?.pets ? 'Pet-friendly Finishes' : 'None'}
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Entertainment</span>
-                  <span className="font-semibold text-slate-100 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Entertainment</span>
+                  <span className="font-bold text-slate-950 dark:text-white mt-1 block">
                     {project.designBrief?.lifestyle?.entertainmentNeeds || 'Frequent Hosting'}
                   </span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10">
-                  <span className="text-[10px] text-slate-400 uppercase block">Storage Scale</span>
-                  <span className="font-semibold text-sky-300 mt-1 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Storage Scale</span>
+                  <span className="font-bold text-sky-700 dark:text-sky-300 mt-1 block">
                     {project.designBrief?.lifestyle?.storageNeeds || 'High Capacity Built-ins'}
                   </span>
                 </div>
               </div>
 
               <div className="mt-2 pt-4 border-t border-sky-400/15">
-                <h4 className="text-xs font-semibold text-sky-400 uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-2">
                   Functional Architectural Requirements
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -1892,7 +1892,7 @@ export const ProjectWorkspace = () => {
                   ).map((req, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-300 border border-sky-400/25 text-xs font-medium"
+                      className="px-3 py-1.5 rounded-xl bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-400/30 text-xs font-bold"
                     >
                       ✓ {req}
                     </span>
@@ -1901,32 +1901,32 @@ export const ProjectWorkspace = () => {
               </div>
 
               {project.designBrief?.freeTextNotes && (
-                <div className="mt-2 p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/10 text-xs text-slate-300">
-                  <strong className="text-sky-400">Special Notes: </strong>
+                <div className="mt-2 p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/10 text-xs text-slate-800 dark:text-slate-200 font-medium">
+                  <strong className="text-sky-700 dark:text-sky-400">Special Notes: </strong>
                   {project.designBrief.freeTextNotes}
                 </div>
               )}
             </GlassCard>
 
             <GlassCard className="flex flex-col gap-4 border-sky-400/20">
-              <h4 className="text-sm font-semibold text-sky-400 uppercase tracking-wider">
+              <h4 className="text-sm font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider">
                 Aesthetic Vision & Style
               </h4>
-              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
-                <span className="text-slate-400 block text-[10px] uppercase">Primary Style</span>
-                <span className="text-base font-serif font-bold text-slate-100 mt-0.5 block">
+              <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 text-xs">
+                <span className="text-slate-700 dark:text-slate-300 block text-[10px] uppercase font-bold">Primary Style</span>
+                <span className="text-base font-serif font-bold text-slate-950 dark:text-white mt-0.5 block">
                   {project.designBrief?.stylePreference || project.preferredStyle || 'Modern Contemporary'}
                 </span>
               </div>
-              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
-                <span className="text-slate-400 block text-[10px] uppercase">Color Theme</span>
-                <span className="text-sm font-semibold text-sky-300 mt-0.5 block">
+              <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 text-xs">
+                <span className="text-slate-700 dark:text-slate-300 block text-[10px] uppercase font-bold">Color Theme</span>
+                <span className="text-sm font-bold text-sky-700 dark:text-sky-300 mt-0.5 block">
                   {project.designBrief?.colorPalettePreference || 'Warm Neutral & Walnut Earthy'}
                 </span>
               </div>
-              <div className="p-3.5 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs">
-                <span className="text-slate-400 block text-[10px] uppercase">Property Dimensions</span>
-                <span className="text-sm font-semibold text-slate-200 mt-0.5 block">
+              <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 text-xs">
+                <span className="text-slate-700 dark:text-slate-300 block text-[10px] uppercase font-bold">Property Dimensions</span>
+                <span className="text-sm font-bold text-slate-950 dark:text-white mt-0.5 block">
                   {project.builtUpArea || project.propertyDetails?.builtUpArea || 2850} sq.ft Built-up • {project.floors || project.propertyDetails?.floors || 2} Floors
                 </span>
               </div>
@@ -1940,10 +1940,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Official Fit-out & Turnkey Quotations ({project.quotations?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Itemized trade costs, material schedules, civil scope, and tax breakdown.
               </p>
             </div>
@@ -1974,19 +1974,19 @@ export const ProjectWorkspace = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-sky-400/15">
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-3">
-                        <h4 className="text-lg sm:text-xl font-serif font-bold text-slate-100">
+                        <h4 className="text-lg sm:text-xl font-serif font-bold text-slate-950 dark:text-white">
                           {quote.title || 'Official Turnkey Interior Estimate'}
                         </h4>
                         <StatusBadge status={quote.status} />
                       </div>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                         Version {quote.version || 1} • Prepared: {new Date(quote.createdAt).toLocaleDateString()}
                       </span>
                     </div>
 
                     <div className="text-left sm:text-right">
-                      <span className="text-xs text-slate-400 uppercase font-semibold">Grand Total (Incl. Tax)</span>
-                      <div className="text-2xl font-serif font-bold text-sky-400">
+                      <span className="text-xs text-slate-700 dark:text-slate-300 uppercase font-bold">Grand Total (Incl. Tax)</span>
+                      <div className="text-2xl font-serif font-bold text-sky-600 dark:text-sky-400">
                         ${(quote.grandTotal || 0).toLocaleString()}
                       </div>
                     </div>
@@ -1994,26 +1994,26 @@ export const ProjectWorkspace = () => {
 
                   {/* Quotation Table */}
                   <div className="py-4 overflow-x-auto">
-                    <table className="w-full text-left text-xs text-slate-300">
+                    <table className="w-full text-left text-xs text-slate-800 dark:text-slate-200">
                       <thead>
-                        <tr className="border-b border-sky-400/15 text-[11px] uppercase text-sky-400">
-                          <th className="pb-3 font-semibold">Trade / Category</th>
-                          <th className="pb-3 font-semibold">Description</th>
-                          <th className="pb-3 font-semibold text-right">Qty</th>
-                          <th className="pb-3 font-semibold text-right">Unit Price</th>
-                          <th className="pb-3 font-semibold text-right">Discount</th>
-                          <th className="pb-3 font-semibold text-right">Total</th>
+                        <tr className="border-b border-sky-400/15 text-[11px] uppercase text-sky-700 dark:text-sky-300 font-bold">
+                          <th className="pb-3 font-bold">Trade / Category</th>
+                          <th className="pb-3 font-bold">Description</th>
+                          <th className="pb-3 font-bold text-right">Qty</th>
+                          <th className="pb-3 font-bold text-right">Unit Price</th>
+                          <th className="pb-3 font-bold text-right">Discount</th>
+                          <th className="pb-3 font-bold text-right">Total</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-white/5">
+                      <tbody className="divide-y divide-slate-200/60 dark:divide-white/5">
                         {(quote.items || []).map((item, idx) => (
-                          <tr key={idx} className="hover:bg-white/[0.02]">
-                            <td className="py-3 font-medium text-slate-100">{item.category}</td>
-                            <td className="py-3 text-slate-300">{item.description}</td>
+                          <tr key={idx} className="hover:bg-slate-100/50 dark:hover:bg-white/[0.02]">
+                            <td className="py-3 font-bold text-slate-950 dark:text-white">{item.category}</td>
+                            <td className="py-3 text-slate-800 dark:text-slate-200">{item.description}</td>
                             <td className="py-3 text-right">{item.quantity} {item.unit}</td>
                             <td className="py-3 text-right">${item.unitPrice?.toLocaleString()}</td>
-                            <td className="py-3 text-right text-emerald-400">${item.discount || 0}</td>
-                            <td className="py-3 text-right font-semibold text-slate-100">${item.total?.toLocaleString()}</td>
+                            <td className="py-3 text-right text-emerald-600 dark:text-emerald-400 font-bold">${item.discount || 0}</td>
+                            <td className="py-3 text-right font-bold text-slate-950 dark:text-white">${item.total?.toLocaleString()}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -2022,10 +2022,10 @@ export const ProjectWorkspace = () => {
 
                   {/* Pricing Summary Breakdown */}
                   <div className="pt-4 border-t border-sky-400/15 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs">
-                    <div className="flex flex-col gap-1 text-slate-400">
-                      <div>Subtotal: <strong className="text-slate-200">${(quote.subtotal || 0).toLocaleString()}</strong></div>
-                      <div>Discount Applied: <strong className="text-emerald-400">-${(quote.discount || 0).toLocaleString()}</strong></div>
-                      <div>GST / Tax: <strong className="text-slate-200">${(quote.tax || 0).toLocaleString()}</strong></div>
+                    <div className="flex flex-col gap-1 text-slate-700 dark:text-slate-300 font-medium">
+                      <div>Subtotal: <strong className="text-slate-950 dark:text-slate-100 font-bold">${(quote.subtotal || 0).toLocaleString()}</strong></div>
+                      <div>Discount Applied: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">-${(quote.discount || 0).toLocaleString()}</strong></div>
+                      <div>GST / Tax: <strong className="text-slate-950 dark:text-slate-100 font-bold">${(quote.tax || 0).toLocaleString()}</strong></div>
                     </div>
 
                     {/* Client Approval Controls */}
@@ -2062,10 +2062,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Central Client & Designer Approval Center ({project.approvals?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Official audit trail of design concepts, material selections, and budget approvals.
               </p>
             </div>
@@ -2078,21 +2078,21 @@ export const ProjectWorkspace = () => {
               description="Design concepts, revisions, quotations, and room spaces approved by the client will be permanently logged here."
             />
           ) : (
-            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+            <div className="divide-y divide-slate-200/60 dark:divide-white/5 glass-card overflow-hidden border-sky-400/20">
               {project.approvals.map((app) => (
                 <div key={app._id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
                   <div className="flex items-start gap-3">
-                    <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/20 shrink-0">
+                    <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-400/20 shrink-0">
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2.5">
-                        <span className="font-semibold text-sm text-slate-100">{app.entityTitle || app.type}</span>
+                        <span className="font-bold text-sm text-slate-950 dark:text-white">{app.entityTitle || app.type}</span>
                         <StatusBadge status={app.status} />
                       </div>
-                      <p className="text-slate-300">{app.comment || 'Verified and approved for execution phase.'}</p>
-                      <span className="text-[11px] text-slate-400">
-                        Decision by: <strong>{app.approvedBy?.name || 'Authorized User'}</strong> ({app.role || 'CLIENT'}) • {new Date(app.timestamp).toLocaleString()}
+                      <p className="text-slate-800 dark:text-slate-200 font-medium">{app.comment || 'Verified and approved for execution phase.'}</p>
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">
+                        Decision by: <strong className="text-slate-950 dark:text-white">{app.approvedBy?.name || 'Authorized User'}</strong> ({app.role || 'CLIENT'}) • {new Date(app.timestamp).toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -2108,10 +2108,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Site Quality Assurance, Punch List & Snags
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Track pre-handover touch-ups, alignment issues, and site rectification items.
               </p>
             </div>
@@ -2137,17 +2137,17 @@ export const ProjectWorkspace = () => {
 
           {/* Snag List Section */}
           <GlassCard className="p-6 border-sky-400/20">
-            <h4 className="text-base font-serif font-bold text-slate-100 mb-4 flex items-center justify-between">
+            <h4 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-4 flex items-center justify-between">
               <span>Punch List Snags ({(project.snags?.length || 0)})</span>
-              <span className="text-xs font-normal text-slate-400">
+              <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
                 {project.snags?.filter(s => s.status === 'Resolved' || s.status === 'Closed').length || 0} / {project.snags?.length || 0} Rectified
               </span>
             </h4>
 
             {(project.snags?.length || 0) === 0 ? (
-              <p className="text-xs text-slate-400 italic py-4 text-center">No punch list items open. Site is defect-free.</p>
+              <p className="text-xs text-slate-700 dark:text-slate-300 italic font-medium py-4 text-center">No punch list items open. Site is defect-free.</p>
             ) : (
-              <div className="divide-y divide-white/5 text-xs">
+              <div className="divide-y divide-slate-200/60 dark:divide-white/5 text-xs">
                 {project.snags.map((snag) => (
                   <div key={snag._id} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -2155,16 +2155,16 @@ export const ProjectWorkspace = () => {
                         type="checkbox"
                         checked={snag.status === 'Resolved' || snag.status === 'Closed'}
                         onChange={(e) => handleUpdateSnagStatus(snag._id, e.target.checked ? 'Resolved' : 'Open')}
-                        className="w-4 h-4 rounded accent-sky-400 cursor-pointer"
+                        className="w-4 h-4 rounded accent-sky-500 cursor-pointer"
                       />
                       <div>
-                        <span className={`font-medium ${snag.status === 'Resolved' ? 'line-through text-slate-400' : 'text-slate-100'}`}>
+                        <span className={`font-bold ${snag.status === 'Resolved' ? 'line-through text-slate-500 dark:text-slate-400' : 'text-slate-950 dark:text-white'}`}>
                           {snag.description}
                         </span>
-                        <div className="text-[10px] text-slate-400 flex items-center gap-2 mt-0.5">
+                        <div className="text-[10px] text-slate-700 dark:text-slate-300 font-medium flex items-center gap-2 mt-0.5">
                           <span>Room: {snag.room || 'General'}</span>
                           <span>•</span>
-                          <span className="text-sky-300">Priority: {snag.priority}</span>
+                          <span className="text-sky-700 dark:text-sky-300 font-bold">Priority: {snag.priority}</span>
                         </div>
                       </div>
                     </div>
@@ -2177,24 +2177,24 @@ export const ProjectWorkspace = () => {
 
           {/* Issues Section */}
           <GlassCard className="p-6 border-sky-400/20">
-            <h4 className="text-base font-serif font-bold text-slate-100 mb-4">
+            <h4 className="text-base font-serif font-bold text-slate-950 dark:text-white mb-4">
               Active Site Issues & Technical Blockers ({(project.issues?.length || 0)})
             </h4>
 
             {(project.issues?.length || 0) === 0 ? (
-              <p className="text-xs text-slate-400 italic py-4 text-center">No open site issues reported.</p>
+              <p className="text-xs text-slate-700 dark:text-slate-300 italic font-medium py-4 text-center">No open site issues reported.</p>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {project.issues.map((issue) => (
-                  <div key={issue._id} className="p-4 rounded-xl bg-charcoal-900/60 border border-sky-400/15 flex flex-col justify-between gap-3 text-xs">
+                  <div key={issue._id} className="p-4 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 flex flex-col justify-between gap-3 text-xs">
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-semibold text-rose-400">{issue.priority} Priority</span>
+                        <span className="text-xs font-bold text-rose-600 dark:text-rose-400">{issue.priority} Priority</span>
                         <StatusBadge status={issue.status} />
                       </div>
-                      <h5 className="font-semibold text-slate-100 text-sm">{issue.title}</h5>
-                      <p className="text-slate-300 mt-1">{issue.description}</p>
-                      <span className="text-[11px] text-slate-400 block mt-2">Space: {issue.room || 'General'}</span>
+                      <h5 className="font-bold text-slate-950 dark:text-white text-sm">{issue.title}</h5>
+                      <p className="text-slate-800 dark:text-slate-200 font-medium mt-1">{issue.description}</p>
+                      <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium block mt-2">Space: {issue.room || 'General'}</span>
                     </div>
 
                     {issue.status !== 'Resolved' && (
@@ -2222,10 +2222,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Material & Furniture Procurement Lifecycle ({project.procurement?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Track ordering status: Required → Quoted → Approved → Ordered → Delivered → Installed.
               </p>
             </div>
@@ -2248,22 +2248,22 @@ export const ProjectWorkspace = () => {
               onAction={() => setShowProcurementModal(true)}
             />
           ) : (
-            <div className="divide-y divide-white/5 glass-card overflow-hidden border-sky-400/20">
+            <div className="divide-y divide-slate-200/60 dark:divide-white/5 glass-card overflow-hidden border-sky-400/20">
               {project.procurement.map((p) => (
                 <div key={p._id} className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2.5">
-                      <span className="font-semibold text-sm text-slate-100">{p.itemName}</span>
+                      <span className="font-bold text-sm text-slate-950 dark:text-white">{p.itemName}</span>
                       <StatusBadge status={p.status} />
                     </div>
-                    <span className="text-slate-400">
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">
                       Category: {p.category} • Supplier: {p.supplier || 'To be selected'} • Room: {p.room || 'General'}
                     </span>
                   </div>
 
                   <div className="flex items-center gap-6">
-                    <span className="text-slate-300 font-medium">Qty: {p.quantityRequired}</span>
-                    <span className="font-semibold text-sky-400">${(p.totalCost || 0).toLocaleString()}</span>
+                    <span className="text-slate-800 dark:text-slate-200 font-bold">Qty: {p.quantityRequired}</span>
+                    <span className="font-bold text-sky-600 dark:text-sky-400">${(p.totalCost || 0).toLocaleString()}</span>
                   </div>
                 </div>
               ))}
@@ -2277,10 +2277,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Site Survey Visits & Condition Reports ({project.siteVisits?.length || 0})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Record laser measurements, MEP condition, wall plastering, and site constraints.
               </p>
             </div>
@@ -2307,27 +2307,27 @@ export const ProjectWorkspace = () => {
               {project.siteVisits.map((visit) => (
                 <GlassCard key={visit._id} className="p-6 border-sky-400/20 flex flex-col gap-4 text-xs">
                   <div className="flex items-center justify-between pb-3 border-b border-sky-400/15">
-                    <span className="font-semibold text-sm text-slate-100">
+                    <span className="font-bold text-sm text-slate-950 dark:text-white">
                       Visit Date: {new Date(visit.date).toLocaleDateString()}
                     </span>
-                    <span className="text-[11px] text-sky-400 font-medium">Verified Survey</span>
+                    <span className="text-[11px] text-sky-700 dark:text-sky-400 font-bold">Verified Survey</span>
                   </div>
 
                   <div className="space-y-2">
                     <div>
-                      <strong className="text-sky-300 block text-[10px] uppercase">Laser Measurements & Layout:</strong>
-                      <span className="text-slate-300">{visit.measurements}</span>
+                      <strong className="text-sky-700 dark:text-sky-300 block text-[10px] uppercase font-bold">Laser Measurements & Layout:</strong>
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">{visit.measurements}</span>
                     </div>
                     <div>
-                      <strong className="text-sky-300 block text-[10px] uppercase">Existing Architectural Shell:</strong>
-                      <span className="text-slate-300">{visit.existingCondition}</span>
+                      <strong className="text-sky-700 dark:text-sky-300 block text-[10px] uppercase font-bold">Existing Architectural Shell:</strong>
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">{visit.existingCondition}</span>
                     </div>
                     <div>
-                      <strong className="text-sky-300 block text-[10px] uppercase">Electrical & Plumbing Grid:</strong>
-                      <span className="text-slate-300">{visit.electricalCondition || visit.plumbingCondition || 'Standard rough-in ready'}</span>
+                      <strong className="text-sky-700 dark:text-sky-300 block text-[10px] uppercase font-bold">Electrical & Plumbing Grid:</strong>
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">{visit.electricalCondition || visit.plumbingCondition || 'Standard rough-in ready'}</span>
                     </div>
                     {visit.notes && (
-                      <div className="pt-2 text-slate-400 italic">
+                      <div className="pt-2 text-slate-700 dark:text-slate-300 italic font-medium">
                         Notes: {visit.notes}
                       </div>
                     )}
@@ -2344,10 +2344,10 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-xl font-serif font-bold text-slate-100">
+              <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
                 Official Project Handover & Client Signoff Certificate
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                 Formal closure, snag list zero-defect verification, and lifetime guarantee signoff.
               </p>
             </div>
@@ -2365,38 +2365,38 @@ export const ProjectWorkspace = () => {
 
           <GlassCard className="p-8 border-sky-400/30 shadow-2xl relative overflow-hidden">
             <div className="flex flex-col items-center text-center gap-4 max-w-2xl mx-auto py-6">
-              <div className="p-4 rounded-2xl bg-sky-500/20 text-sky-300 border border-sky-400/30">
+              <div className="p-4 rounded-2xl bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-400/30">
                 <Award className="w-12 h-12" />
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
                 {project.handoverDetails?.completed
                   ? 'Official Certificate of Completion & Handover'
                   : 'Project Handover In Progress'}
               </h2>
 
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed">
                 {project.handoverDetails?.completed
                   ? `This certifies that ${project.title} has undergone full architectural execution, site snag list clearance, and has been officially accepted by ${project.client?.name || 'the Client'}.`
                   : 'Complete all site tasks, resolve punch list snags, and execute final client signoff to close this project.'}
               </p>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full mt-6 text-xs text-left">
-                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
-                  <span className="text-[10px] text-slate-400 uppercase block">Total Spaces</span>
-                  <span className="text-base font-bold text-slate-100 mt-0.5 block">{project.rooms?.length || 0} Spaces</span>
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/80 border border-slate-200 dark:border-sky-400/15">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Total Spaces</span>
+                  <span className="text-base font-bold text-slate-950 dark:text-white mt-0.5 block">{project.rooms?.length || 0} Spaces</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
-                  <span className="text-[10px] text-slate-400 uppercase block">Total Budget</span>
-                  <span className="text-base font-bold text-sky-400 mt-0.5 block">${(project.totalBudget || 0).toLocaleString()}</span>
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/80 border border-slate-200 dark:border-sky-400/15">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Total Budget</span>
+                  <span className="text-base font-bold text-sky-600 dark:text-sky-400 mt-0.5 block">${(project.totalBudget || 0).toLocaleString()}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
-                  <span className="text-[10px] text-slate-400 uppercase block">Actual Spent</span>
-                  <span className="text-base font-bold text-emerald-400 mt-0.5 block">${(project.spentAmount || 0).toLocaleString()}</span>
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/80 border border-slate-200 dark:border-sky-400/15">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Actual Spent</span>
+                  <span className="text-base font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 block">${(project.spentAmount || 0).toLocaleString()}</span>
                 </div>
-                <div className="p-3.5 rounded-xl bg-charcoal-900/80 border border-sky-400/15">
-                  <span className="text-[10px] text-slate-400 uppercase block">Handover Date</span>
-                  <span className="text-base font-bold text-slate-100 mt-0.5 block">
+                <div className="p-3.5 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/80 border border-slate-200 dark:border-sky-400/15">
+                  <span className="text-[10px] text-slate-700 dark:text-slate-300 uppercase font-bold block">Handover Date</span>
+                  <span className="text-base font-bold text-slate-950 dark:text-white mt-0.5 block">
                     {project.handoverDetails?.handoverDate
                       ? new Date(project.handoverDetails.handoverDate).toLocaleDateString()
                       : 'Pending'}
@@ -2405,8 +2405,8 @@ export const ProjectWorkspace = () => {
               </div>
 
               {project.handoverDetails?.inspectionNotes && (
-                <div className="mt-4 p-4 rounded-xl bg-charcoal-900/60 border border-sky-400/15 text-xs text-slate-300 text-left w-full">
-                  <strong className="text-sky-400 block mb-1">Architectural Inspection Summary:</strong>
+                <div className="mt-4 p-4 rounded-xl bg-slate-100/90 dark:bg-charcoal-900/60 border border-slate-200 dark:border-sky-400/15 text-xs text-slate-800 dark:text-slate-200 font-medium text-left w-full">
+                  <strong className="text-sky-700 dark:text-sky-400 block mb-1">Architectural Inspection Summary:</strong>
                   {project.handoverDetails.inspectionNotes}
                 </div>
               )}

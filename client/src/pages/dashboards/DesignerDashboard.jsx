@@ -113,10 +113,10 @@ export const DesignerDashboard = () => {
               </span>
             )}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-950 dark:text-white">
             Studio of {user?.name}
           </h1>
-          <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 max-w-xl mt-1 font-medium">
             Develop spatial concepts, curate bespoke furniture & materials, design modular kitchens, and manage client revision iterations.
           </p>
         </div>
@@ -175,7 +175,7 @@ export const DesignerDashboard = () => {
       {/* REVISION REQUESTS / NOTICES */}
       {revisionCount > 0 && (
         <div className="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
-          <div className="flex items-center gap-2 text-rose-600 dark:text-rose-300 font-semibold text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider">
             <RotateCcw className="w-4 h-4" /> Client Revision Feedback Received
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -184,8 +184,8 @@ export const DesignerDashboard = () => {
               .map((r, i) => (
                 <div key={i} className="p-3.5 rounded-xl glass-panel border border-rose-400/20 flex items-center justify-between text-xs">
                   <div className="flex flex-col">
-                    <span className="font-bold text-slate-900 dark:text-slate-100">{r.name} • {r.projectTitle}</span>
-                    <span className="text-rose-600 dark:text-rose-300 mt-0.5">{r.clientFeedback || 'Adjust spatial details & color palette'}</span>
+                    <span className="font-bold text-slate-950 dark:text-white">{r.name} • {r.projectTitle}</span>
+                    <span className="text-rose-700 dark:text-rose-300 font-medium mt-0.5">{r.clientFeedback || 'Adjust spatial details & color palette'}</span>
                   </div>
                   <Button
                     variant="danger"
@@ -208,10 +208,10 @@ export const DesignerDashboard = () => {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">
               Assigned Residential Projects
             </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-400">
+            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">
               Select any house to plan rooms, define palettes, and generate material schedules
             </p>
           </div>
@@ -233,14 +233,14 @@ export const DesignerDashboard = () => {
                   {/* House Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-sky-400/15">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20">
+                      <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-400/20">
                         <Home className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100">
+                        <h4 className="text-lg font-serif font-bold text-slate-950 dark:text-white">
                           {project.title}
                         </h4>
-                        <span className="text-xs text-slate-500 dark:text-slate-400">
+                        <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
                           Client: {project.client?.name || 'Homeowner'} • {project.propertyType || 'Villa'} • {project.location} • Budget: ${(project.totalBudget || 0).toLocaleString()}
                         </span>
                       </div>
@@ -265,14 +265,14 @@ export const DesignerDashboard = () => {
                         >
                           <div>
                             <div className="flex items-start justify-between gap-2 mb-2">
-                              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-500 dark:group-hover:text-sky-300">
+                              <span className="text-xs font-bold text-slate-950 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-300">
                                 {room.name}
                               </span>
                               <StatusBadge status={room.designStatus || 'Draft'} />
                             </div>
 
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-2">
-                              Style: <strong className="text-slate-800 dark:text-slate-200">{room.style || 'Modern'}</strong> • {room.dimensions || '180 sq.ft'}
+                            <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium block mb-2">
+                              Style: <strong className="text-slate-950 dark:text-white font-bold">{room.style || 'Modern'}</strong> • {room.dimensions || '180 sq.ft'}
                             </span>
 
                             {/* Color Swatches */}
@@ -289,7 +289,7 @@ export const DesignerDashboard = () => {
                             )}
 
                             {/* Specs count */}
-                            <div className="flex items-center gap-3 text-[10px] text-slate-500 dark:text-slate-400 mb-3">
+                            <div className="flex items-center gap-3 text-[10px] text-slate-700 dark:text-slate-300 font-medium mb-3">
                               <span>{room.furniture?.length || 0} Furniture</span>
                               <span>•</span>
                               <span>{room.materials?.length || 0} Materials</span>

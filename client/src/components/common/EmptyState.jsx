@@ -14,8 +14,8 @@ export const EmptyState = ({
       <div className="p-4 rounded-2xl bg-sky-500/10 dark:bg-charcoal-800/80 border border-sky-400/30 text-sky-500 dark:text-sky-400 mb-4 shadow-glass-subtle">
         <Icon className="w-8 h-8" />
       </div>
-      <h4 className="text-lg font-serif font-semibold text-slate-900 dark:text-slate-100 mb-2">{title}</h4>
-      <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md leading-relaxed mb-6">
+      <h4 className="text-lg font-serif font-bold text-slate-950 dark:text-white mb-2">{title}</h4>
+      <p className="text-xs text-slate-700 dark:text-slate-300 font-medium max-w-md leading-relaxed mb-6">
         {description}
       </p>
       {actionText && onAction && (

@@ -27,10 +27,10 @@ export const ConfirmDialog = ({
           >
             <AlertTriangle className="w-6 h-6" />
           </div>
-          <p className="text-sm text-slate-300 leading-relaxed pt-1">{message}</p>
+          <p className="text-sm text-slate-800 dark:text-slate-200 font-medium leading-relaxed pt-1">{message}</p>
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-sky-400/20">
           <Button variant="ghost" onClick={onClose} disabled={isLoading}>
             {cancelText}
           </Button>

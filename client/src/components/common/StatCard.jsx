@@ -26,10 +26,10 @@ export const StatCard = ({
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+          <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
             {title}
           </span>
-          <span className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
+          <span className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white tracking-tight mt-1">
             {value}
           </span>
         </div>
@@ -41,7 +41,7 @@ export const StatCard = ({
       </div>
 
       {(subtitle || trend) && (
-        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 text-xs">
+        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-sky-400/15 dark:border-white/10 text-xs">
           {trend && (
             <span
               className={`font-semibold ${
@@ -51,7 +51,7 @@ export const StatCard = ({
               {trend}
             </span>
           )}
-          {subtitle && <span className="text-slate-500 dark:text-slate-400/80">{subtitle}</span>}
+          {subtitle && <span className="text-slate-700 dark:text-slate-300 font-medium">{subtitle}</span>}
         </div>
       )}
     </GlassCard>

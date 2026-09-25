@@ -108,8 +108,8 @@ export const AdminUsersPage = () => {
         <div className="flex items-center gap-3">
           <Avatar src={row.profileImage} name={row.name} size="sm" />
           <div className="flex flex-col">
-            <span className="font-semibold text-slate-900 dark:text-slate-100">{row.name}</span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">{row.email}</span>
+            <span className="font-semibold text-slate-950 dark:text-white">{row.name}</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">{row.email}</span>
           </div>
         </div>
       ),
@@ -152,7 +152,7 @@ export const AdminUsersPage = () => {
       accessor: 'isActive',
       render: (row) => (
         <span
-          className={`text-xs px-2 py-0.5 rounded-full ${
+          className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
             row.isActive
               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20'
               : 'bg-rose-500/10 text-rose-600 dark:text-rose-300 border border-rose-500/20'
@@ -166,7 +166,7 @@ export const AdminUsersPage = () => {
       header: 'Joined',
       accessor: 'createdAt',
       render: (row) => (
-        <span className="text-xs text-slate-500 dark:text-slate-400">
+        <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
           {new Date(row.createdAt).toLocaleDateString()}
         </span>
       ),
@@ -203,10 +203,10 @@ export const AdminUsersPage = () => {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
           User Directory & Governance
         </h1>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">
           Review user accounts, verify architectural designers, and manage platform permissions.
         </p>
       </div>

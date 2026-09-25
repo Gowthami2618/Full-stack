@@ -98,10 +98,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
               <Compass className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100 tracking-tight group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
+              <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
                 Design<span className="text-sky-500 dark:text-sky-400">Space</span>
               </span>
-              <span className="text-[9px] uppercase tracking-widest text-slate-500 dark:text-slate-400 -mt-1 font-medium">
+              <span className="text-[9px] uppercase tracking-widest text-slate-700 dark:text-slate-300 -mt-1 font-bold">
                 Atelier Platform
               </span>
             </div>
@@ -121,11 +121,11 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(false);
               }}
               aria-label="Notifications"
-              className="relative p-2.5 rounded-xl border border-sky-400/20 glass-panel text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-white hover:border-sky-400/40 transition-colors"
+              className="relative p-2.5 rounded-xl border border-sky-400/20 glass-panel text-slate-800 dark:text-slate-100 hover:text-sky-600 dark:hover:text-white hover:border-sky-400/40 transition-colors"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-bold text-white shadow-sm animate-pulse">
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-bold text-white shadow-xs animate-pulse">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
@@ -133,9 +133,9 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
 
             {showNotifications && (
               <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-sky-400/25 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="flex items-center justify-between p-4 border-b border-sky-400/15 bg-white/90 dark:bg-charcoal-900/90">
+                <div className="flex items-center justify-between p-4 border-b border-sky-400/15 bg-white/95 dark:bg-charcoal-900/95">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Notifications</h4>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">Notifications</h4>
                     {unreadCount > 0 && (
                       <Badge variant="sky" size="sm">
                         {unreadCount} New
@@ -145,15 +145,15 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   <Link
                     to="/notifications"
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs text-sky-500 dark:text-sky-400 hover:underline flex items-center gap-1 font-medium"
+                    className="text-xs text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 font-semibold"
                   >
                     View all <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-slate-200/50 dark:divide-white/5">
+                <div className="max-h-80 overflow-y-auto divide-y divide-sky-400/10 dark:divide-white/5">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-500 dark:text-slate-400">
+                    <div className="p-6 text-center text-xs text-slate-600 dark:text-slate-300 font-medium">
                       No notifications yet.
                     </div>
                   ) : (
@@ -167,22 +167,22 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           setShowNotifications(false);
                         }}
                         className={`p-3.5 hover:bg-sky-500/[0.08] dark:hover:bg-sky-500/[0.05] transition-colors cursor-pointer flex items-start justify-between gap-3 ${
-                          !n.isRead ? 'bg-sky-500/[0.06] dark:bg-sky-500/[0.04]' : ''
+                          !n.isRead ? 'bg-sky-500/[0.08] dark:bg-sky-500/[0.05]' : ''
                         }`}
                       >
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">
+                            <span className="text-xs font-bold text-slate-900 dark:text-white">
                               {n.title}
                             </span>
                             {!n.isRead && (
                               <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
                             )}
                           </div>
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                          <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
                             {n.message}
                           </p>
-                          <span className="text-[10px] text-slate-400 mt-1">
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 font-medium">
                             {new Date(n.createdAt).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -193,7 +193,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <button
                             onClick={(e) => handleMarkRead(n._id, e)}
                             title="Mark as read"
-                            className="text-slate-400 hover:text-emerald-500 p-1"
+                            className="text-slate-500 hover:text-emerald-500 p-1"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           </button>
@@ -217,10 +217,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             >
               <Avatar src={user?.profileImage} name={user?.name} size="sm" />
               <div className="hidden sm:flex flex-col">
-                <span className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate max-w-[120px]">
+                <span className="text-xs font-bold text-slate-950 dark:text-white truncate max-w-[120px]">
                   {user?.name}
                 </span>
-                <span className="text-[10px] text-sky-600 dark:text-sky-400 font-medium capitalize">
+                <span className="text-[10px] text-sky-600 dark:text-sky-400 font-semibold capitalize">
                   {user?.role?.toLowerCase()}
                 </span>
               </div>
@@ -228,11 +228,11 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
 
             {showUserMenu && (
               <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-sky-400/25 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="p-4 border-b border-sky-400/15 bg-white/90 dark:bg-charcoal-900/90">
-                  <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">
+                <div className="p-4 border-b border-sky-400/15 bg-white/95 dark:bg-charcoal-900/95">
+                  <p className="text-xs font-bold text-slate-950 dark:text-white truncate">
                     {user?.name}
                   </p>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
+                  <p className="text-[11px] text-slate-700 dark:text-slate-300 truncate font-medium">{user?.email}</p>
                   <div className="mt-2">
                     <Badge variant="sky" size="sm">
                       {user?.role}
@@ -240,18 +240,18 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   </div>
                 </div>
 
-                <div className="p-2 divide-y divide-slate-100 dark:divide-white/5 text-xs">
+                <div className="p-2 divide-y divide-sky-400/10 dark:divide-white/5 text-xs">
                   <Link
                     to="/profile"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-white hover:bg-sky-500/10 rounded-lg transition-colors"
+                    className="flex items-center gap-2.5 px-3 py-2 text-slate-800 dark:text-slate-100 hover:text-sky-600 dark:hover:text-white hover:bg-sky-500/10 rounded-lg transition-colors font-medium"
                   >
                     <User className="w-4 h-4 text-sky-500 dark:text-sky-400" />
                     <span>My Profile</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-500 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left mt-1"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left mt-1 font-medium"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>

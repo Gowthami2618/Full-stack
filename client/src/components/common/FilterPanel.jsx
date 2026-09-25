@@ -22,10 +22,10 @@ export const FilterPanel = ({
             <select
               value={filter.value}
               onChange={(e) => filter.onChange(e.target.value)}
-              className="w-full glass-input text-xs py-1.5 px-3 rounded-lg bg-charcoal-900 border-sky-400/20 text-slate-200 cursor-pointer focus:border-sky-400"
+              className="w-full glass-input text-xs py-1.5 px-3 rounded-lg bg-slate-100/90 dark:bg-charcoal-900 border-sky-400/30 text-slate-900 dark:text-slate-100 font-semibold cursor-pointer focus:border-sky-400"
             >
               {filter.options.map((opt) => (
-                <option key={opt.value} value={opt.value} className="bg-charcoal-900">
+                <option key={opt.value} value={opt.value} className="bg-white dark:bg-charcoal-900 text-slate-900 dark:text-slate-100 font-medium">
                   {opt.label}
                 </option>
               ))}

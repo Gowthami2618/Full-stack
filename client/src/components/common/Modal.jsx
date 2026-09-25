@@ -41,14 +41,14 @@ export const Modal = ({
         {/* Modal Header */}
         <div className="flex items-start justify-between p-6 border-b border-sky-400/15 bg-white/70 dark:bg-charcoal-900/60">
           <div>
-            <h3 className="text-xl font-serif font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
-            {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{subtitle}</p>}
+            <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">{title}</h3>
+            {subtitle && <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">{subtitle}</p>}
           </div>
           {showClose && (
             <button
               onClick={onClose}
               aria-label="Close dialog"
-              className="text-slate-400 hover:text-slate-700 dark:hover:text-slate-100 p-1.5 rounded-lg hover:bg-sky-500/10 transition-colors"
+              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white p-1.5 rounded-lg hover:bg-sky-500/10 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -56,7 +56,7 @@ export const Modal = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 max-h-[75vh] overflow-y-auto text-slate-800 dark:text-slate-100">{children}</div>
+        <div className="p-6 max-h-[75vh] overflow-y-auto text-slate-900 dark:text-slate-100">{children}</div>
       </div>
     </div>
   );

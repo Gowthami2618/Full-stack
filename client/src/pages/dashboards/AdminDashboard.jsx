@@ -102,10 +102,10 @@ export const AdminDashboard = () => {
               Administrator
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
             Platform Intelligence & Governance
           </h1>
-          <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl mt-1">
+          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 max-w-xl mt-1 font-medium">
             Global view of user registrations, professional certifications, system throughput, and architectural fit-out budgets.
           </p>
         </div>
@@ -169,10 +169,10 @@ export const AdminDashboard = () => {
         {/* Users by Role Distribution */}
         <GlassCard className="flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white">
               Users Ecosystem by Role
             </h3>
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Platform Demographics</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-bold">Platform Demographics</span>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -204,10 +204,10 @@ export const AdminDashboard = () => {
         {/* Projects Status Distribution */}
         <GlassCard className="flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white">
               Projects by Lifecycle Status
             </h3>
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Workflow Volume</span>
+            <span className="text-xs text-slate-700 dark:text-slate-300 font-bold">Workflow Volume</span>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -215,11 +215,11 @@ export const AdminDashboard = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'} />
                 <XAxis
                   dataKey="status"
-                  stroke={isDark ? '#94A3B8' : '#64748B'}
+                  stroke={isDark ? '#CBD5E1' : '#334155'}
                   fontSize={10}
                   tickFormatter={(val) => val.substring(0, 8)}
                 />
-                <YAxis stroke={isDark ? '#94A3B8' : '#64748B'} fontSize={10} />
+                <YAxis stroke={isDark ? '#CBD5E1' : '#334155'} fontSize={10} />
                 <Tooltip contentStyle={tooltipStyle} />
                 <Bar dataKey="count" fill="#38BDF8" radius={[6, 6, 0, 0]} />
               </BarChart>
@@ -233,7 +233,7 @@ export const AdminDashboard = () => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Award className="w-5 h-5 text-sky-600 dark:text-sky-400" />
-            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white">
               Pending Professional Verifications ({unverifiedUsers.length})
             </h3>
           </div>
@@ -248,7 +248,7 @@ export const AdminDashboard = () => {
         </div>
 
         {unverifiedUsers.length === 0 ? (
-          <div className="p-6 text-center text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/20 rounded-xl font-medium">
+          <div className="p-6 text-center text-xs text-emerald-800 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 rounded-xl font-bold">
             ✓ All registered designers and contractors have been verified.
           </div>
         ) : (
@@ -261,8 +261,8 @@ export const AdminDashboard = () => {
                 <div className="flex items-center gap-3">
                   <Avatar src={u.profileImage} name={u.name} size="sm" />
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">{u.name}</span>
-                    <span className="text-[11px] text-slate-500 dark:text-slate-400">{u.email}</span>
+                    <span className="text-xs font-bold text-slate-950 dark:text-white">{u.name}</span>
+                    <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium">{u.email}</span>
                   </div>
                   <Badge variant={u.role === 'DESIGNER' ? 'sky' : 'default'} size="sm">
                     {u.role}

@@ -44,10 +44,10 @@ export const ProfessionalsDirectoryPage = () => {
     <div className="flex flex-col gap-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
           Curated Professionals Network
         </h1>
-        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+        <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">
           Explore certified interior design ateliers, architects, and master building contractors.
         </p>
       </div>
@@ -66,10 +66,10 @@ export const ProfessionalsDirectoryPage = () => {
               key={role}
               type="button"
               onClick={() => setRoleFilter(role)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                 roleFilter === role
                   ? 'sky-gradient-btn text-white font-bold shadow-xs'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'
               }`}
             >
               {role === 'ALL' ? 'All Network' : role === 'DESIGNER' ? 'Designers' : 'Contractors'}
@@ -82,7 +82,7 @@ export const ProfessionalsDirectoryPage = () => {
       {loading ? (
         <LoadingSpinner text="Searching professional network..." />
       ) : filtered.length === 0 ? (
-        <div className="p-12 text-center text-xs text-slate-500 dark:text-slate-400 glass-card">
+        <div className="p-12 text-center text-xs text-slate-700 dark:text-slate-300 font-medium glass-card">
           No professionals found matching the search criteria.
         </div>
       ) : (
@@ -94,13 +94,13 @@ export const ProfessionalsDirectoryPage = () => {
                   <div className="flex items-center gap-3">
                     <Avatar src={pro.profileImage} name={pro.name} size="md" />
                     <div>
-                      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{pro.name}</h3>
+                      <h3 className="text-sm font-bold text-slate-950 dark:text-white">{pro.name}</h3>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <Badge variant={pro.role === 'DESIGNER' ? 'sky' : 'indigo'} size="sm">
                           {pro.role}
                         </Badge>
                         {pro.isVerified && (
-                          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 font-medium">
+                          <span className="text-[10px] text-emerald-700 dark:text-emerald-300 flex items-center gap-0.5 font-bold">
                             <Award className="w-3 h-3" /> Verified
                           </span>
                         )}
@@ -109,20 +109,20 @@ export const ProfessionalsDirectoryPage = () => {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-800 dark:text-slate-200 font-medium line-clamp-3 leading-relaxed">
                   {pro.bio || 'Specialized interior design and fit-out professional with deep domain experience.'}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-sky-400/10 flex flex-col gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+              <div className="pt-3 border-t border-sky-400/10 flex flex-col gap-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium">
                 {pro.location && (
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400 shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
                     <span>{pro.location}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400 shrink-0" />
+                  <Mail className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400 shrink-0" />
                   <span className="truncate">{pro.email}</span>
                 </div>
               </div>

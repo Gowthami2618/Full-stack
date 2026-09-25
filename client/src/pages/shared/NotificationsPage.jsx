@@ -56,10 +56,10 @@ export const NotificationsPage = () => {
     <div className="max-w-4xl mx-auto flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
             Notifications Center
           </h1>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">
             Real-time updates on proposal approvals, task completions, and project milestones.
           </p>
         </div>
@@ -95,13 +95,13 @@ export const NotificationsPage = () => {
             >
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">{n.title}</span>
+                  <span className="text-sm font-bold text-slate-950 dark:text-white">{n.title}</span>
                   {!n.isRead && (
                     <span className="w-2 h-2 rounded-full bg-sky-500 shrink-0 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
                   )}
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{n.message}</p>
-                <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+                <p className="text-xs text-slate-800 dark:text-slate-200 font-medium leading-relaxed">{n.message}</p>
+                <span className="text-[11px] text-slate-700 dark:text-slate-300 font-medium mt-1">
                   {new Date(n.createdAt).toLocaleString()}
                 </span>
               </div>
@@ -122,7 +122,7 @@ export const NotificationsPage = () => {
                 <button
                   type="button"
                   onClick={() => handleDelete(n._id)}
-                  className="p-1.5 text-slate-400 hover:text-rose-500 transition-colors rounded-lg hover:bg-black/5 dark:hover:bg-white/5"
+                  className="p-1.5 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 transition-colors rounded-lg hover:bg-black/5 dark:hover:bg-white/5"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

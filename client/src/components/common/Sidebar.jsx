@@ -118,12 +118,12 @@ export const Sidebar = ({ isOpen, onClose }) => {
       >
         <div className="flex flex-col gap-6 px-4">
           {/* User Workspace Info Pill */}
-          <div className="p-3.5 rounded-xl bg-white/60 dark:bg-charcoal-900/80 border border-sky-400/15 flex items-center justify-between shadow-sm">
+          <div className="p-3.5 rounded-xl bg-white/80 dark:bg-charcoal-900/90 border border-sky-400/20 flex items-center justify-between shadow-xs">
             <div className="flex flex-col">
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+              <span className="text-[11px] text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold">
                 Workspace Mode
               </span>
-              <span className="text-xs font-semibold text-slate-900 dark:text-slate-100 mt-0.5">
+              <span className="text-xs font-bold text-slate-950 dark:text-white mt-0.5">
                 {user.role === 'ADMIN'
                   ? 'Governance'
                   : user.role === 'DESIGNER'
@@ -142,7 +142,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
           {/* Navigation Links */}
           <nav className="flex flex-col gap-1.5">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 dark:text-slate-400/70 px-3 mb-1">
+            <span className="text-[10px] uppercase font-extrabold tracking-widest text-slate-700 dark:text-slate-300 px-3 mb-1">
               Menu
             </span>
             {navItems.map((item) => {
@@ -153,14 +153,14 @@ export const Sidebar = ({ isOpen, onClose }) => {
                   to={item.to}
                   onClick={() => onClose && onClose()}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-medium transition-all duration-200 group ${
+                    `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 group ${
                       isActive
                         ? item.highlight
-                          ? 'sky-gradient-btn text-white font-semibold shadow-md'
-                          : 'bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-400/30 font-semibold shadow-glass-subtle'
+                          ? 'sky-gradient-btn text-white font-bold shadow-md'
+                          : 'bg-sky-500/20 text-sky-700 dark:text-sky-300 border border-sky-400/40 font-bold shadow-xs'
                         : item.highlight
-                        ? 'bg-sky-500/15 text-sky-600 dark:text-sky-300 hover:bg-sky-500/25 border border-sky-400/30 font-semibold'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-sky-500/[0.08]'
+                        ? 'bg-sky-500/15 text-sky-700 dark:text-sky-300 hover:bg-sky-500/25 border border-sky-400/30 font-bold'
+                        : 'text-slate-800 dark:text-slate-100 hover:text-slate-950 dark:hover:text-white hover:bg-sky-500/[0.12]'
                     }`
                   }
                 >
@@ -173,12 +173,12 @@ export const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-sky-400/15 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+        <div className="p-4 border-t border-sky-400/20 flex items-center justify-between text-[11px] text-slate-700 dark:text-slate-300">
           <div className="flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400" />
-            <span className="font-medium">DesignSpace v2.4</span>
+            <span className="font-semibold">DesignSpace v2.4</span>
           </div>
-          <span className="text-[10px] bg-sky-500/10 px-2 py-0.5 rounded-md border border-sky-400/20 text-sky-600 dark:text-sky-300 font-semibold">
+          <span className="text-[10px] bg-sky-500/15 px-2 py-0.5 rounded-md border border-sky-400/30 text-sky-700 dark:text-sky-300 font-bold">
             Enterprise
           </span>
         </div>

@@ -14,11 +14,11 @@ export const Pagination = ({
   const endItem = Math.min(currentPage * limit, totalItems);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-2 text-xs text-slate-500 dark:text-slate-400">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-2 text-xs text-slate-700 dark:text-slate-300 font-medium">
       <div>
-        Showing <span className="font-semibold text-slate-800 dark:text-slate-200">{startItem}</span> to{' '}
-        <span className="font-semibold text-slate-800 dark:text-slate-200">{endItem}</span> of{' '}
-        <span className="font-semibold text-slate-800 dark:text-slate-200">{totalItems}</span> entries
+        Showing <span className="font-bold text-slate-950 dark:text-white">{startItem}</span> to{' '}
+        <span className="font-bold text-slate-950 dark:text-white">{endItem}</span> of{' '}
+        <span className="font-bold text-slate-950 dark:text-white">{totalItems}</span> entries
       </div>
 
       <div className="flex items-center gap-1.5">

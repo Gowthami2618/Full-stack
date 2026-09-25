@@ -66,16 +66,16 @@ export const LoginPage = () => {
             <div className="inline-flex p-3 rounded-2xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20 mb-3">
               <Sparkles className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
               Welcome Back
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1.5">
               Sign in to your interior design workspace
             </p>
           </div>
 
           {error && (
-            <div className="mb-6 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
+            <div className="mb-6 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-500/30 text-rose-700 dark:text-rose-300 text-xs font-semibold leading-relaxed">
               {error}
             </div>
           )}
@@ -115,7 +115,7 @@ export const LoginPage = () => {
 
           {/* Quick Demo Logins Section */}
           <div className="mt-8 pt-6 border-t border-sky-400/15">
-            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-3">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold text-sky-700 dark:text-sky-300 uppercase tracking-wider mb-3">
               <UserCheck className="w-3.5 h-3.5" />
               <span>Instant Demo Exploration</span>
             </div>
@@ -123,37 +123,37 @@ export const LoginPage = () => {
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin@designspace.com')}
-                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-white/10 transition-all text-left font-bold"
               >
                 👑 Admin Portal
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('client@designspace.com')}
-                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-white/10 transition-all text-left font-bold"
               >
                 👤 Client Portal
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('designer@designspace.com')}
-                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-white/10 transition-all text-left font-bold"
               >
                 🎨 Designer Studio
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('contractor@designspace.com')}
-                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-white/10 transition-all text-left font-bold"
               >
                 🔨 Contractor Desk
               </button>
             </div>
           </div>
 
-          <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
+          <div className="mt-6 text-center text-xs text-slate-700 dark:text-slate-300 font-medium">
             Don't have an account yet?{' '}
-            <Link to="/register" className="text-sky-600 dark:text-sky-400 hover:underline font-semibold">
+            <Link to="/register" className="text-sky-600 dark:text-sky-400 hover:underline font-bold">
               Create an account
             </Link>
           </div>

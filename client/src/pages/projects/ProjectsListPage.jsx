@@ -153,10 +153,10 @@ export const ProjectsListPage = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white">
             Interior Projects Directory
           </h1>
-          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+          <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">
             Browse and manage all interior architecture, design proposals, and site fit-outs.
           </p>
         </div>
@@ -198,7 +198,7 @@ export const ProjectsListPage = () => {
               className={`p-1.5 rounded-lg text-xs transition-colors ${
                 viewMode === 'grid'
                   ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 font-semibold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
@@ -209,7 +209,7 @@ export const ProjectsListPage = () => {
               className={`p-1.5 rounded-lg text-xs transition-colors ${
                 viewMode === 'table'
                   ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 font-semibold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white'
               }`}
             >
               <List className="w-4 h-4" />
@@ -258,28 +258,28 @@ export const ProjectsListPage = () => {
 
               <div className="p-5 flex flex-col gap-4 flex-1 justify-between">
                 <div>
-                  <div className="flex items-center justify-between text-xs text-sky-600 dark:text-sky-400 font-medium mb-1">
+                  <div className="flex items-center justify-between text-xs text-sky-600 dark:text-sky-400 font-semibold mb-1">
                     <span>{project.projectType}</span>
                     <span>{project.propertyType}</span>
                   </div>
-                  <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100 line-clamp-1">
+                  <h3 className="text-base font-serif font-bold text-slate-950 dark:text-white line-clamp-1">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1">
+                  <p className="text-xs text-slate-800 dark:text-slate-200 line-clamp-2 mt-1">
                     {project.description}
                   </p>
                 </div>
 
                 <ProgressBar progress={project.progress || 0} />
 
-                <div className="pt-3 border-t border-sky-400/10 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                <div className="pt-3 border-t border-sky-400/10 flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 font-medium">
                   <div>
                     Budget:{' '}
-                    <span className="font-semibold text-slate-900 dark:text-slate-100">
+                    <span className="font-bold text-slate-950 dark:text-white">
                       ${project.totalBudget?.toLocaleString()}
                     </span>
                   </div>
-                  <span className="text-sky-600 dark:text-sky-400 font-medium flex items-center gap-1">
+                  <span className="text-sky-600 dark:text-sky-400 font-semibold flex items-center gap-1">
                     Workspace <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>

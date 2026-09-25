@@ -14,7 +14,7 @@ export const Tabs = ({ tabs = [], activeTab, onChange, className = '' }) => {
             className={`flex items-center gap-2 px-4 py-3 text-xs md:text-sm font-semibold border-b-2 whitespace-nowrap transition-all duration-200 cursor-pointer ${
               isActive
                 ? 'border-sky-500 dark:border-sky-400 text-sky-600 dark:text-sky-300 bg-sky-500/[0.08]'
-                : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:border-sky-400/30'
+                : 'border-transparent text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:border-sky-400/30'
             }`}
           >
             {Icon && <Icon className={`w-4 h-4 ${isActive ? 'text-sky-500 dark:text-sky-400' : ''}`} />}
@@ -24,7 +24,7 @@ export const Tabs = ({ tabs = [], activeTab, onChange, className = '' }) => {
                 className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                   isActive
                     ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 border border-sky-400/30'
-                    : 'bg-slate-200/80 dark:bg-charcoal-800 text-slate-600 dark:text-slate-400'
+                    : 'bg-slate-200/90 dark:bg-charcoal-800 text-slate-800 dark:text-slate-200'
                 }`}
               >
                 {tab.count}
