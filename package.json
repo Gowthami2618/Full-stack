@@ -9,6 +9,7 @@
     "server:install": "npm --prefix server install",
     "client:install": "npm --prefix client install",
     "install:all": "npm run server:install && npm run client:install",
+    "build": "npm --prefix client run build",
     "seed": "npm --prefix server run seed"
   },
   "devDependencies": {

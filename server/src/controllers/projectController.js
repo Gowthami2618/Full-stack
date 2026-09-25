@@ -139,6 +139,10 @@ export const createProject = async (req, res, next) => {
       preferredStyle,
       images,
       designerId,
+      propertyDetails,
+      budgetAllocation,
+      housePhotos,
+      rooms,
     } = req.body;
 
     if (!title || !description || !projectType || !propertyType || !location || !totalBudget) {
