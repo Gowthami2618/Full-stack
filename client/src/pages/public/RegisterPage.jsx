@@ -7,7 +7,7 @@ import Button from '../../components/common/Button';
 import GlassCard from '../../components/common/GlassCard';
 
 export const RegisterPage = () => {
-  const { register } = useAuth();
+  const { register, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -21,6 +21,16 @@ export const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // If already logged in, redirect to respective dashboard
+  React.useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.role === 'ADMIN') navigate('/admin/dashboard', { replace: true });
+      else if (user.role === 'DESIGNER') navigate('/designer/dashboard', { replace: true });
+      else if (user.role === 'CONTRACTOR') navigate('/contractor/dashboard', { replace: true });
+      else navigate('/client/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -33,6 +43,11 @@ export const RegisterPage = () => {
     e.preventDefault();
     setError('');
 
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match.');
       return;
@@ -43,9 +58,10 @@ export const RegisterPage = () => {
     setIsLoading(false);
 
     if (res.success) {
-      if (res.user.role === 'DESIGNER') navigate('/designer/dashboard');
-      else if (res.user.role === 'CONTRACTOR') navigate('/contractor/dashboard');
-      else navigate('/client/dashboard');
+      if (res.user?.role === 'ADMIN') navigate('/admin/dashboard', { replace: true });
+      else if (res.user?.role === 'DESIGNER') navigate('/designer/dashboard', { replace: true });
+      else if (res.user?.role === 'CONTRACTOR') navigate('/contractor/dashboard', { replace: true });
+      else navigate('/client/dashboard', { replace: true });
     } else {
       setError(res.message);
     }

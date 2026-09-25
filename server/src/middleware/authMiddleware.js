@@ -6,14 +6,23 @@ import { sendError } from '../utils/apiResponse.js';
 export const authenticate = async (req, res, next) => {
   let token;
 
-  // Check HTTP-only cookie first, then fallback to Authorization header
-  if (req.cookies && req.cookies.jwt) {
-    token = req.cookies.jwt;
-  } else if (
+  // 1. Check Bearer Authorization header first
+  if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith('Bearer ')
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    const candidate = req.headers.authorization.split(' ')[1];
+    if (candidate && candidate !== 'null' && candidate !== 'undefined') {
+      token = candidate;
+    }
+  }
+
+  // 2. Fallback to HTTP-only cookie if header not provided
+  if (!token && req.cookies && req.cookies.jwt) {
+    const cookieToken = req.cookies.jwt;
+    if (cookieToken && cookieToken !== 'null' && cookieToken !== 'undefined') {
+      token = cookieToken;
+    }
   }
 
   if (!token) {
@@ -25,7 +34,7 @@ export const authenticate = async (req, res, next) => {
   }
 
   try {
-    const secret = process.env.JWT_SECRET || 'designspace_fallback_secret_key_2026';
+    const secret = process.env.JWT_SECRET || 'designspace_super_secure_jwt_secret_key_2026_dev_prod';
     const decoded = jwt.verify(token, secret);
 
     // Fetch user from DB to ensure account is still active and valid
@@ -47,6 +56,24 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
+    // If header token verification failed, try cookie token as fallback if available
+    if (
+      req.cookies?.jwt &&
+      token !== req.cookies.jwt &&
+      req.cookies.jwt !== 'null' &&
+      req.cookies.jwt !== 'undefined'
+    ) {
+      try {
+        const secret = process.env.JWT_SECRET || 'designspace_super_secure_jwt_secret_key_2026_dev_prod';
+        const decodedCookie = jwt.verify(req.cookies.jwt, secret);
+        const cookieUser = await User.findById(decodedCookie.userId).select('-password');
+        if (cookieUser && cookieUser.isActive) {
+          req.user = cookieUser;
+          return next();
+        }
+      } catch (_) {}
+    }
+
     if (error.name === 'TokenExpiredError') {
       return sendError(res, 401, 'Session expired. Please log in again.');
     }

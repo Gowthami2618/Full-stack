@@ -75,10 +75,11 @@ userSchema.index({ isActive: 1 });
 // Encrypt password using bcrypt
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
-    next();
+    return next ? next() : undefined;
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  if (next) next();
 });
 
 // Match user entered password to hashed password in database

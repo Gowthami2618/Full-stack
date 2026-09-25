@@ -7,7 +7,7 @@ import Button from '../../components/common/Button';
 import GlassCard from '../../components/common/GlassCard';
 
 export const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,16 +16,24 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const redirectAfterLogin = (user) => {
-    if (location.state?.from) {
-      navigate(location.state.from.pathname);
+  const redirectAfterLogin = (activeUser) => {
+    const from = location.state?.from?.pathname;
+    if (from && !['/login', '/register', '/unauthorized'].includes(from)) {
+      navigate(from, { replace: true });
       return;
     }
-    if (user.role === 'ADMIN') navigate('/admin/dashboard');
-    else if (user.role === 'DESIGNER') navigate('/designer/dashboard');
-    else if (user.role === 'CONTRACTOR') navigate('/contractor/dashboard');
-    else navigate('/client/dashboard');
+    if (activeUser?.role === 'ADMIN') navigate('/admin/dashboard', { replace: true });
+    else if (activeUser?.role === 'DESIGNER') navigate('/designer/dashboard', { replace: true });
+    else if (activeUser?.role === 'CONTRACTOR') navigate('/contractor/dashboard', { replace: true });
+    else navigate('/client/dashboard', { replace: true });
   };
+
+  // If already logged in, redirect automatically to their dashboard
+  React.useEffect(() => {
+    if (isAuthenticated && user) {
+      redirectAfterLogin(user);
+    }
+  }, [isAuthenticated, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

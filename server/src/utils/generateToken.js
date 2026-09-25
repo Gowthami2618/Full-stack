@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export const generateToken = (res, user) => {
-  const secret = process.env.JWT_SECRET || 'designspace_fallback_secret_key_2026';
+  const secret = process.env.JWT_SECRET || 'designspace_super_secure_jwt_secret_key_2026_dev_prod';
   const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
 
   // Minimal secure payload
