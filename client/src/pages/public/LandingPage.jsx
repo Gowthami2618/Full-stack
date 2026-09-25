@@ -7,6 +7,8 @@ import {
   Hammer,
   CheckCircle2,
 } from 'lucide-react';
+import { WarpFieldBackground } from '@designcodeio/threeui';
+import '@designcodeio/threeui/style.css';
 import Button from '../../components/common/Button';
 import GlassCard from '../../components/common/GlassCard';
 import Badge from '../../components/common/Badge';
@@ -18,74 +20,93 @@ export const LandingPage = () => {
     <div className="flex flex-col gap-24 pb-20 overflow-hidden">
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center flex flex-col items-center">
-        {/* Glow ambient background element */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-sky-500/15 via-sky-400/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 text-sky-300 text-xs font-semibold uppercase tracking-widest mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-          The Premier Architectural Interior Collaboration Platform
-        </div>
-
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-slate-100 max-w-4xl tracking-tight leading-[1.1] mb-6">
-          Design Your Space.{' '}
-          <span className="sky-gradient-text block mt-1">Manage Every Detail.</span>
-        </h1>
-
-        <p className="text-sm sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed mb-10">
-          Connect discerning clients, visionary interior designers, and master contractors
-          on a unified platform. Streamline proposals, revisions, budgets, materials, and execution.
-        </p>
-
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate('/register')}
-            icon={ArrowRight}
-          >
-            Start Your Project
-          </Button>
-          <Button
-            variant="glass"
-            size="lg"
-            onClick={() => {
-              const el = document.getElementById('how-it-works');
-              el?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            Explore Platform
-          </Button>
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={() => navigate('/login')}
-          >
-            Quick Sign In
-          </Button>
-        </div>
-
-        {/* Hero Graphic Showcase */}
-        <div className="mt-16 w-full max-w-5xl rounded-2xl glass-panel p-2.5 sm:p-4 border-sky-400/25 shadow-2xl relative">
-          <img
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80"
-            alt="Luxury Interior Design Architecture"
-            className="w-full h-72 sm:h-[480px] object-cover rounded-xl"
+        {/* ThreeUI Hyperspace WarpField Background */}
+        <div className="shader-frame absolute inset-0 z-0 pointer-events-none overflow-hidden rounded-3xl opacity-80">
+          <WarpFieldBackground
+            variant="hyperspace"
+            speed={15.0}
+            streakOpacity={0.60}
+            tileOpacity={0.90}
+            fov={75}
+            hue={0}
+            saturation={1.00}
+            brightness={1.00}
           />
-          <div className="absolute bottom-6 left-6 right-6 sm:left-10 sm:right-10 glass-dropdown p-4 sm:p-6 rounded-xl border-sky-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex flex-col text-left">
-              <span className="text-xs text-sky-400 font-semibold uppercase tracking-wider">
-                Live Project Showcase
-              </span>
-              <h3 className="text-base sm:text-xl font-serif font-bold text-slate-100">
-                Tribeca High-Ceiling Loft Renovation
-              </h3>
-              <p className="text-xs text-slate-400 hidden sm:block">
-                Client: Eleanor Vance • Designer: Aurelia Dupont • Contractor: Harrison Sterling
-              </p>
-            </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <Badge variant="sky">IN PROGRESS (45%)</Badge>
-              <Badge variant="emerald">$125,000 Budget</Badge>
+          <div className="absolute inset-0 bg-gradient-to-b from-charcoal-950/40 via-transparent to-charcoal-950/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(11,15,25,0.15)_0%,rgba(11,15,25,0.85)_100%)] pointer-events-none" />
+        </div>
+
+        {/* Hero Content positioned cleanly above the background */}
+        <div className="relative z-10 flex flex-col items-center w-full">
+          {/* Glow ambient background element */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-sky-500/15 via-sky-400/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
+
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-sky-400/30 bg-sky-500/10 text-sky-300 text-xs font-semibold uppercase tracking-widest mb-6 backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+            The Premier Architectural Interior Collaboration Platform
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-slate-100 max-w-4xl tracking-tight leading-[1.1] mb-6 drop-shadow-md">
+            Design Your Space.{' '}
+            <span className="sky-gradient-text block mt-1">Manage Every Detail.</span>
+          </h1>
+
+          <p className="text-sm sm:text-lg text-slate-300/90 max-w-2xl mx-auto leading-relaxed mb-10">
+            Connect discerning clients, visionary interior designers, and master contractors
+            on a unified platform. Streamline proposals, revisions, budgets, materials, and execution.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => navigate('/register')}
+              icon={ArrowRight}
+            >
+              Start Your Project
+            </Button>
+            <Button
+              variant="glass"
+              size="lg"
+              onClick={() => {
+                const el = document.getElementById('how-it-works');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Explore Platform
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => navigate('/login')}
+            >
+              Quick Sign In
+            </Button>
+          </div>
+
+          {/* Hero Graphic Showcase */}
+          <div className="mt-16 w-full max-w-5xl rounded-2xl glass-panel p-2.5 sm:p-4 border-sky-400/25 shadow-2xl relative">
+            <img
+              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80"
+              alt="Luxury Interior Design Architecture"
+              className="w-full h-72 sm:h-[480px] object-cover rounded-xl"
+            />
+            <div className="absolute bottom-6 left-6 right-6 sm:left-10 sm:right-10 glass-dropdown p-4 sm:p-6 rounded-xl border-sky-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex flex-col text-left">
+                <span className="text-xs text-sky-400 font-semibold uppercase tracking-wider">
+                  Live Project Showcase
+                </span>
+                <h3 className="text-base sm:text-xl font-serif font-bold text-slate-100">
+                  Tribeca High-Ceiling Loft Renovation
+                </h3>
+                <p className="text-xs text-slate-400 hidden sm:block">
+                  Client: Eleanor Vance • Designer: Aurelia Dupont • Contractor: Harrison Sterling
+                </p>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <Badge variant="sky">IN PROGRESS (45%)</Badge>
+                <Badge variant="emerald">$125,000 Budget</Badge>
+              </div>
             </div>
           </div>
         </div>
