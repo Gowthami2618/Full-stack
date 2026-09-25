@@ -22,6 +22,7 @@ import {
   CartesianGrid,
 } from 'recharts';
 import { analyticsAPI, usersAPI } from '../../services/api';
+import { useTheme } from '../../context/ThemeContext';
 import StatCard from '../../components/common/StatCard';
 import GlassCard from '../../components/common/GlassCard';
 import Button from '../../components/common/Button';
@@ -33,6 +34,7 @@ import { useToast } from '../../context/ToastContext';
 export const AdminDashboard = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { isDark } = useTheme();
 
   const [analytics, setAnalytics] = useState(null);
   const [unverifiedUsers, setUnverifiedUsers] = useState([]);
@@ -78,23 +80,32 @@ export const AdminDashboard = () => {
 
   const PIE_COLORS = ['#38BDF8', '#0284C7', '#64748B', '#10B981'];
 
+  const tooltipStyle = {
+    backgroundColor: isDark ? '#0F1F33' : '#FFFFFF',
+    borderColor: 'rgba(56,189,248,0.3)',
+    borderRadius: '12px',
+    color: isDark ? '#F8FAFC' : '#0F172A',
+    fontSize: '12px',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+  };
+
   return (
     <div className="flex flex-col gap-8">
       {/* Header Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-2xl border-sky-400/20 relative overflow-hidden">
         <div className="flex flex-col gap-1 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-sky-400 uppercase tracking-widest">
+            <span className="text-xs font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-widest">
               Platform Command Center
             </span>
             <Badge variant="sky" size="sm">
               Administrator
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
             Platform Intelligence & Governance
           </h1>
-          <p className="text-xs text-slate-400 max-w-xl mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl mt-1">
             Global view of user registrations, professional certifications, system throughput, and architectural fit-out budgets.
           </p>
         </div>
@@ -158,10 +169,10 @@ export const AdminDashboard = () => {
         {/* Users by Role Distribution */}
         <GlassCard className="flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-serif font-bold text-slate-100">
+            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
               Users Ecosystem by Role
             </h3>
-            <span className="text-xs text-slate-400">Platform Demographics</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Platform Demographics</span>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -184,15 +195,7 @@ export const AdminDashboard = () => {
                     />
                   ))}
                 </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#111827',
-                    border: '1px solid rgba(56,189,248,0.2)',
-                    borderRadius: '8px',
-                    color: '#F8FCFF',
-                    fontSize: '12px',
-                  }}
-                />
+                <Tooltip contentStyle={tooltipStyle} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -201,31 +204,23 @@ export const AdminDashboard = () => {
         {/* Projects Status Distribution */}
         <GlassCard className="flex flex-col justify-between">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-serif font-bold text-slate-100">
+            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
               Projects by Lifecycle Status
             </h3>
-            <span className="text-xs text-slate-400">Workflow Volume</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Workflow Volume</span>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={charts.projectsByStatus || []}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'} />
                 <XAxis
                   dataKey="status"
-                  stroke="#64748B"
+                  stroke={isDark ? '#94A3B8' : '#64748B'}
                   fontSize={10}
                   tickFormatter={(val) => val.substring(0, 8)}
                 />
-                <YAxis stroke="#64748B" fontSize={10} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#111827',
-                    border: '1px solid rgba(56,189,248,0.2)',
-                    borderRadius: '8px',
-                    color: '#F8FCFF',
-                    fontSize: '12px',
-                  }}
-                />
+                <YAxis stroke={isDark ? '#94A3B8' : '#64748B'} fontSize={10} />
+                <Tooltip contentStyle={tooltipStyle} />
                 <Bar dataKey="count" fill="#38BDF8" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -237,8 +232,8 @@ export const AdminDashboard = () => {
       <GlassCard>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Award className="w-5 h-5 text-sky-400" />
-            <h3 className="text-base font-serif font-bold text-slate-100">
+            <Award className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
               Pending Professional Verifications ({unverifiedUsers.length})
             </h3>
           </div>
@@ -253,11 +248,11 @@ export const AdminDashboard = () => {
         </div>
 
         {unverifiedUsers.length === 0 ? (
-          <div className="p-6 text-center text-xs text-emerald-400 bg-emerald-950/20 border border-emerald-500/20 rounded-xl">
+          <div className="p-6 text-center text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-500/20 rounded-xl font-medium">
             ✓ All registered designers and contractors have been verified.
           </div>
         ) : (
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-slate-200/50 dark:divide-white/5">
             {unverifiedUsers.map((u) => (
               <div
                 key={u._id}
@@ -266,8 +261,8 @@ export const AdminDashboard = () => {
                 <div className="flex items-center gap-3">
                   <Avatar src={u.profileImage} name={u.name} size="sm" />
                   <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-slate-100">{u.name}</span>
-                    <span className="text-[11px] text-slate-400">{u.email}</span>
+                    <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">{u.name}</span>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">{u.email}</span>
                   </div>
                   <Badge variant={u.role === 'DESIGNER' ? 'sky' : 'default'} size="sm">
                     {u.role}

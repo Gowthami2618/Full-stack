@@ -63,19 +63,19 @@ export const LoginPage = () => {
       <div className="w-full max-w-md">
         <GlassCard className="border-sky-400/25 p-8 shadow-2xl">
           <div className="text-center mb-8">
-            <div className="inline-flex p-3 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-400/20 mb-3">
+            <div className="inline-flex p-3 rounded-2xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20 mb-3">
               <Sparkles className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
               Welcome Back
             </h2>
-            <p className="text-xs text-slate-400 mt-1.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
               Sign in to your interior design workspace
             </p>
           </div>
 
           {error && (
-            <div className="mb-6 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs leading-relaxed">
+            <div className="mb-6 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
               {error}
             </div>
           )}
@@ -115,7 +115,7 @@ export const LoginPage = () => {
 
           {/* Quick Demo Logins Section */}
           <div className="mt-8 pt-6 border-t border-sky-400/15">
-            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-sky-400 uppercase tracking-wider mb-3">
+            <div className="flex items-center gap-1.5 text-[11px] font-semibold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-3">
               <UserCheck className="w-3.5 h-3.5" />
               <span>Instant Demo Exploration</span>
             </div>
@@ -123,37 +123,37 @@ export const LoginPage = () => {
               <button
                 type="button"
                 onClick={() => handleQuickLogin('admin@designspace.com')}
-                className="text-[11px] p-2 rounded-lg bg-charcoal-800 hover:bg-charcoal-700 hover:border-sky-400/30 text-slate-200 border border-white/5 transition-colors text-left font-medium"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
               >
                 👑 Admin Portal
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('client@designspace.com')}
-                className="text-[11px] p-2 rounded-lg bg-charcoal-800 hover:bg-charcoal-700 hover:border-sky-400/30 text-slate-200 border border-white/5 transition-colors text-left font-medium"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
               >
                 👤 Client Portal
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('designer@designspace.com')}
-                className="text-[11px] p-2 rounded-lg bg-charcoal-800 hover:bg-charcoal-700 hover:border-sky-400/30 text-slate-200 border border-white/5 transition-colors text-left font-medium"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
               >
                 🎨 Designer Studio
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickLogin('contractor@designspace.com')}
-                className="text-[11px] p-2 rounded-lg bg-charcoal-800 hover:bg-charcoal-700 hover:border-sky-400/30 text-slate-200 border border-white/5 transition-colors text-left font-medium"
+                className="text-[11px] p-2.5 rounded-xl bg-slate-100 dark:bg-charcoal-800 hover:bg-sky-500/10 dark:hover:bg-charcoal-700 hover:border-sky-400/40 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-white/5 transition-all text-left font-semibold"
               >
                 🔨 Contractor Desk
               </button>
             </div>
           </div>
 
-          <div className="mt-6 text-center text-xs text-slate-400">
+          <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
             Don't have an account yet?{' '}
-            <Link to="/register" className="text-sky-400 hover:underline font-semibold">
+            <Link to="/register" className="text-sky-600 dark:text-sky-400 hover:underline font-semibold">
               Create an account
             </Link>
           </div>

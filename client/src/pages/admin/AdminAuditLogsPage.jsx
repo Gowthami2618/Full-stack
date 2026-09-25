@@ -69,7 +69,7 @@ export const AdminAuditLogsPage = () => {
       header: 'Timestamp',
       accessor: 'timestamp',
       render: (row) => (
-        <span className="text-xs text-beige-400">
+        <span className="text-xs text-slate-500 dark:text-slate-400">
           {new Date(row.timestamp).toLocaleString()}
         </span>
       ),
@@ -78,7 +78,7 @@ export const AdminAuditLogsPage = () => {
       header: 'Action',
       accessor: 'action',
       render: (row) => (
-        <span className="font-semibold text-sky-300 text-xs">{row.action}</span>
+        <span className="font-semibold text-sky-600 dark:text-sky-300 text-xs">{row.action}</span>
       ),
     },
     {
@@ -95,25 +95,25 @@ export const AdminAuditLogsPage = () => {
       accessor: 'user',
       render: (row) => (
         <div className="flex flex-col text-xs">
-          <span className="font-semibold text-beige-100">{row.user?.name || 'System / Guest'}</span>
-          <span className="text-[11px] text-beige-400">{row.user?.role || 'SYSTEM'}</span>
+          <span className="font-semibold text-slate-900 dark:text-slate-100">{row.user?.name || 'System / Guest'}</span>
+          <span className="text-[11px] text-slate-500 dark:text-slate-400">{row.user?.role || 'SYSTEM'}</span>
         </div>
       ),
     },
     {
       header: 'Description',
       accessor: 'description',
-      render: (row) => <span className="text-xs text-beige-300">{row.description}</span>,
+      render: (row) => <span className="text-xs text-slate-600 dark:text-slate-300">{row.description}</span>,
     },
   ];
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-beige-100">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
           Platform Audit & Security Logs
         </h1>
-        <p className="text-xs text-beige-400 mt-1">
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
           Immutable event trails of user authentications, financial entries, and project status modifications.
         </p>
       </div>

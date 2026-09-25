@@ -131,17 +131,17 @@ export const ClientDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-2xl border-sky-400/20 relative overflow-hidden">
         <div className="flex flex-col gap-1 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-sky-400 uppercase tracking-widest">
+            <span className="text-xs font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
               House Owner Portal
             </span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold border border-emerald-400/30">
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-semibold border border-emerald-400/30">
               Live House Workspace
             </span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-100">
+          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
             Welcome Home, {user?.name}
           </h1>
-          <p className="text-xs text-slate-300 max-w-xl mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mt-1">
             Track your dream home renovation room-by-room, review designer spatial blueprints, and manage contractor fit-out budgets.
           </p>
         </div>
@@ -167,13 +167,13 @@ export const ClientDashboard = () => {
                 <Home className="w-8 h-8" />
               </div>
               <div>
-                <span className="text-[11px] font-semibold text-sky-400 uppercase tracking-widest">
+                <span className="text-[11px] font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
                   Featured Property
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
                   {primaryHouse.title}
                 </h2>
-                <span className="text-xs text-slate-300 mt-0.5 block">
+                <span className="text-xs text-slate-600 dark:text-slate-300 mt-0.5 block">
                   {primaryHouse.propertyType || 'Villa'} • {primaryHouse.propertyDetails?.totalArea?.toLocaleString() || '2,400'} sq.ft • {primaryHouse.propertyDetails?.floors || 2} Floors • {primaryHouse.location}
                 </span>
               </div>
@@ -196,39 +196,39 @@ export const ClientDashboard = () => {
             {/* Overall Progress */}
             <div className="flex flex-col gap-1 p-4 rounded-xl glass-panel border border-sky-400/20 col-span-2 sm:col-span-1 lg:col-span-2">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Overall Progress</span>
-                <span className="text-sm font-bold text-sky-400">{overallProgress}%</span>
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">Overall Progress</span>
+                <span className="text-sm font-bold text-sky-500 dark:text-sky-400">{overallProgress}%</span>
               </div>
               <ProgressBar progress={overallProgress} size="md" variant="sky" className="mt-2" />
-              <span className="text-[10px] text-slate-400 mt-1">On schedule with interior milestones</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1">On schedule with interior milestones</span>
             </div>
 
             {/* Total Budget */}
             <div className="flex flex-col p-4 rounded-xl glass-panel border border-sky-400/20">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Budget</span>
-              <span className="text-lg font-bold text-slate-100 mt-1">${totalBudget.toLocaleString()}</span>
-              <span className="text-[10px] text-sky-400">100% Allocated</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Budget</span>
+              <span className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1">${totalBudget.toLocaleString()}</span>
+              <span className="text-[10px] text-sky-500 dark:text-sky-400">100% Allocated</span>
             </div>
 
             {/* Spent */}
             <div className="flex flex-col p-4 rounded-xl glass-panel border border-sky-400/20">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Incurred Spent</span>
-              <span className="text-lg font-bold text-emerald-400 mt-1">${spentAmount.toLocaleString()}</span>
-              <span className="text-[10px] text-emerald-300">Verified Receipts</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Incurred Spent</span>
+              <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">${spentAmount.toLocaleString()}</span>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-300">Verified Receipts</span>
             </div>
 
             {/* Remaining */}
             <div className="flex flex-col p-4 rounded-xl glass-panel border border-sky-400/20">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Remaining</span>
-              <span className="text-lg font-bold text-sky-300 mt-1">${remainingBudget.toLocaleString()}</span>
-              <span className="text-[10px] text-slate-400">Reserve Funds</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Remaining</span>
+              <span className="text-lg font-bold text-sky-600 dark:text-sky-300 mt-1">${remainingBudget.toLocaleString()}</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Reserve Funds</span>
             </div>
 
             {/* Rooms Stats */}
             <div className="flex flex-col p-4 rounded-xl glass-panel border border-sky-400/20">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">House Spaces</span>
-              <span className="text-lg font-bold text-slate-100 mt-1">{rooms.length || 8} Rooms</span>
-              <span className="text-[10px] text-slate-300">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">House Spaces</span>
+              <span className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-1">{rooms.length || 8} Rooms</span>
+              <span className="text-[10px] text-slate-600 dark:text-slate-300">
                 {completedRooms} Done • {inProgressRooms} Active • {pendingRooms} Next
               </span>
             </div>
@@ -240,14 +240,14 @@ export const ClientDashboard = () => {
       {pendingRoomReviews.length > 0 && (
         <div className="p-5 rounded-2xl bg-amber-500/10 border border-amber-400/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-400">
+            <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-500 dark:text-amber-400">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-sm font-serif font-bold text-slate-100">
+              <h4 className="text-sm font-serif font-bold text-slate-900 dark:text-slate-100">
                 Action Required: {pendingRoomReviews.length} Room Designs Awaiting Your Review
               </h4>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-600 dark:text-slate-300">
                 Your interior architect has submitted new palettes, 3D concepts, and material specifications for your sign-off.
               </p>
             </div>
@@ -275,14 +275,14 @@ export const ClientDashboard = () => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-serif font-bold text-slate-100">
+            <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100">
               House Spaces & Interior Execution
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Independent spatial planning, color palettes, custom furniture, and site execution progress
             </p>
           </div>
-          <span className="text-xs font-semibold text-sky-400">
+          <span className="text-xs font-semibold text-sky-500 dark:text-sky-400">
             {rooms.length} Active Spaces
           </span>
         </div>
@@ -296,10 +296,10 @@ export const ClientDashboard = () => {
               <div>
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex flex-col">
-                    <span className="text-xs font-serif font-bold text-slate-100 group-hover:text-sky-300 transition-colors">
+                    <span className="text-xs font-serif font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
                       {room.name}
                     </span>
-                    <span className="text-[10px] text-slate-400">{room.dimensions || `${room.area || 180} sq.ft`}</span>
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400">{room.dimensions || `${room.area || 180} sq.ft`}</span>
                   </div>
                   <StatusBadge status={room.designStatus || 'Draft'} />
                 </div>
@@ -307,33 +307,33 @@ export const ClientDashboard = () => {
                 {/* Progress bar */}
                 <div className="flex flex-col gap-1 mb-3">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="text-slate-400">Site Build</span>
-                    <span className="font-bold text-sky-400">{room.progress || 0}%</span>
+                    <span className="text-slate-500 dark:text-slate-400">Site Build</span>
+                    <span className="font-bold text-sky-500 dark:text-sky-400">{room.progress || 0}%</span>
                   </div>
                   <ProgressBar progress={room.progress || 0} size="sm" variant={room.progress === 100 ? 'emerald' : 'sky'} />
                 </div>
 
                 {/* Details snapshot */}
-                <div className="grid grid-cols-2 gap-2 text-[11px] p-2.5 rounded-lg bg-charcoal-900/40 border border-sky-400/10 mb-3">
+                <div className="grid grid-cols-2 gap-2 text-[11px] p-2.5 rounded-lg bg-sky-50/70 dark:bg-charcoal-900/40 border border-sky-400/10 mb-3">
                   <div>
-                    <span className="text-slate-400 block text-[9px] uppercase">Budget</span>
-                    <span className="font-semibold text-slate-200">${(room.budget || 0).toLocaleString()}</span>
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px] uppercase">Budget</span>
+                    <span className="font-semibold text-slate-800 dark:text-slate-200">${(room.budget || 0).toLocaleString()}</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[9px] uppercase">Style</span>
-                    <span className="font-semibold text-sky-300 truncate block">{room.style || 'Modern'}</span>
+                    <span className="text-slate-500 dark:text-slate-400 block text-[9px] uppercase">Style</span>
+                    <span className="font-semibold text-sky-600 dark:text-sky-300 truncate block">{room.style || 'Modern'}</span>
                   </div>
                 </div>
 
                 {/* Color Swatch Dots */}
                 {room.colorPalette && (
                   <div className="flex items-center gap-1.5 mb-3">
-                    <span className="text-[9px] text-slate-400 uppercase">Colors:</span>
+                    <span className="text-[9px] text-slate-500 dark:text-slate-400 uppercase">Colors:</span>
                     {[room.colorPalette.primary, room.colorPalette.secondary, room.colorPalette.accent, room.colorPalette.flooring].map(
                       (c, idx) => (
                         <div
                           key={idx}
-                          className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-xs"
+                          className="w-3.5 h-3.5 rounded-full border border-black/10 dark:border-white/20 shadow-xs"
                           style={{ backgroundColor: c }}
                         />
                       )
@@ -364,11 +364,11 @@ export const ClientDashboard = () => {
       {/* BEFORE & AFTER SHOWCASE SLIDER */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-serif font-bold text-slate-100 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-sky-400" />
+          <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-sky-500 dark:text-sky-400" />
             Before & After Transformation Gallery
           </h3>
-          <span className="text-xs text-slate-400">Slide to compare raw space with architectural design</span>
+          <span className="text-xs text-slate-600 dark:text-slate-400">Slide to compare raw space with architectural design</span>
         </div>
 
         <BeforeAfterSlider

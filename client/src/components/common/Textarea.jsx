@@ -21,10 +21,10 @@ export const Textarea = forwardRef(
         {label && (
           <label
             htmlFor={textareaId}
-            className="text-xs font-medium text-beige-300 flex items-center gap-1"
+            className="text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1"
           >
             {label}
-            {required && <span className="text-rose-400">*</span>}
+            {required && <span className="text-rose-500">*</span>}
           </label>
         )}
         <textarea
@@ -32,16 +32,16 @@ export const Textarea = forwardRef(
           ref={ref}
           rows={rows}
           required={required}
-          className={`w-full glass-input rounded-xl px-3.5 py-2.5 text-sm transition-all duration-200 placeholder:text-beige-400/40 resize-y min-h-[80px] ${
+          className={`w-full glass-input rounded-xl px-3.5 py-2.5 text-sm transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 resize-y min-h-[80px] ${
             error
-              ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/20'
-              : 'border-white/10 hover:border-white/20'
+              ? 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/20'
+              : 'border-sky-400/25 hover:border-sky-400/40'
           } ${className}`}
           {...props}
         />
-        {error && <span className="text-xs text-rose-400 mt-0.5">{error}</span>}
+        {error && <span className="text-xs text-rose-500 dark:text-rose-400 mt-0.5">{error}</span>}
         {helperText && !error && (
-          <span className="text-xs text-beige-400/60 mt-0.5">{helperText}</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{helperText}</span>
         )}
       </div>
     );

@@ -62,19 +62,19 @@ export const RegisterPage = () => {
       <div className="w-full max-w-lg">
         <GlassCard className="border-sky-400/25 p-8 shadow-2xl">
           <div className="text-center mb-6">
-            <div className="inline-flex p-3 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-400/20 mb-3">
+            <div className="inline-flex p-3 rounded-2xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20 mb-3">
               <Sparkles className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
               Create Your Account
             </h2>
-            <p className="text-xs text-slate-400 mt-1.5">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
               Select your role to start collaborating on luxury interior spaces
             </p>
           </div>
 
           {error && (
-            <div className="mb-6 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs leading-relaxed">
+            <div className="mb-6 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-500/30 text-rose-600 dark:text-rose-300 text-xs leading-relaxed">
               {error}
             </div>
           )}
@@ -82,7 +82,7 @@ export const RegisterPage = () => {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Role Selection Tabs */}
             <div className="flex flex-col gap-1.5 mb-1">
-              <label className="text-xs font-medium text-slate-300">
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
                 I am registering as a:
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -97,8 +97,8 @@ export const RegisterPage = () => {
                     onClick={() => handleRoleSelect(item.role)}
                     className={`py-2.5 px-2 rounded-xl text-xs font-semibold border transition-all text-center ${
                       formData.role === item.role
-                        ? 'border-sky-400 bg-sky-500/15 text-sky-300 shadow-glass-subtle'
-                        : 'border-white/10 bg-charcoal-900/60 text-slate-400 hover:text-slate-200 hover:border-sky-400/30'
+                        ? 'border-sky-500 bg-sky-500/15 text-sky-700 dark:text-sky-300 shadow-glass-subtle'
+                        : 'border-slate-200 dark:border-white/10 bg-slate-100/80 dark:bg-charcoal-900/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-sky-400/40'
                     }`}
                   >
                     {item.label}
@@ -176,9 +176,9 @@ export const RegisterPage = () => {
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-xs text-slate-400">
+          <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-sky-400 hover:underline font-semibold">
+            <Link to="/login" className="text-sky-600 dark:text-sky-400 hover:underline font-semibold">
               Sign in instead
             </Link>
           </div>

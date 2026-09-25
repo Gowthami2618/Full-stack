@@ -105,8 +105,8 @@ export const ProjectsListPage = () => {
       accessor: 'title',
       render: (row) => (
         <div className="flex flex-col">
-          <span className="font-semibold text-slate-100">{row.title}</span>
-          <span className="text-xs text-slate-400">
+          <span className="font-semibold text-slate-900 dark:text-slate-100">{row.title}</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">
             {row.projectType} • {row.propertyType}
           </span>
         </div>
@@ -153,10 +153,10 @@ export const ProjectsListPage = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
             Interior Projects Directory
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
             Browse and manage all interior architecture, design proposals, and site fit-outs.
           </p>
         </div>
@@ -191,23 +191,25 @@ export const ProjectsListPage = () => {
             }}
           />
 
-          <div className="hidden sm:flex items-center p-1 rounded-xl bg-charcoal-900 border border-sky-400/20 shrink-0">
+          <div className="hidden sm:flex items-center p-1 rounded-xl bg-slate-100 dark:bg-charcoal-900 border border-sky-400/20 shrink-0">
             <button
+              type="button"
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-lg text-xs transition-colors ${
                 viewMode === 'grid'
-                  ? 'bg-sky-500/20 text-sky-300 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 font-semibold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-lg text-xs transition-colors ${
                 viewMode === 'table'
-                  ? 'bg-sky-500/20 text-sky-300 font-semibold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 font-semibold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               <List className="w-4 h-4" />
@@ -236,7 +238,7 @@ export const ProjectsListPage = () => {
               onClick={() => navigate(`/projects/${project._id}`)}
               className="flex flex-col justify-between p-0 overflow-hidden border-sky-400/20"
             >
-              <div className="relative h-44 w-full bg-charcoal-800">
+              <div className="relative h-44 w-full bg-slate-200 dark:bg-charcoal-800">
                 <img
                   src={
                     project.images?.[0] ||
@@ -248,7 +250,7 @@ export const ProjectsListPage = () => {
                 <div className="absolute top-3 right-3">
                   <StatusBadge status={project.status} />
                 </div>
-                <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-charcoal-950/85 backdrop-blur-md text-[11px] font-medium text-slate-200 border border-sky-400/20 flex items-center gap-1.5">
+                <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-md bg-slate-900/85 backdrop-blur-md text-[11px] font-medium text-slate-100 border border-sky-400/20 flex items-center gap-1.5">
                   <MapPin className="w-3 h-3 text-sky-400" />
                   <span className="truncate max-w-[160px]">{project.location}</span>
                 </div>
@@ -256,28 +258,28 @@ export const ProjectsListPage = () => {
 
               <div className="p-5 flex flex-col gap-4 flex-1 justify-between">
                 <div>
-                  <div className="flex items-center justify-between text-xs text-sky-400 font-medium mb-1">
+                  <div className="flex items-center justify-between text-xs text-sky-600 dark:text-sky-400 font-medium mb-1">
                     <span>{project.projectType}</span>
                     <span>{project.propertyType}</span>
                   </div>
-                  <h3 className="text-base font-serif font-bold text-slate-100 line-clamp-1">
+                  <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100 line-clamp-1">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-slate-400 line-clamp-2 mt-1">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mt-1">
                     {project.description}
                   </p>
                 </div>
 
                 <ProgressBar progress={project.progress || 0} />
 
-                <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+                <div className="pt-3 border-t border-sky-400/10 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                   <div>
                     Budget:{' '}
-                    <span className="font-semibold text-slate-100">
+                    <span className="font-semibold text-slate-900 dark:text-slate-100">
                       ${project.totalBudget?.toLocaleString()}
                     </span>
                   </div>
-                  <span className="text-sky-400 font-medium flex items-center gap-1">
+                  <span className="text-sky-600 dark:text-sky-400 font-medium flex items-center gap-1">
                     Workspace <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>

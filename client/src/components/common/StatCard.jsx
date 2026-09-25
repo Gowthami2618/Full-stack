@@ -12,10 +12,10 @@ export const StatCard = ({
   onClick,
 }) => {
   const iconVariants = {
-    sky: 'bg-sky-500/15 text-sky-400 border-sky-400/30',
-    rose: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    indigo: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30',
+    sky: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-400/30',
+    rose: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
+    emerald: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+    indigo: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30',
   };
 
   return (
@@ -26,10 +26,10 @@ export const StatCard = ({
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             {title}
           </span>
-          <span className="text-2xl sm:text-3xl font-serif font-bold text-slate-100 tracking-tight mt-1">
+          <span className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100 tracking-tight mt-1">
             {value}
           </span>
         </div>
@@ -41,17 +41,17 @@ export const StatCard = ({
       </div>
 
       {(subtitle || trend) && (
-        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-white/5 text-xs">
+        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-slate-200/50 dark:border-white/5 text-xs">
           {trend && (
             <span
               className={`font-semibold ${
-                trendPositive ? 'text-emerald-400' : 'text-rose-400'
+                trendPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
               }`}
             >
               {trend}
             </span>
           )}
-          {subtitle && <span className="text-slate-400/80">{subtitle}</span>}
+          {subtitle && <span className="text-slate-500 dark:text-slate-400/80">{subtitle}</span>}
         </div>
       )}
     </GlassCard>

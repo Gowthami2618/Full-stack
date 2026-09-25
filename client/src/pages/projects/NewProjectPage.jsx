@@ -289,14 +289,14 @@ export const NewProjectPage = () => {
         {/* Step Indicator Header */}
         <div className="flex items-center justify-between mb-8 pb-6 border-b border-sky-400/20">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-sky-500/10 text-sky-400 border border-sky-400/20">
+            <div className="p-3 rounded-2xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20">
               <FolderPlus className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-100">
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
                 Create Complete House Project
               </h1>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 Define property blueprint, initial site photos, financial allocations, and individual spaces
               </p>
             </div>
@@ -316,10 +316,10 @@ export const NewProjectPage = () => {
                 onClick={() => setCurrentStep(s.num)}
                 className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all ${
                   isActive
-                    ? 'border-sky-400 bg-sky-500/20 text-sky-300 font-bold shadow-glass-glow'
+                    ? 'border-sky-400 bg-sky-500/20 text-sky-600 dark:text-sky-300 font-bold shadow-glass-glow'
                     : isCompleted
-                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'
-                    : 'border-sky-400/10 glass-panel text-slate-400'
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : 'border-sky-400/10 glass-panel text-slate-500 dark:text-slate-400'
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
@@ -536,17 +536,17 @@ export const NewProjectPage = () => {
         {/* STEP 3: BUDGET ALLOCATION */}
         {currentStep === 3 && (
           <div className="flex flex-col gap-6">
-            <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
               <DollarSign className="w-4 h-4" /> 3. Total Project Budget & Category Allocations
             </h3>
 
             {/* Total Budget Input */}
             <div className="p-6 rounded-2xl glass-panel border border-sky-400/30 bg-sky-500/10 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <span className="text-xs font-semibold text-sky-300 uppercase tracking-widest">
+                <span className="text-xs font-semibold text-sky-600 dark:text-sky-300 uppercase tracking-widest">
                   Total House Fit-out Budget
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-100 mt-1">
+                <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100 mt-1">
                   ${totalBudget.toLocaleString()}
                 </h2>
               </div>
@@ -575,7 +575,7 @@ export const NewProjectPage = () => {
                 { key: 'contingency', label: 'Contingency Reserve' },
               ].map((item) => (
                 <div key={item.key} className="p-3.5 rounded-xl glass-panel border border-sky-400/20 flex flex-col gap-1.5">
-                  <span className="text-[11px] font-medium text-slate-300 truncate">{item.label}</span>
+                  <span className="text-[11px] font-medium text-slate-700 dark:text-slate-300 truncate">{item.label}</span>
                   <input
                     type="number"
                     value={budgetAllocation[item.key] || 0}
@@ -585,9 +585,9 @@ export const NewProjectPage = () => {
                         [item.key]: Number(e.target.value),
                       })
                     }
-                    className="w-full text-xs bg-charcoal-900 border border-sky-400/30 rounded px-2 py-1 text-slate-100 font-semibold"
+                    className="w-full text-xs glass-input border border-sky-400/30 rounded px-2 py-1 text-slate-900 dark:text-slate-100 font-semibold"
                   />
-                  <span className="text-[10px] text-sky-400">
+                  <span className="text-[10px] text-sky-500 dark:text-sky-400">
                     {totalBudget > 0
                       ? `${Math.round(((budgetAllocation[item.key] || 0) / totalBudget) * 100)}% of total`
                       : '0%'}
@@ -603,10 +603,10 @@ export const NewProjectPage = () => {
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-wider flex items-center gap-2">
                   <Grid className="w-4 h-4" /> 4. House Spaces & Room Breakdown
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                   Select all rooms and architectural zones present in your property. Each will be independently planned and executed.
                 </p>
               </div>
@@ -654,16 +654,16 @@ export const NewProjectPage = () => {
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-slate-100">{room.name}</span>
+                      <span className="text-xs font-bold text-slate-900 dark:text-slate-100">{room.name}</span>
                       {isSelected ? (
-                        <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 shrink-0" />
                       ) : (
-                        <Plus className="w-4 h-4 text-slate-500 shrink-0" />
+                        <Plus className="w-4 h-4 text-slate-400 shrink-0" />
                       )}
                     </div>
-                    <div className="flex flex-col text-[10px] text-slate-300">
+                    <div className="flex flex-col text-[10px] text-slate-600 dark:text-slate-300">
                       <span>{room.dimensions}</span>
-                      <span className="text-sky-300 font-medium">
+                      <span className="text-sky-600 dark:text-sky-300 font-medium">
                         Est: ${(Math.round(totalBudget * room.budgetRatio)).toLocaleString()}
                       </span>
                     </div>
@@ -674,21 +674,21 @@ export const NewProjectPage = () => {
 
             {/* Selected Rooms List */}
             <div className="flex flex-col gap-2 pt-4 border-t border-sky-400/20">
-              <span className="text-xs font-semibold text-slate-200">
+              <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
                 Configured House Spaces ({selectedRooms.length} Spaces Active)
               </span>
               <div className="flex flex-wrap gap-2">
                 {selectedRooms.map((r, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-charcoal-900 border border-sky-400/30 text-xs text-slate-200"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl glass-panel border border-sky-400/30 text-xs text-slate-800 dark:text-slate-200"
                   >
-                    <Sparkles className="w-3 h-3 text-sky-400" />
+                    <Sparkles className="w-3 h-3 text-sky-500 dark:text-sky-400" />
                     {r.name} ({r.dimensions || 'Custom'})
                     <button
                       type="button"
                       onClick={() => setSelectedRooms(selectedRooms.filter((_, idx) => idx !== i))}
-                      className="text-slate-500 hover:text-rose-400 ml-1"
+                      className="text-slate-400 hover:text-rose-500 ml-1"
                     >
                       ×
                     </button>

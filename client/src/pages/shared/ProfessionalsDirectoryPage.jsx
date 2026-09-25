@@ -44,10 +44,10 @@ export const ProfessionalsDirectoryPage = () => {
     <div className="flex flex-col gap-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-beige-100">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-slate-100">
           Curated Professionals Network
         </h1>
-        <p className="text-xs text-beige-400 mt-1">
+        <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
           Explore certified interior design ateliers, architects, and master building contractors.
         </p>
       </div>
@@ -60,15 +60,16 @@ export const ProfessionalsDirectoryPage = () => {
           placeholder="Search by professional name or city..."
         />
 
-        <div className="flex items-center gap-2 p-1 rounded-xl bg-charcoal-900 border border-white/10 shrink-0">
+        <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-100 dark:bg-charcoal-900 border border-sky-400/20 shrink-0">
           {['ALL', 'DESIGNER', 'CONTRACTOR'].map((role) => (
             <button
               key={role}
+              type="button"
               onClick={() => setRoleFilter(role)}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
                 roleFilter === role
-                  ? 'sky-gradient-btn text-charcoal-950 font-bold shadow-sm'
-                  : 'text-beige-400 hover:text-beige-200'
+                  ? 'sky-gradient-btn text-white font-bold shadow-xs'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
               }`}
             >
               {role === 'ALL' ? 'All Network' : role === 'DESIGNER' ? 'Designers' : 'Contractors'}
@@ -81,25 +82,25 @@ export const ProfessionalsDirectoryPage = () => {
       {loading ? (
         <LoadingSpinner text="Searching professional network..." />
       ) : filtered.length === 0 ? (
-        <div className="p-12 text-center text-xs text-beige-400 glass-card">
+        <div className="p-12 text-center text-xs text-slate-500 dark:text-slate-400 glass-card">
           No professionals found matching the search criteria.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((pro) => (
-            <GlassCard key={pro._id} className="p-6 flex flex-col justify-between gap-4 border-white/10">
+            <GlassCard key={pro._id} className="p-6 flex flex-col justify-between gap-4 border-sky-400/20">
               <div>
                 <div className="flex items-start justify-between gap-3 mb-4">
                   <div className="flex items-center gap-3">
                     <Avatar src={pro.profileImage} name={pro.name} size="md" />
                     <div>
-                      <h3 className="text-sm font-semibold text-beige-100">{pro.name}</h3>
+                      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{pro.name}</h3>
                       <div className="flex items-center gap-1.5 mt-0.5">
                         <Badge variant={pro.role === 'DESIGNER' ? 'sky' : 'indigo'} size="sm">
                           {pro.role}
                         </Badge>
                         {pro.isVerified && (
-                          <span className="text-[10px] text-emerald-400 flex items-center gap-0.5">
+                          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 font-medium">
                             <Award className="w-3 h-3" /> Verified
                           </span>
                         )}
@@ -108,20 +109,20 @@ export const ProfessionalsDirectoryPage = () => {
                   </div>
                 </div>
 
-                <p className="text-xs text-beige-300 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
                   {pro.bio || 'Specialized interior design and fit-out professional with deep domain experience.'}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/5 flex flex-col gap-1.5 text-xs text-beige-400">
+              <div className="pt-3 border-t border-sky-400/10 flex flex-col gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                 {pro.location && (
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400 shrink-0" />
                     <span>{pro.location}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-2">
-                  <Mail className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                  <Mail className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400 shrink-0" />
                   <span className="truncate">{pro.email}</span>
                 </div>
               </div>

@@ -847,21 +847,21 @@ export const ProjectWorkspace = () => {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="text-xs font-semibold text-sky-400 uppercase tracking-widest">
+              <span className="text-xs font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
                 {project.projectType} • {project.propertyType}
               </span>
               <StatusBadge status={project.status} />
-              <span className="text-xs text-slate-400 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-sky-400" />
+              <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-sky-500 dark:text-sky-400" />
                 {project.location}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-100">
+            <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
               {project.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-xs text-slate-300 pt-1">
+            <div className="flex flex-wrap items-center gap-6 text-xs text-slate-600 dark:text-slate-300 pt-1">
               <div className="flex items-center gap-2">
                 <Avatar src={project.client?.profileImage} name={project.client?.name} size="sm" />
                 <span>Client: <strong>{project.client?.name}</strong></span>
@@ -878,14 +878,14 @@ export const ProjectWorkspace = () => {
           </div>
 
           {/* Quick Metrics & Actions Widget */}
-          <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-4 p-4 rounded-xl bg-charcoal-900/80 border border-sky-400/15 shrink-0">
+          <div className="flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-between gap-4 p-4 rounded-xl glass-panel border border-sky-400/20 shrink-0">
             <div className="flex flex-col lg:items-end">
-              <span className="text-[11px] text-slate-400 uppercase font-semibold">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold">
                 Committed Budget / Spent
               </span>
-              <div className="text-lg font-serif font-bold text-slate-100 mt-0.5">
-                <span className="text-sky-400">${(project.spentAmount || 0).toLocaleString()}</span>
-                <span className="text-slate-400 text-sm"> / ${(project.totalBudget || 0).toLocaleString()}</span>
+              <div className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100 mt-0.5">
+                <span className="text-sky-600 dark:text-sky-400">${(project.spentAmount || 0).toLocaleString()}</span>
+                <span className="text-slate-500 dark:text-slate-400 text-sm"> / ${(project.totalBudget || 0).toLocaleString()}</span>
               </div>
             </div>
 

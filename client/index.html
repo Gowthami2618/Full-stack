@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DesignSpace — Luxury Interior Design Planning & Collaboration Platform</title>
     <meta name="description" content="Collaborative interior design planning, proposals, budget & milestone tracking, material estimation, and project management for clients, designers, and contractors." />
+    <!-- Pre-render theme initialization to prevent flash -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('designspace_theme');
+          var theme = saved === 'light' || saved === 'dark' ? saved : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.classList.add(theme);
+          document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        } catch (e) {}
+      })();
+    </script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-charcoal-950 text-slate-100 min-h-screen antialiased selection:bg-sky-500/30 selection:text-sky-300">
+  <body class="min-h-screen antialiased selection:bg-sky-500/30 selection:text-sky-400">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

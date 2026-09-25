@@ -98,19 +98,19 @@ export const ContractorDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-2xl border-sky-400/20 relative overflow-hidden">
         <div className="flex flex-col gap-1 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-sky-400 uppercase tracking-widest">
+            <span className="text-xs font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
               Contractor Site Execution Desk
             </span>
             {user?.isVerified && (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-semibold border border-amber-400/30">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-300 font-semibold border border-amber-400/30">
                 Master Builder & Fit-out Contractor
               </span>
             )}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-100">
+          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
             {user?.name}
           </h1>
-          <p className="text-xs text-slate-300 max-w-xl mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mt-1">
             Coordinate on-site fit-out execution, track material deliveries, log progress photos room-by-room, and report completion milestones.
           </p>
         </div>
@@ -170,10 +170,10 @@ export const ContractorDashboard = () => {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-serif font-bold text-slate-100">
+            <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100">
               Active Build Sites & Room Execution
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Update room build completion percentages, log daily site photos, and manage material deliveries
             </p>
           </div>
@@ -197,14 +197,14 @@ export const ContractorDashboard = () => {
                   {/* Site Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-sky-400/15">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-400/20">
+                      <div className="p-2.5 rounded-xl bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-400/20">
                         <Hammer className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-serif font-bold text-slate-100">
+                        <h4 className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100">
                           {project.title}
                         </h4>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-500 dark:text-slate-400">
                           {project.location} • {project.propertyDetails?.totalArea?.toLocaleString() || '2,400'} sq.ft • {project.propertyDetails?.floors || 2} Floors
                         </span>
                       </div>
@@ -212,8 +212,8 @@ export const ContractorDashboard = () => {
 
                     <div className="flex items-center gap-4">
                       <div className="flex flex-col items-end">
-                        <span className="text-[10px] text-slate-400 uppercase font-semibold">Overall Site Progress</span>
-                        <span className="text-base font-bold text-sky-400">{projectProgress}%</span>
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase font-semibold">Overall Site Progress</span>
+                        <span className="text-base font-bold text-sky-500 dark:text-sky-400">{projectProgress}%</span>
                       </div>
                       <Button
                         variant="glass"
@@ -236,16 +236,16 @@ export const ContractorDashboard = () => {
                         >
                           <div>
                             <div className="flex items-start justify-between gap-2 mb-2">
-                              <span className="text-xs font-bold text-slate-100 group-hover:text-amber-300">
+                              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-amber-500 dark:group-hover:text-amber-300">
                                 {room.name}
                               </span>
                               <span
                                 className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border ${
                                   room.executionStatus === 'Completed'
-                                    ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30'
+                                    ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 border-emerald-400/30'
                                     : room.executionStatus === 'In Progress'
-                                    ? 'bg-sky-500/20 text-sky-300 border-sky-400/30'
-                                    : 'bg-charcoal-800 text-slate-400 border-slate-700'
+                                    ? 'bg-sky-500/20 text-sky-600 dark:text-sky-300 border-sky-400/30'
+                                    : 'bg-slate-200 dark:bg-charcoal-800 text-slate-700 dark:text-slate-400 border-slate-300 dark:border-slate-700'
                                 }`}
                               >
                                 {room.executionStatus || 'Pending'}
@@ -255,13 +255,13 @@ export const ContractorDashboard = () => {
                             {/* Progress bar */}
                             <div className="flex flex-col gap-1 mb-3">
                               <div className="flex items-center justify-between text-[10px]">
-                                <span className="text-slate-400">Construction</span>
-                                <span className="font-bold text-amber-400">{roomProgress}%</span>
+                                <span className="text-slate-500 dark:text-slate-400">Construction</span>
+                                <span className="font-bold text-amber-500 dark:text-amber-400">{roomProgress}%</span>
                               </div>
                               <ProgressBar progress={roomProgress} size="sm" variant={roomProgress === 100 ? 'emerald' : 'amber'} />
                             </div>
 
-                            <div className="text-[10px] text-slate-400 flex items-center justify-between mb-3">
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400 flex items-center justify-between mb-3">
                               <span>{room.materials?.length || 0} Materials Scheduled</span>
                               <span>{room.sitePhotos?.length || 0} Site Photos</span>
                             </div>
@@ -294,16 +294,16 @@ export const ContractorDashboard = () => {
       <GlassCard className="p-6 border-sky-400/20">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-sky-400/15">
           <div className="flex items-center gap-2">
-            <ListTodo className="w-5 h-5 text-sky-400" />
-            <h3 className="text-base font-serif font-bold text-slate-100">
+            <ListTodo className="w-5 h-5 text-sky-500 dark:text-sky-400" />
+            <h3 className="text-base font-serif font-bold text-slate-900 dark:text-slate-100">
               Assigned Site Execution Tasks ({tasks.length})
             </h3>
           </div>
-          <span className="text-xs text-slate-400">Quick status updates</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">Quick status updates</span>
         </div>
 
         {tasks.length === 0 ? (
-          <span className="text-xs text-slate-400 italic">No tasks currently assigned to you.</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400 italic">No tasks currently assigned to you.</span>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {tasks.slice(0, 6).map((task) => (
@@ -313,25 +313,25 @@ export const ContractorDashboard = () => {
               >
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <span className="font-bold text-slate-100">{task.title}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">{task.title}</span>
                     <StatusBadge status={task.status} />
                   </div>
-                  <span className="text-[11px] text-slate-400 line-clamp-2">{task.description}</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">{task.description}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-sky-400/10">
-                  <span className="text-[10px] text-sky-400">Priority: {task.priority}</span>
+                  <span className="text-[10px] text-sky-500 dark:text-sky-400">Priority: {task.priority}</span>
                   <div className="flex items-center gap-1.5">
                     {task.status !== 'COMPLETED' ? (
                       <button
                         type="button"
                         onClick={() => handleTaskStatusChange(task._id, 'COMPLETED')}
-                        className="px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/40 text-[10px] font-semibold transition-colors"
+                        className="px-2 py-1 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 hover:bg-emerald-500/40 text-[10px] font-semibold transition-colors"
                       >
                         Mark Done
                       </button>
                     ) : (
-                      <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
+                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" /> Completed
                       </span>
                     )}

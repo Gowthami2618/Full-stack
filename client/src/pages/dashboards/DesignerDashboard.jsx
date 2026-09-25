@@ -104,19 +104,19 @@ export const DesignerDashboard = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 sm:p-8 rounded-2xl border-sky-400/20 relative overflow-hidden">
         <div className="flex flex-col gap-1 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-sky-400 uppercase tracking-widest">
+            <span className="text-xs font-semibold text-sky-500 dark:text-sky-400 uppercase tracking-widest">
               Designer Atelier Studio
             </span>
             {user?.isVerified && (
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 font-semibold border border-sky-400/30">
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-600 dark:text-sky-300 font-semibold border border-sky-400/30">
                 Verified Architect
               </span>
             )}
           </div>
-          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-100">
+          <h1 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-slate-100">
             Studio of {user?.name}
           </h1>
-          <p className="text-xs text-slate-300 max-w-xl mt-1">
+          <p className="text-xs text-slate-600 dark:text-slate-300 max-w-xl mt-1">
             Develop spatial concepts, curate bespoke furniture & materials, design modular kitchens, and manage client revision iterations.
           </p>
         </div>
@@ -175,7 +175,7 @@ export const DesignerDashboard = () => {
       {/* REVISION REQUESTS / NOTICES */}
       {revisionCount > 0 && (
         <div className="p-5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex flex-col gap-3">
-          <div className="flex items-center gap-2 text-rose-300 font-semibold text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-rose-600 dark:text-rose-300 font-semibold text-xs uppercase tracking-wider">
             <RotateCcw className="w-4 h-4" /> Client Revision Feedback Received
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -184,8 +184,8 @@ export const DesignerDashboard = () => {
               .map((r, i) => (
                 <div key={i} className="p-3.5 rounded-xl glass-panel border border-rose-400/20 flex items-center justify-between text-xs">
                   <div className="flex flex-col">
-                    <span className="font-bold text-slate-100">{r.name} • {r.projectTitle}</span>
-                    <span className="text-rose-300 mt-0.5">{r.clientFeedback || 'Adjust spatial details & color palette'}</span>
+                    <span className="font-bold text-slate-900 dark:text-slate-100">{r.name} • {r.projectTitle}</span>
+                    <span className="text-rose-600 dark:text-rose-300 mt-0.5">{r.clientFeedback || 'Adjust spatial details & color palette'}</span>
                   </div>
                   <Button
                     variant="danger"
@@ -208,10 +208,10 @@ export const DesignerDashboard = () => {
       <div className="flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-serif font-bold text-slate-100">
+            <h3 className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100">
               Assigned Residential Projects
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Select any house to plan rooms, define palettes, and generate material schedules
             </p>
           </div>
@@ -233,14 +233,14 @@ export const DesignerDashboard = () => {
                   {/* House Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-sky-400/15">
                     <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/20">
+                      <div className="p-2.5 rounded-xl bg-sky-500/10 text-sky-500 dark:text-sky-400 border border-sky-400/20">
                         <Home className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-serif font-bold text-slate-100">
+                        <h4 className="text-lg font-serif font-bold text-slate-900 dark:text-slate-100">
                           {project.title}
                         </h4>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-500 dark:text-slate-400">
                           Client: {project.client?.name || 'Homeowner'} • {project.propertyType || 'Villa'} • {project.location} • Budget: ${(project.totalBudget || 0).toLocaleString()}
                         </span>
                       </div>
@@ -258,10 +258,6 @@ export const DesignerDashboard = () => {
                   {/* Room-by-room Design Studio Cards */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                     {projectRooms.map((room) => {
-                      const isApproved = room.designStatus === 'Approved';
-                      const isRevision = room.designStatus === 'Changes Requested';
-                      const isSubmitted = room.designStatus === 'Submitted';
-
                       return (
                         <div
                           key={room._id}
@@ -269,14 +265,14 @@ export const DesignerDashboard = () => {
                         >
                           <div>
                             <div className="flex items-start justify-between gap-2 mb-2">
-                              <span className="text-xs font-bold text-slate-100 group-hover:text-sky-300">
+                              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 group-hover:text-sky-500 dark:group-hover:text-sky-300">
                                 {room.name}
                               </span>
                               <StatusBadge status={room.designStatus || 'Draft'} />
                             </div>
 
-                            <span className="text-[11px] text-slate-400 block mb-2">
-                              Style: <strong className="text-slate-200">{room.style || 'Modern'}</strong> • {room.dimensions || '180 sq.ft'}
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 block mb-2">
+                              Style: <strong className="text-slate-800 dark:text-slate-200">{room.style || 'Modern'}</strong> • {room.dimensions || '180 sq.ft'}
                             </span>
 
                             {/* Color Swatches */}
@@ -285,7 +281,7 @@ export const DesignerDashboard = () => {
                                 {[room.colorPalette.primary, room.colorPalette.secondary, room.colorPalette.accent, room.colorPalette.flooring].map((c, idx) => (
                                   <div
                                     key={idx}
-                                    className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-xs"
+                                    className="w-3.5 h-3.5 rounded-full border border-black/10 dark:border-white/20 shadow-xs"
                                     style={{ backgroundColor: c }}
                                   />
                                 ))}
@@ -293,7 +289,7 @@ export const DesignerDashboard = () => {
                             )}
 
                             {/* Specs count */}
-                            <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-3">
+                            <div className="flex items-center gap-3 text-[10px] text-slate-500 dark:text-slate-400 mb-3">
                               <span>{room.furniture?.length || 0} Furniture</span>
                               <span>•</span>
                               <span>{room.materials?.length || 0} Materials</span>
