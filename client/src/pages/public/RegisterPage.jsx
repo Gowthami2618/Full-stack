@@ -7,7 +7,7 @@ import Button from '../../components/common/Button';
 import GlassCard from '../../components/common/GlassCard';
 
 export const RegisterPage = () => {
-  const { register, user, isAuthenticated } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -20,16 +20,6 @@ export const RegisterPage = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
-  // If already logged in, redirect to respective dashboard
-  React.useEffect(() => {
-    if (isAuthenticated && user) {
-      if (user.role === 'ADMIN') navigate('/admin/dashboard', { replace: true });
-      else if (user.role === 'DESIGNER') navigate('/designer/dashboard', { replace: true });
-      else if (user.role === 'CONTRACTOR') navigate('/contractor/dashboard', { replace: true });
-      else navigate('/client/dashboard', { replace: true });
-    }
-  }, [isAuthenticated, user, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

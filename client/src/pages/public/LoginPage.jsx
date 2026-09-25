@@ -7,7 +7,7 @@ import Button from '../../components/common/Button';
 import GlassCard from '../../components/common/GlassCard';
 
 export const LoginPage = () => {
-  const { login, user, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,13 +27,6 @@ export const LoginPage = () => {
     else if (activeUser?.role === 'CONTRACTOR') navigate('/contractor/dashboard', { replace: true });
     else navigate('/client/dashboard', { replace: true });
   };
-
-  // If already logged in, redirect automatically to their dashboard
-  React.useEffect(() => {
-    if (isAuthenticated && user) {
-      redirectAfterLogin(user);
-    }
-  }, [isAuthenticated, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
