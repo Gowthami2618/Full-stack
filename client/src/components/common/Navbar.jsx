@@ -81,27 +81,27 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-aqua-400/25 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full glass-panel border-b border-pink-400/25 backdrop-blur-xl">
       <div className="flex items-center justify-between px-4 sm:px-6 py-3.5">
         {/* Left Side: Mobile Menu Button & Brand */}
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
             aria-label="Toggle navigation menu"
-            className="lg:hidden p-2 rounded-xl text-[#58737D] dark:text-[#D3F2F4] hover:text-aqua-600 dark:hover:text-white hover:bg-aqua-500/10 transition-colors"
+            className="lg:hidden p-2 rounded-xl text-[#765E72] dark:text-[#D2AFC5] hover:text-[#D9008F] dark:hover:text-white hover:bg-pink-500/10 transition-colors"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-aqua-400 to-aqua-600 text-white shadow-glass-glow">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-brand-orange via-brand-hotpink to-brand-purple text-white shadow-glass-glow">
               <Compass className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold text-[#173B4A] dark:text-[#F3FFFF] tracking-tight group-hover:text-aqua-600 dark:group-hover:text-[#5DE0EA] transition-colors">
-                Design<span className="text-aqua-500 dark:text-[#5DE0EA]">Space</span>
+              <span className="text-lg font-serif font-bold text-[#35152F] dark:text-[#FFF5FC] tracking-tight group-hover:text-pink-600 dark:group-hover:text-[#FF5CAB] transition-colors">
+                Design<span className="text-[#D9008F] dark:text-[#FF5CAB]">Space</span>
               </span>
-              <span className="text-[9px] uppercase tracking-widest text-[#58737D] dark:text-[#A8D0D5] -mt-1 font-bold">
+              <span className="text-[9px] uppercase tracking-widest text-[#765E72] dark:text-[#D2AFC5] -mt-1 font-bold">
                 Atelier Platform
               </span>
             </div>
@@ -121,7 +121,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(false);
               }}
               aria-label="Notifications"
-              className="relative p-2.5 rounded-xl border border-aqua-400/25 glass-panel text-[#173B4A] dark:text-[#F3FFFF] hover:text-aqua-600 dark:hover:text-white hover:border-aqua-400/50 transition-colors"
+              className="relative p-2.5 rounded-xl border border-pink-400/25 glass-panel text-[#35152F] dark:text-[#FFF5FC] hover:text-[#D9008F] dark:hover:text-white hover:border-pink-400/50 transition-colors"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
@@ -132,10 +132,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             </button>
 
             {showNotifications && (
-              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-aqua-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="flex items-center justify-between p-4 border-b border-aqua-400/20 bg-white/98 dark:bg-teal-900/98">
+              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-pink-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="flex items-center justify-between p-4 border-b border-pink-400/20 bg-white/98 dark:bg-plum-900/98">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-bold text-[#173B4A] dark:text-[#F3FFFF]">Notifications</h4>
+                    <h4 className="text-sm font-bold text-[#35152F] dark:text-[#FFF5FC]">Notifications</h4>
                     {unreadCount > 0 && (
                       <Badge variant="sky" size="sm">
                         {unreadCount} New
@@ -145,15 +145,15 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   <Link
                     to="/notifications"
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs text-aqua-700 dark:text-[#5DE0EA] hover:underline flex items-center gap-1 font-bold"
+                    className="text-xs text-[#D9008F] dark:text-[#FF5CAB] hover:underline flex items-center gap-1 font-bold"
                   >
                     View all <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-aqua-400/15 dark:divide-white/10 bg-white/95 dark:bg-teal-850/95">
+                <div className="max-h-80 overflow-y-auto divide-y divide-pink-400/15 dark:divide-white/10 bg-white/95 dark:bg-plum-850/95">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-[#58737D] dark:text-[#D3F2F4] font-medium">
+                    <div className="p-6 text-center text-xs text-[#765E72] dark:text-[#D2AFC5] font-medium">
                       No notifications yet.
                     </div>
                   ) : (
@@ -166,23 +166,23 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           }
                           setShowNotifications(false);
                         }}
-                        className={`p-3.5 hover:bg-aqua-500/15 dark:hover:bg-aqua-500/15 transition-colors cursor-pointer flex items-start justify-between gap-3 ${
-                          !n.isRead ? 'bg-aqua-500/10 dark:bg-aqua-500/15' : ''
+                        className={`p-3.5 hover:bg-pink-500/15 dark:hover:bg-pink-500/15 transition-colors cursor-pointer flex items-start justify-between gap-3 ${
+                          !n.isRead ? 'bg-pink-500/10 dark:bg-pink-500/15' : ''
                         }`}
                       >
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF]">
+                            <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC]">
                               {n.title}
                             </span>
                             {!n.isRead && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-aqua-500" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#F72585]" />
                             )}
                           </div>
-                          <p className="text-xs text-[#315765] dark:text-[#D3F2F4] leading-relaxed font-medium">
+                          <p className="text-xs text-[#593A55] dark:text-[#F3D7EA] leading-relaxed font-medium">
                             {n.message}
                           </p>
-                          <span className="text-[10px] text-[#58737D] dark:text-[#A8D0D5] mt-1 font-semibold">
+                          <span className="text-[10px] text-[#765E72] dark:text-[#D2AFC5] mt-1 font-semibold">
                             {new Date(n.createdAt).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -193,7 +193,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <button
                             onClick={(e) => handleMarkRead(n._id, e)}
                             title="Mark as read"
-                            className="text-[#58737D] dark:text-[#D3F2F4] hover:text-mint-500 p-1"
+                            className="text-[#765E72] dark:text-[#D2AFC5] hover:text-emerald-500 p-1"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           </button>
@@ -213,26 +213,26 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(!showUserMenu);
                 setShowNotifications(false);
               }}
-              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-aqua-400/30 glass-panel hover:border-aqua-400/60 transition-all text-left"
+              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-pink-400/30 glass-panel hover:border-pink-400/60 transition-all text-left"
             >
               <Avatar src={user?.profileImage} name={user?.name} size="sm" />
               <div className="hidden sm:flex flex-col">
-                <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] truncate max-w-[120px]">
+                <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] truncate max-w-[120px]">
                   {user?.name}
                 </span>
-                <span className="text-[10px] text-aqua-700 dark:text-[#5DE0EA] font-bold capitalize">
+                <span className="text-[10px] text-[#D9008F] dark:text-[#FF5CAB] font-bold capitalize">
                   {user?.role?.toLowerCase()}
                 </span>
               </div>
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-aqua-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="p-4 border-b border-aqua-400/20 bg-white/98 dark:bg-teal-900/98">
-                  <p className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] truncate">
+              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-pink-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="p-4 border-b border-pink-400/20 bg-white/98 dark:bg-plum-900/98">
+                  <p className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] truncate">
                     {user?.name}
                   </p>
-                  <p className="text-[11px] text-[#58737D] dark:text-[#D3F2F4] truncate font-semibold">{user?.email}</p>
+                  <p className="text-[11px] text-[#765E72] dark:text-[#D2AFC5] truncate font-semibold">{user?.email}</p>
                   <div className="mt-2">
                     <Badge variant="sky" size="sm">
                       {user?.role}
@@ -240,13 +240,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   </div>
                 </div>
 
-                <div className="p-2 divide-y divide-aqua-400/15 dark:divide-white/10 text-xs bg-white/95 dark:bg-teal-850/95">
+                <div className="p-2 divide-y divide-pink-400/15 dark:divide-white/10 text-xs bg-white/95 dark:bg-plum-850/95">
                   <Link
                     to="/profile"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 text-[#173B4A] dark:text-[#F3FFFF] hover:text-aqua-700 dark:hover:text-[#5DE0EA] hover:bg-aqua-500/15 rounded-lg transition-colors font-bold"
+                    className="flex items-center gap-2.5 px-3 py-2 text-[#35152F] dark:text-[#FFF5FC] hover:text-[#D9008F] dark:hover:text-[#FF5CAB] hover:bg-pink-500/15 rounded-lg transition-colors font-bold"
                   >
-                    <User className="w-4 h-4 text-aqua-600 dark:text-[#5DE0EA]" />
+                    <User className="w-4 h-4 text-[#F72585] dark:text-[#FF5CAB]" />
                     <span>My Profile</span>
                   </Link>
                   <button

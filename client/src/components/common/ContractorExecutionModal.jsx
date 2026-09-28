@@ -94,10 +94,10 @@ export const ContractorExecutionModal = ({
             <Hammer className="w-5 h-5" />
           </div>
           <div>
-            <span className="text-lg font-serif font-bold text-[#173B4A] dark:text-[#F3FFFF]">
+            <span className="text-lg font-serif font-bold text-[#35152F] dark:text-[#FFF5FC]">
               Site Execution Desk: {room.name}
             </span>
-            <span className="text-xs text-[#58737D] dark:text-[#D3F2F4] block font-semibold">
+            <span className="text-xs text-[#593A55] dark:text-[#F3D7EA] block font-semibold">
               Manage on-site build progress, material deliveries, and photographic milestones
             </span>
           </div>
@@ -107,7 +107,7 @@ export const ContractorExecutionModal = ({
     >
       <div className="flex flex-col gap-6">
         {/* Progress & Status Controls */}
-        <div className="p-4 rounded-xl glass-panel border border-aqua-400/25 flex flex-col gap-4">
+        <div className="p-4 rounded-xl glass-panel border border-pink-500/25 flex flex-col gap-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Select
               label="On-Site Construction Status"
@@ -117,8 +117,8 @@ export const ContractorExecutionModal = ({
             />
             <div className="flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF]">Room Fit-out Progress (%)</label>
-                <span className="text-xs font-bold text-aqua-700 dark:text-[#5DE0EA]">{formData.progress}%</span>
+                <label className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC]">Room Fit-out Progress (%)</label>
+                <span className="text-xs font-bold text-pink-600 dark:text-[#FF5CAB]">{formData.progress}%</span>
               </div>
               <input
                 type="range"
@@ -126,7 +126,7 @@ export const ContractorExecutionModal = ({
                 max="100"
                 value={formData.progress}
                 onChange={(e) => setFormData({ ...formData, progress: Number(e.target.value) })}
-                className="w-full accent-aqua-500 cursor-pointer h-2 bg-aqua-100 dark:bg-teal-800 rounded-lg"
+                className="w-full accent-pink-500 cursor-pointer h-2 bg-pink-100 dark:bg-plum-800 rounded-lg"
               />
               <ProgressBar progress={formData.progress} size="sm" variant={formData.progress === 100 ? 'emerald' : 'sky'} />
             </div>
@@ -135,10 +135,10 @@ export const ContractorExecutionModal = ({
 
         {/* Site Progress Photos Logger */}
         <div className="flex flex-col gap-3">
-          <span className="text-xs font-bold text-aqua-700 dark:text-[#5DE0EA] uppercase tracking-wider flex items-center gap-1.5">
+          <span className="text-xs font-bold text-pink-600 dark:text-[#FF5CAB] uppercase tracking-wider flex items-center gap-1.5">
             <ImageIcon className="w-3.5 h-3.5" /> Log Daily Site Progress Photo
           </span>
-          <div className="p-4 rounded-xl glass-panel border border-aqua-400/25 flex flex-col sm:flex-row items-center gap-3">
+          <div className="p-4 rounded-xl glass-panel border border-pink-500/25 flex flex-col sm:flex-row items-center gap-3">
             <Input
               label="Photo URL"
               placeholder="https://..."
@@ -174,16 +174,16 @@ export const ContractorExecutionModal = ({
           {/* Site Photos Gallery */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-48 overflow-y-auto">
             {formData.sitePhotos.map((photo, i) => (
-              <div key={i} className="relative rounded-xl overflow-hidden glass-panel border border-aqua-400/25 group">
+              <div key={i} className="relative rounded-xl overflow-hidden glass-panel border border-pink-500/25 group">
                 <img src={photo.url} alt={photo.caption} className="w-full h-24 object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent p-2 flex flex-col justify-end">
                   <span className="text-[11px] font-bold text-white truncate">{photo.caption || 'Site Photo'}</span>
-                  <span className="text-[9px] text-aqua-300 font-semibold">{photo.stage} • {photo.progressPercent}%</span>
+                  <span className="text-[9px] text-pink-300 font-semibold">{photo.stage} • {photo.progressPercent}%</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleRemovePhoto(i)}
-                  className="absolute top-1.5 right-1.5 p-1 rounded-full bg-teal-950/80 text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-1.5 right-1.5 p-1 rounded-full bg-plum-950/80 text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity"
                 >
                   <Trash2 className="w-3 h-3" />
                 </button>
@@ -194,11 +194,11 @@ export const ContractorExecutionModal = ({
 
         {/* Materials Required vs Delivered Tracker */}
         <div className="flex flex-col gap-2">
-          <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-aqua-600 dark:text-[#5DE0EA]" /> Material Delivery Tracking ({formData.materials.length})
+          <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-pink-600 dark:text-[#FF5CAB]" /> Material Delivery Tracking ({formData.materials.length})
           </span>
           {formData.materials.length === 0 ? (
-            <div className="p-4 text-center text-xs text-[#58737D] dark:text-[#D3F2F4] font-medium glass-panel rounded-xl">
+            <div className="p-4 text-center text-xs text-[#593A55] dark:text-[#F3D7EA] font-medium glass-panel rounded-xl">
               No materials registered for this room yet.
             </div>
           ) : (
@@ -206,11 +206,11 @@ export const ContractorExecutionModal = ({
               {formData.materials.map((m, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-3 rounded-xl glass-panel border border-aqua-400/20 text-xs bg-aqua-50/50 dark:bg-teal-900/50"
+                  className="flex items-center justify-between p-3 rounded-xl glass-panel border border-pink-500/20 text-xs bg-pink-50/50 dark:bg-plum-900/50"
                 >
                   <div className="flex flex-col">
-                    <span className="font-bold text-[#173B4A] dark:text-[#F3FFFF]">{m.name}</span>
-                    <span className="text-[11px] text-[#58737D] dark:text-[#D3F2F4] font-medium">
+                    <span className="font-bold text-[#35152F] dark:text-[#FFF5FC]">{m.name}</span>
+                    <span className="text-[11px] text-[#593A55] dark:text-[#F3D7EA] font-medium">
                       Category: {m.category} {m.supplier && `• Supplier: ${m.supplier}`}
                     </span>
                   </div>
@@ -220,7 +220,7 @@ export const ContractorExecutionModal = ({
                       placeholder="Delivered qty"
                       value={m.quantityDelivered || ''}
                       onChange={(e) => handleMaterialDeliveryChange(idx, e.target.value)}
-                      className="w-28 text-xs glass-input rounded px-2.5 py-1 text-[#173B4A] dark:text-[#F3FFFF] font-medium"
+                      className="w-28 text-xs glass-input rounded px-2.5 py-1 text-[#35152F] dark:text-[#FFF5FC] font-medium"
                     />
                   </div>
                 </div>
@@ -230,7 +230,7 @@ export const ContractorExecutionModal = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-aqua-400/20">
+        <div className="flex items-center justify-between pt-4 border-t border-pink-500/20">
           <Button variant="ghost" size="sm" onClick={onClose}>
             Cancel
           </Button>

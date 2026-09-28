@@ -27,23 +27,23 @@ export const PublicLayout = () => {
               <Compass className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-serif font-bold text-[#173B4A] dark:text-[#F3FFFF] tracking-tight group-hover:text-aqua-600 dark:group-hover:text-[#5DE0EA] transition-colors">
-                Design<span className="text-aqua-500 dark:text-[#5DE0EA]">Space</span>
+              <span className="text-xl font-serif font-bold text-[#35152F] dark:text-[#FFF5FC] tracking-tight group-hover:text-pink-600 dark:group-hover:text-[#FF5CAB] transition-colors">
+                Design<span className="text-[#D9008F] dark:text-[#FF5CAB]">Space</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-[#58737D] dark:text-[#A8D0D5] -mt-1 font-semibold">
+              <span className="text-[10px] uppercase tracking-widest text-[#765E72] dark:text-[#D2AFC5] -mt-1 font-semibold">
                 Atelier Platform
               </span>
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-[#173B4A] dark:text-[#D3F2F4] font-bold">
-            <a href="#features" className="hover:text-aqua-600 dark:hover:text-white transition-colors">
+          <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-[#593A55] dark:text-[#F3D7EA] font-bold">
+            <a href="#features" className="hover:text-[#D9008F] dark:hover:text-white transition-colors">
               Features
             </a>
-            <a href="#how-it-works" className="hover:text-aqua-600 dark:hover:text-white transition-colors">
+            <a href="#how-it-works" className="hover:text-[#D9008F] dark:hover:text-white transition-colors">
               How It Works
             </a>
-            <a href="#ecosystem" className="hover:text-aqua-600 dark:hover:text-white transition-colors">
+            <a href="#ecosystem" className="hover:text-[#D9008F] dark:hover:text-white transition-colors">
               Ecosystem
             </a>
           </nav>
@@ -88,22 +88,22 @@ export const PublicLayout = () => {
       </main>
 
       {/* Public Footer */}
-      <footer className="border-t border-aqua-400/20 glass-panel py-10 px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#58737D] dark:text-[#A8D0D5]">
+      <footer className="border-t border-pink-400/20 glass-panel py-10 px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#765E72] dark:text-[#D2AFC5]">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-aqua-500/20 text-aqua-600 dark:text-[#5DE0EA]">
+            <div className="p-1.5 rounded-lg bg-pink-500/20 text-[#D9008F] dark:text-[#FF5CAB]">
               <Compass className="w-4 h-4" />
             </div>
-            <span className="font-serif font-bold text-sm text-[#173B4A] dark:text-[#F3FFFF]">
+            <span className="font-serif font-bold text-sm text-[#35152F] dark:text-[#FFF5FC]">
               DesignSpace
             </span>
             <span>— Precision Interior Design & Project Execution</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link to="/login" className="hover:text-aqua-600 dark:hover:text-[#5DE0EA] transition-colors">
+            <Link to="/login" className="hover:text-[#D9008F] dark:hover:text-[#FF5CAB] transition-colors">
               Log In
             </Link>
-            <Link to="/register" className="hover:text-aqua-600 dark:hover:text-[#5DE0EA] transition-colors">
+            <Link to="/register" className="hover:text-[#D9008F] dark:hover:text-[#FF5CAB] transition-colors">
               Register
             </Link>
             <ThemeToggle size="sm" />

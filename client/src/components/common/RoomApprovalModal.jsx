@@ -62,17 +62,17 @@ export const RoomApprovalModal = ({
       onClose={onClose}
       title={
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-aqua-500/20 text-aqua-600 dark:text-[#5DE0EA] border border-aqua-400/30">
+          <div className="p-2 rounded-xl bg-pink-500/20 text-pink-600 dark:text-[#FF5CAB] border border-pink-400/30">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-lg font-serif font-bold text-[#173B4A] dark:text-[#F3FFFF]">
+              <span className="text-lg font-serif font-bold text-[#35152F] dark:text-[#FFF5FC]">
                 Design Review: {room.name}
               </span>
               <StatusBadge status={room.designStatus || 'Draft'} />
             </div>
-            <span className="text-xs text-[#58737D] dark:text-[#D3F2F4] font-medium">
+            <span className="text-xs text-[#593A55] dark:text-[#F3D7EA] font-medium">
               Review spatial specifications, colors, materials, and concepts submitted by your designer
             </span>
           </div>
@@ -83,28 +83,28 @@ export const RoomApprovalModal = ({
       <div className="flex flex-col gap-6">
         {/* Concept Overview Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="p-3.5 rounded-xl glass-panel border border-aqua-400/25">
-            <span className="text-[10px] uppercase text-aqua-700 dark:text-[#5DE0EA] font-bold tracking-wider">Design Style</span>
-            <span className="text-sm font-bold text-[#173B4A] dark:text-[#F3FFFF] block mt-0.5">{room.style || 'Modern'}</span>
+          <div className="p-3.5 rounded-xl glass-panel border border-pink-500/25">
+            <span className="text-[10px] uppercase text-pink-700 dark:text-[#FF5CAB] font-bold tracking-wider">Design Style</span>
+            <span className="text-sm font-bold text-[#35152F] dark:text-[#FFF5FC] block mt-0.5">{room.style || 'Modern'}</span>
           </div>
-          <div className="p-3.5 rounded-xl glass-panel border border-aqua-400/25">
-            <span className="text-[10px] uppercase text-aqua-700 dark:text-[#5DE0EA] font-bold tracking-wider">Dimensions</span>
-            <span className="text-sm font-bold text-[#173B4A] dark:text-[#F3FFFF] block mt-0.5">{room.dimensions || '180 sq.ft'}</span>
+          <div className="p-3.5 rounded-xl glass-panel border border-pink-500/25">
+            <span className="text-[10px] uppercase text-pink-700 dark:text-[#FF5CAB] font-bold tracking-wider">Dimensions</span>
+            <span className="text-sm font-bold text-[#35152F] dark:text-[#FFF5FC] block mt-0.5">{room.dimensions || '180 sq.ft'}</span>
           </div>
-          <div className="p-3.5 rounded-xl glass-panel border border-aqua-400/25">
-            <span className="text-[10px] uppercase text-aqua-700 dark:text-[#5DE0EA] font-bold tracking-wider">Allocated Budget</span>
-            <span className="text-sm font-bold text-[#173B4A] dark:text-[#F3FFFF] block mt-0.5">${(room.budget || 0).toLocaleString()}</span>
+          <div className="p-3.5 rounded-xl glass-panel border border-pink-500/25">
+            <span className="text-[10px] uppercase text-pink-700 dark:text-[#FF5CAB] font-bold tracking-wider">Allocated Budget</span>
+            <span className="text-sm font-bold text-[#35152F] dark:text-[#FFF5FC] block mt-0.5">${(room.budget || 0).toLocaleString()}</span>
           </div>
-          <div className="p-3.5 rounded-xl glass-panel border border-aqua-400/25">
-            <span className="text-[10px] uppercase text-aqua-700 dark:text-[#5DE0EA] font-bold tracking-wider">Approval Stage</span>
-            <span className="text-sm font-bold text-aqua-700 dark:text-[#5DE0EA] block mt-0.5">{room.designStatus || 'Draft'}</span>
+          <div className="p-3.5 rounded-xl glass-panel border border-pink-500/25">
+            <span className="text-[10px] uppercase text-pink-700 dark:text-[#FF5CAB] font-bold tracking-wider">Approval Stage</span>
+            <span className="text-sm font-bold text-pink-700 dark:text-[#FF5CAB] block mt-0.5">{room.designStatus || 'Draft'}</span>
           </div>
         </div>
 
         {/* Color Palette Swatches */}
         {room.colorPalette && (
-          <div className="p-4 rounded-xl glass-panel border border-aqua-400/25 flex flex-col gap-2">
-            <span className="text-xs font-bold text-aqua-700 dark:text-[#5DE0EA] uppercase tracking-wider flex items-center gap-1.5">
+          <div className="p-4 rounded-xl glass-panel border border-pink-500/25 flex flex-col gap-2">
+            <span className="text-xs font-bold text-pink-700 dark:text-[#FF5CAB] uppercase tracking-wider flex items-center gap-1.5">
               <Palette className="w-3.5 h-3.5" /> Approved Spatial Color Harmony
             </span>
             <div className="flex items-center gap-3 flex-wrap">
@@ -115,12 +115,12 @@ export const RoomApprovalModal = ({
                 { label: 'Ceiling', color: room.colorPalette.ceiling },
                 { label: 'Flooring', color: room.colorPalette.flooring },
               ].map((c, i) => (
-                <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-aqua-50/80 dark:bg-teal-900/80 border border-aqua-400/25">
+                <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-pink-50/80 dark:bg-plum-900/80 border border-pink-500/25">
                   <div
                     className="w-5 h-5 rounded-full border border-black/20 dark:border-white/30 shadow-xs"
                     style={{ backgroundColor: c.color }}
                   />
-                  <span className="text-[11px] text-[#173B4A] dark:text-[#F3FFFF] font-mono font-semibold">{c.label}: {c.color}</span>
+                  <span className="text-[11px] text-[#35152F] dark:text-[#FFF5FC] font-mono font-semibold">{c.label}: {c.color}</span>
                 </div>
               ))}
             </div>
@@ -130,37 +130,37 @@ export const RoomApprovalModal = ({
         {/* Furniture & Materials Summary */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Furniture */}
-          <div className="p-4 rounded-xl glass-panel border border-aqua-400/25 flex flex-col gap-2">
-            <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] flex items-center gap-1.5">
-              <Armchair className="w-3.5 h-3.5 text-aqua-600 dark:text-[#5DE0EA]" /> Furniture List ({room.furniture?.length || 0})
+          <div className="p-4 rounded-xl glass-panel border border-pink-500/25 flex flex-col gap-2">
+            <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] flex items-center gap-1.5">
+              <Armchair className="w-3.5 h-3.5 text-pink-600 dark:text-[#FF5CAB]" /> Furniture List ({room.furniture?.length || 0})
             </span>
             <div className="flex flex-col gap-1.5 max-h-40 overflow-y-auto pr-1">
               {(room.furniture || []).map((f, i) => (
-                <div key={i} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-aqua-50/60 dark:bg-teal-900/60 border border-aqua-400/20">
-                  <span className="text-[#173B4A] dark:text-[#F3FFFF] font-semibold">{f.name} (x{f.quantity})</span>
-                  <span className="text-aqua-700 dark:text-[#5DE0EA] font-bold">${f.estimatedCost?.toLocaleString()}</span>
+                <div key={i} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-pink-50/60 dark:bg-plum-900/60 border border-pink-500/20">
+                  <span className="text-[#35152F] dark:text-[#FFF5FC] font-semibold">{f.name} (x{f.quantity})</span>
+                  <span className="text-pink-700 dark:text-[#FF5CAB] font-bold">${f.estimatedCost?.toLocaleString()}</span>
                 </div>
               ))}
               {(!room.furniture || room.furniture.length === 0) && (
-                <span className="text-xs text-[#58737D] dark:text-[#A8D0D5] italic font-medium">No furniture specified yet</span>
+                <span className="text-xs text-[#593A55] dark:text-[#D2AFC5] italic font-medium">No furniture specified yet</span>
               )}
             </div>
           </div>
 
           {/* Materials */}
-          <div className="p-4 rounded-xl glass-panel border border-aqua-400/25 flex flex-col gap-2">
-            <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-aqua-600 dark:text-[#5DE0EA]" /> Specified Materials ({room.materials?.length || 0})
+          <div className="p-4 rounded-xl glass-panel border border-pink-500/25 flex flex-col gap-2">
+            <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-pink-600 dark:text-[#FF5CAB]" /> Specified Materials ({room.materials?.length || 0})
             </span>
             <div className="flex flex-col gap-1.5 max-h-40 overflow-y-auto pr-1">
               {(room.materials || []).map((m, i) => (
-                <div key={i} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-aqua-50/60 dark:bg-teal-900/60 border border-aqua-400/20">
-                  <span className="text-[#173B4A] dark:text-[#F3FFFF] font-semibold">{m.name} ({m.category})</span>
-                  <span className="text-aqua-700 dark:text-[#5DE0EA] font-bold">${m.price?.toLocaleString()}</span>
+                <div key={i} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-pink-50/60 dark:bg-plum-900/60 border border-pink-500/20">
+                  <span className="text-[#35152F] dark:text-[#FFF5FC] font-semibold">{m.name} ({m.category})</span>
+                  <span className="text-pink-700 dark:text-[#FF5CAB] font-bold">${m.price?.toLocaleString()}</span>
                 </div>
               ))}
               {(!room.materials || room.materials.length === 0) && (
-                <span className="text-xs text-[#58737D] dark:text-[#A8D0D5] italic font-medium">No materials specified yet</span>
+                <span className="text-xs text-[#593A55] dark:text-[#D2AFC5] italic font-medium">No materials specified yet</span>
               )}
             </div>
           </div>
@@ -168,8 +168,8 @@ export const RoomApprovalModal = ({
 
         {/* Designer Notes */}
         {room.designerNotes && (
-          <div className="p-3.5 rounded-xl bg-aqua-500/10 border border-aqua-400/25 text-xs text-[#173B4A] dark:text-[#F3FFFF] font-medium">
-            <span className="font-bold text-aqua-700 dark:text-[#5DE0EA] block mb-1">Architectural Concept Notes:</span>
+          <div className="p-3.5 rounded-xl bg-pink-500/10 border border-pink-500/25 text-xs text-[#35152F] dark:text-[#FFF5FC] font-medium">
+            <span className="font-bold text-pink-700 dark:text-[#FF5CAB] block mb-1">Architectural Concept Notes:</span>
             {room.designerNotes}
           </div>
         )}
@@ -205,7 +205,7 @@ export const RoomApprovalModal = ({
 
         {/* Actions */}
         {!showChangesInput && (
-          <div className="flex items-center justify-between pt-4 border-t border-aqua-400/20">
+          <div className="flex items-center justify-between pt-4 border-t border-pink-500/20">
             <Button variant="ghost" size="sm" onClick={onClose}>
               Close
             </Button>

@@ -13,12 +13,12 @@ export const Badge = ({
   };
 
   const variantStyles = {
-    default: 'bg-aqua-100/70 dark:bg-teal-900/90 text-[#173B4A] dark:text-[#F3FFFF] border-aqua-400/30 font-bold',
-    sky: 'bg-aqua-500/20 text-aqua-900 dark:text-[#5DE0EA] border-aqua-400/45 font-bold shadow-xs',
+    default: 'bg-pink-100/70 dark:bg-plum-900/90 text-[#35152F] dark:text-[#FFF5FC] border-pink-400/30 font-bold',
+    sky: 'bg-pink-500/20 text-[#D9008F] dark:text-[#FF5CAB] border-pink-400/45 font-bold shadow-xs',
     rose: 'bg-rose-500/20 text-rose-900 dark:text-rose-200 border-rose-500/40 font-bold shadow-xs',
-    emerald: 'bg-mint-400/25 text-emerald-900 dark:text-mint-300 border-mint-400/50 font-bold shadow-xs',
+    emerald: 'bg-emerald-500/20 text-emerald-900 dark:text-emerald-300 border-emerald-500/40 font-bold shadow-xs',
     amber: 'bg-amber-500/20 text-amber-900 dark:text-amber-200 border-amber-400/40 font-bold shadow-xs',
-    purple: 'bg-indigo-500/20 text-indigo-900 dark:text-indigo-200 border-indigo-500/40 font-bold shadow-xs',
+    purple: 'bg-purple-500/20 text-[#6A0DAD] dark:text-[#B517FF] border-purple-400/40 font-bold shadow-xs',
   };
 
   return (

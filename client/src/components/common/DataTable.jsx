@@ -22,11 +22,11 @@ export const DataTable = ({
   }
 
   return (
-    <div className="glass-card overflow-hidden border border-aqua-400/30 shadow-glass">
+    <div className="glass-card overflow-hidden border border-pink-400/30 shadow-glass">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm border-collapse">
           <thead>
-            <tr className="border-b border-aqua-400/25 bg-aqua-50/90 dark:bg-teal-900/90 text-xs uppercase tracking-wider text-[#173B4A] dark:text-[#F3FFFF] font-extrabold">
+            <tr className="border-b border-pink-400/25 bg-pink-50/90 dark:bg-plum-800/90 text-xs uppercase tracking-wider text-[#35152F] dark:text-[#FFF5FC] font-extrabold">
               {columns.map((col, idx) => (
                 <th
                   key={idx}
@@ -37,21 +37,21 @@ export const DataTable = ({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-aqua-400/15 dark:divide-white/10 bg-white/60 dark:bg-teal-850/60">
+          <tbody className="divide-y divide-pink-400/15 dark:divide-white/10 bg-white/60 dark:bg-plum-900/60">
             {data.map((row, rowIdx) => (
               <tr
                 key={row._id || rowIdx}
                 onClick={() => onRowClick && onRowClick(row)}
                 className={`transition-colors duration-150 ${
                   onRowClick
-                    ? 'hover:bg-aqua-500/15 dark:hover:bg-aqua-500/20 cursor-pointer'
-                    : 'hover:bg-aqua-500/5 dark:hover:bg-aqua-500/10'
+                    ? 'hover:bg-pink-500/15 dark:hover:bg-pink-500/20 cursor-pointer'
+                    : 'hover:bg-pink-500/5 dark:hover:bg-pink-500/10'
                 }`}
               >
                 {columns.map((col, colIdx) => (
                   <td
                     key={colIdx}
-                    className={`px-5 py-4 text-[#173B4A] dark:text-[#F3FFFF] font-semibold ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'} ${col.className || ''}`}
+                    className={`px-5 py-4 text-[#35152F] dark:text-[#FFF5FC] font-semibold ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'} ${col.className || ''}`}
                   >
                     {col.render ? col.render(row, rowIdx) : row[col.accessor]}
                   </td>

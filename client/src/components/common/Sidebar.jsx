@@ -112,18 +112,18 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-40 w-64 glass-panel border-r border-aqua-400/25 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 pt-20 lg:pt-6 bg-white/95 dark:bg-teal-900/95 backdrop-blur-2xl shadow-xl ${
+        className={`fixed top-0 left-0 bottom-0 z-40 w-64 glass-panel border-r border-pink-400/25 flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 pt-20 lg:pt-6 bg-white/95 dark:bg-plum-900/95 backdrop-blur-2xl shadow-xl ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex flex-col gap-6 px-4">
           {/* User Workspace Info Pill */}
-          <div className="p-3.5 rounded-xl bg-aqua-50/80 dark:bg-teal-800/90 border border-aqua-400/30 flex items-center justify-between shadow-xs">
+          <div className="p-3.5 rounded-xl bg-pink-50/80 dark:bg-plum-800/90 border border-pink-400/30 flex items-center justify-between shadow-xs">
             <div className="flex flex-col">
-              <span className="text-[11px] text-[#58737D] dark:text-[#A8D0D5] uppercase tracking-wider font-extrabold">
+              <span className="text-[11px] text-[#765E72] dark:text-[#D2AFC5] uppercase tracking-wider font-extrabold">
                 Workspace Mode
               </span>
-              <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] mt-0.5">
+              <span className="text-xs font-bold text-[#35152F] dark:text-[#FFF5FC] mt-0.5">
                 {user.role === 'ADMIN'
                   ? 'Governance'
                   : user.role === 'DESIGNER'
@@ -142,7 +142,7 @@ export const Sidebar = ({ isOpen, onClose }) => {
 
           {/* Navigation Links */}
           <nav className="flex flex-col gap-1.5">
-            <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#58737D] dark:text-[#A8D0D5] px-3 mb-1">
+            <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#765E72] dark:text-[#D2AFC5] px-3 mb-1">
               Main Menu
             </span>
             {navItems.map((item) => {
@@ -156,15 +156,15 @@ export const Sidebar = ({ isOpen, onClose }) => {
                     `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs md:text-sm font-bold transition-all duration-200 group ${
                       isActive
                         ? item.highlight
-                          ? 'aqua-gradient-btn text-white font-bold shadow-md'
-                          : 'bg-aqua-500/20 text-aqua-800 dark:text-[#5DE0EA] border border-aqua-400/50 font-bold shadow-xs'
+                          ? 'sunset-gradient-btn text-white font-bold shadow-md'
+                          : 'bg-pink-500/20 text-[#D9008F] dark:text-[#FF5CAB] border border-pink-400/50 font-bold shadow-xs'
                         : item.highlight
-                        ? 'bg-aqua-500/15 text-aqua-800 dark:text-[#5DE0EA] hover:bg-aqua-500/25 border border-aqua-400/35 font-bold'
-                        : 'text-[#173B4A] dark:text-[#D3F2F4] hover:text-[#139BC5] dark:hover:text-white hover:bg-aqua-500/15'
+                        ? 'bg-pink-500/15 text-[#D9008F] dark:text-[#FF5CAB] hover:bg-pink-500/25 border border-pink-400/35 font-bold'
+                        : 'text-[#35152F] dark:text-[#F3D7EA] hover:text-[#D9008F] dark:hover:text-white hover:bg-pink-500/15'
                     }`
                   }
                 >
-                  <Icon className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110 text-aqua-600 dark:text-[#5DE0EA]" />
+                  <Icon className="w-4 h-4 shrink-0 transition-transform group-hover:scale-110 text-[#F72585] dark:text-[#FF5CAB]" />
                   <span>{item.label}</span>
                 </NavLink>
               );
@@ -173,12 +173,12 @@ export const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Sidebar Footer */}
-        <div className="p-4 border-t border-aqua-400/20 flex items-center justify-between text-[11px] text-[#58737D] dark:text-[#A8D0D5] bg-aqua-50/40 dark:bg-teal-950/40">
+        <div className="p-4 border-t border-pink-400/20 flex items-center justify-between text-[11px] text-[#765E72] dark:text-[#D2AFC5] bg-pink-50/40 dark:bg-plum-950/40">
           <div className="flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-aqua-600 dark:text-[#5DE0EA]" />
-            <span className="font-bold text-[#173B4A] dark:text-[#F3FFFF]">DesignSpace v2.4</span>
+            <Sparkles className="w-3.5 h-3.5 text-[#F72585] dark:text-[#FF5CAB]" />
+            <span className="font-bold text-[#35152F] dark:text-[#FFF5FC]">DesignSpace v2.4</span>
           </div>
-          <span className="text-[10px] bg-aqua-500/20 px-2 py-0.5 rounded-md border border-aqua-400/35 text-aqua-800 dark:text-[#5DE0EA] font-extrabold">
+          <span className="text-[10px] bg-pink-500/20 px-2 py-0.5 rounded-md border border-pink-400/35 text-[#D9008F] dark:text-[#FF5CAB] font-extrabold">
             Enterprise
           </span>
         </div>
