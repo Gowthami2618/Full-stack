@@ -30,25 +30,25 @@ export const Modal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/60 dark:bg-charcoal-950/80 backdrop-blur-md transition-opacity animate-fadeIn"
+        className="fixed inset-0 bg-slate-950/70 dark:bg-navy-950/85 backdrop-blur-md transition-opacity animate-fadeIn"
         onClick={onClose}
       />
 
       {/* Modal Box */}
       <div
-        className={`relative w-full ${maxWidth} glass-panel border border-sky-400/25 rounded-2xl shadow-2xl z-10 my-8 overflow-hidden transform transition-all animate-scaleUp`}
+        className={`relative w-full ${maxWidth} glass-panel border border-sky-400/30 rounded-2xl shadow-2xl z-10 my-8 overflow-hidden transform transition-all animate-scaleUp bg-white/98 dark:bg-navy-900/98 backdrop-blur-2xl`}
       >
         {/* Modal Header */}
-        <div className="flex items-start justify-between p-6 border-b border-sky-400/15 bg-white/70 dark:bg-charcoal-900/60">
+        <div className="flex items-start justify-between p-6 border-b border-sky-400/20 bg-sky-50/80 dark:bg-navy-850/90">
           <div>
             <h3 className="text-xl font-serif font-bold text-slate-950 dark:text-white">{title}</h3>
-            {subtitle && <p className="text-xs text-slate-700 dark:text-slate-300 font-medium mt-1">{subtitle}</p>}
+            {subtitle && <p className="text-xs text-slate-700 dark:text-slate-300 font-semibold mt-1">{subtitle}</p>}
           </div>
           {showClose && (
             <button
               onClick={onClose}
               aria-label="Close dialog"
-              className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white p-1.5 rounded-lg hover:bg-sky-500/10 transition-colors"
+              className="text-slate-600 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white p-1.5 rounded-lg hover:bg-sky-500/15 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -56,7 +56,7 @@ export const Modal = ({
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 max-h-[75vh] overflow-y-auto text-slate-900 dark:text-slate-100">{children}</div>
+        <div className="p-6 max-h-[75vh] overflow-y-auto text-slate-900 dark:text-slate-100 bg-white/95 dark:bg-navy-900/95">{children}</div>
       </div>
     </div>
   );

@@ -132,10 +132,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             </button>
 
             {showNotifications && (
-              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-sky-400/25 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="flex items-center justify-between p-4 border-b border-sky-400/15 bg-white/95 dark:bg-charcoal-900/95">
+              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-sky-400/30 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="flex items-center justify-between p-4 border-b border-sky-400/20 bg-white/98 dark:bg-navy-900/98">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">Notifications</h4>
+                    <h4 className="text-sm font-bold text-slate-950 dark:text-white">Notifications</h4>
                     {unreadCount > 0 && (
                       <Badge variant="sky" size="sm">
                         {unreadCount} New
@@ -145,15 +145,15 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   <Link
                     to="/notifications"
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 font-semibold"
+                    className="text-xs text-sky-700 dark:text-sky-300 hover:underline flex items-center gap-1 font-bold"
                   >
                     View all <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-sky-400/10 dark:divide-white/5">
+                <div className="max-h-80 overflow-y-auto divide-y divide-sky-400/10 dark:divide-white/10 bg-white/95 dark:bg-navy-850/95">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-600 dark:text-slate-300 font-medium">
+                    <div className="p-6 text-center text-xs text-slate-700 dark:text-slate-200 font-medium">
                       No notifications yet.
                     </div>
                   ) : (
@@ -166,13 +166,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           }
                           setShowNotifications(false);
                         }}
-                        className={`p-3.5 hover:bg-sky-500/[0.08] dark:hover:bg-sky-500/[0.05] transition-colors cursor-pointer flex items-start justify-between gap-3 ${
-                          !n.isRead ? 'bg-sky-500/[0.08] dark:bg-sky-500/[0.05]' : ''
+                        className={`p-3.5 hover:bg-sky-500/15 dark:hover:bg-sky-500/15 transition-colors cursor-pointer flex items-start justify-between gap-3 ${
+                          !n.isRead ? 'bg-sky-500/10 dark:bg-sky-500/15' : ''
                         }`}
                       >
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-slate-900 dark:text-white">
+                            <span className="text-xs font-bold text-slate-950 dark:text-white">
                               {n.title}
                             </span>
                             {!n.isRead && (
@@ -182,7 +182,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
                             {n.message}
                           </p>
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 font-medium">
+                          <span className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 font-semibold">
                             {new Date(n.createdAt).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -193,7 +193,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <button
                             onClick={(e) => handleMarkRead(n._id, e)}
                             title="Mark as read"
-                            className="text-slate-500 hover:text-emerald-500 p-1"
+                            className="text-slate-600 dark:text-slate-300 hover:text-emerald-500 p-1"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           </button>
@@ -213,22 +213,22 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(!showUserMenu);
                 setShowNotifications(false);
               }}
-              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-sky-400/20 glass-panel hover:border-sky-400/40 transition-all text-left"
+              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-sky-400/25 glass-panel hover:border-sky-400/50 transition-all text-left"
             >
               <Avatar src={user?.profileImage} name={user?.name} size="sm" />
               <div className="hidden sm:flex flex-col">
                 <span className="text-xs font-bold text-slate-950 dark:text-white truncate max-w-[120px]">
                   {user?.name}
                 </span>
-                <span className="text-[10px] text-sky-600 dark:text-sky-400 font-semibold capitalize">
+                <span className="text-[10px] text-sky-700 dark:text-sky-300 font-bold capitalize">
                   {user?.role?.toLowerCase()}
                 </span>
               </div>
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-sky-400/25 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="p-4 border-b border-sky-400/15 bg-white/95 dark:bg-charcoal-900/95">
+              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-sky-400/30 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="p-4 border-b border-sky-400/20 bg-white/98 dark:bg-navy-900/98">
                   <p className="text-xs font-bold text-slate-950 dark:text-white truncate">
                     {user?.name}
                   </p>
@@ -240,13 +240,13 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   </div>
                 </div>
 
-                <div className="p-2 divide-y divide-sky-400/10 dark:divide-white/5 text-xs">
+                <div className="p-2 divide-y divide-sky-400/10 dark:divide-white/10 text-xs bg-white/95 dark:bg-navy-850/95">
                   <Link
                     to="/profile"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 text-slate-800 dark:text-slate-100 hover:text-sky-600 dark:hover:text-white hover:bg-sky-500/10 rounded-lg transition-colors font-medium"
+                    className="flex items-center gap-2.5 px-3 py-2 text-slate-800 dark:text-slate-100 hover:text-sky-700 dark:hover:text-sky-300 hover:bg-sky-500/15 rounded-lg transition-colors font-bold"
                   >
-                    <User className="w-4 h-4 text-sky-500 dark:text-sky-400" />
+                    <User className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                     <span>My Profile</span>
                   </Link>
                   <button

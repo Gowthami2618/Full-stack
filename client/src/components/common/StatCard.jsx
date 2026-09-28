@@ -12,21 +12,22 @@ export const StatCard = ({
   onClick,
 }) => {
   const iconVariants = {
-    sky: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-400/30',
-    rose: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
-    indigo: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30',
+    sky: 'bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-400/40 shadow-xs',
+    amber: 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-400/40 shadow-xs',
+    rose: 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/40 shadow-xs',
+    emerald: 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40 shadow-xs',
+    indigo: 'bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-500/40 shadow-xs',
   };
 
   return (
     <GlassCard
       hoverEffect={!!onClick}
       onClick={onClick}
-      className="flex flex-col justify-between"
+      className="flex flex-col justify-between border-sky-400/25 shadow-md"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1">
-          <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+          <span className="text-[11px] font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
             {title}
           </span>
           <span className="text-2xl sm:text-3xl font-serif font-bold text-slate-950 dark:text-white tracking-tight mt-1">
@@ -41,17 +42,17 @@ export const StatCard = ({
       </div>
 
       {(subtitle || trend) && (
-        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-sky-400/15 dark:border-white/10 text-xs">
+        <div className="flex items-center gap-2 mt-4 pt-3 border-t border-sky-400/20 dark:border-sky-400/20 text-xs">
           {trend && (
             <span
-              className={`font-semibold ${
-                trendPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
+              className={`font-bold ${
+                trendPositive ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'
               }`}
             >
               {trend}
             </span>
           )}
-          {subtitle && <span className="text-slate-700 dark:text-slate-300 font-medium">{subtitle}</span>}
+          {subtitle && <span className="text-slate-700 dark:text-slate-200 font-semibold">{subtitle}</span>}
         </div>
       )}
     </GlassCard>
