@@ -15,8 +15,8 @@ export const GlassCard = ({
       } ${className}`}
       {...props}
     >
-      {/* Subtle top border sky glow */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-sky-400/25 to-transparent pointer-events-none" />
+      {/* Subtle top border aqua glow */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-aqua-400/35 to-transparent pointer-events-none" />
       {children}
     </div>
   );

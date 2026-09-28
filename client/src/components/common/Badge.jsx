@@ -13,12 +13,12 @@ export const Badge = ({
   };
 
   const variantStyles = {
-    default: 'bg-slate-200/90 dark:bg-navy-800 text-slate-800 dark:text-slate-100 border-slate-300 dark:border-sky-400/20 font-bold',
-    sky: 'bg-sky-500/20 text-sky-800 dark:text-sky-200 border-sky-400/40 font-bold shadow-xs',
-    rose: 'bg-rose-500/20 text-rose-800 dark:text-rose-200 border-rose-500/40 font-bold shadow-xs',
-    emerald: 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border-emerald-500/40 font-bold shadow-xs',
-    amber: 'bg-amber-500/20 text-amber-800 dark:text-amber-200 border-amber-400/40 font-bold shadow-xs',
-    purple: 'bg-indigo-500/20 text-indigo-800 dark:text-indigo-200 border-indigo-500/40 font-bold shadow-xs',
+    default: 'bg-aqua-100/70 dark:bg-teal-900/90 text-[#173B4A] dark:text-[#F3FFFF] border-aqua-400/30 font-bold',
+    sky: 'bg-aqua-500/20 text-aqua-900 dark:text-[#5DE0EA] border-aqua-400/45 font-bold shadow-xs',
+    rose: 'bg-rose-500/20 text-rose-900 dark:text-rose-200 border-rose-500/40 font-bold shadow-xs',
+    emerald: 'bg-mint-400/25 text-emerald-900 dark:text-mint-300 border-mint-400/50 font-bold shadow-xs',
+    amber: 'bg-amber-500/20 text-amber-900 dark:text-amber-200 border-amber-400/40 font-bold shadow-xs',
+    purple: 'bg-indigo-500/20 text-indigo-900 dark:text-indigo-200 border-indigo-500/40 font-bold shadow-xs',
   };
 
   return (

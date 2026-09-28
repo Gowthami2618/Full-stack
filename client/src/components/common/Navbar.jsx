@@ -81,27 +81,27 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-sky-400/20 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 w-full glass-panel border-b border-aqua-400/25 backdrop-blur-xl">
       <div className="flex items-center justify-between px-4 sm:px-6 py-3.5">
         {/* Left Side: Mobile Menu Button & Brand */}
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
             aria-label="Toggle navigation menu"
-            className="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-white hover:bg-sky-500/10 transition-colors"
+            className="lg:hidden p-2 rounded-xl text-[#58737D] dark:text-[#D3F2F4] hover:text-aqua-600 dark:hover:text-white hover:bg-aqua-500/10 transition-colors"
           >
             {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 text-white shadow-glass-glow">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-aqua-400 to-aqua-600 text-white shadow-glass-glow">
               <Compass className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold text-slate-900 dark:text-white tracking-tight group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
-                Design<span className="text-sky-500 dark:text-sky-400">Space</span>
+              <span className="text-lg font-serif font-bold text-[#173B4A] dark:text-[#F3FFFF] tracking-tight group-hover:text-aqua-600 dark:group-hover:text-[#5DE0EA] transition-colors">
+                Design<span className="text-aqua-500 dark:text-[#5DE0EA]">Space</span>
               </span>
-              <span className="text-[9px] uppercase tracking-widest text-slate-700 dark:text-slate-300 -mt-1 font-bold">
+              <span className="text-[9px] uppercase tracking-widest text-[#58737D] dark:text-[#A8D0D5] -mt-1 font-bold">
                 Atelier Platform
               </span>
             </div>
@@ -121,7 +121,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(false);
               }}
               aria-label="Notifications"
-              className="relative p-2.5 rounded-xl border border-sky-400/20 glass-panel text-slate-800 dark:text-slate-100 hover:text-sky-600 dark:hover:text-white hover:border-sky-400/40 transition-colors"
+              className="relative p-2.5 rounded-xl border border-aqua-400/25 glass-panel text-[#173B4A] dark:text-[#F3FFFF] hover:text-aqua-600 dark:hover:text-white hover:border-aqua-400/50 transition-colors"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
@@ -132,10 +132,10 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
             </button>
 
             {showNotifications && (
-              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-sky-400/30 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="flex items-center justify-between p-4 border-b border-sky-400/20 bg-white/98 dark:bg-navy-900/98">
+              <div className="absolute right-0 mt-3 w-80 sm:w-96 rounded-2xl glass-dropdown border border-aqua-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="flex items-center justify-between p-4 border-b border-aqua-400/20 bg-white/98 dark:bg-teal-900/98">
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-bold text-slate-950 dark:text-white">Notifications</h4>
+                    <h4 className="text-sm font-bold text-[#173B4A] dark:text-[#F3FFFF]">Notifications</h4>
                     {unreadCount > 0 && (
                       <Badge variant="sky" size="sm">
                         {unreadCount} New
@@ -145,15 +145,15 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   <Link
                     to="/notifications"
                     onClick={() => setShowNotifications(false)}
-                    className="text-xs text-sky-700 dark:text-sky-300 hover:underline flex items-center gap-1 font-bold"
+                    className="text-xs text-aqua-700 dark:text-[#5DE0EA] hover:underline flex items-center gap-1 font-bold"
                   >
                     View all <ExternalLink className="w-3 h-3" />
                   </Link>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-sky-400/10 dark:divide-white/10 bg-white/95 dark:bg-navy-850/95">
+                <div className="max-h-80 overflow-y-auto divide-y divide-aqua-400/15 dark:divide-white/10 bg-white/95 dark:bg-teal-850/95">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-700 dark:text-slate-200 font-medium">
+                    <div className="p-6 text-center text-xs text-[#58737D] dark:text-[#D3F2F4] font-medium">
                       No notifications yet.
                     </div>
                   ) : (
@@ -166,23 +166,23 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           }
                           setShowNotifications(false);
                         }}
-                        className={`p-3.5 hover:bg-sky-500/15 dark:hover:bg-sky-500/15 transition-colors cursor-pointer flex items-start justify-between gap-3 ${
-                          !n.isRead ? 'bg-sky-500/10 dark:bg-sky-500/15' : ''
+                        className={`p-3.5 hover:bg-aqua-500/15 dark:hover:bg-aqua-500/15 transition-colors cursor-pointer flex items-start justify-between gap-3 ${
+                          !n.isRead ? 'bg-aqua-500/10 dark:bg-aqua-500/15' : ''
                         }`}
                       >
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-bold text-slate-950 dark:text-white">
+                            <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF]">
                               {n.title}
                             </span>
                             {!n.isRead && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-aqua-500" />
                             )}
                           </div>
-                          <p className="text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+                          <p className="text-xs text-[#315765] dark:text-[#D3F2F4] leading-relaxed font-medium">
                             {n.message}
                           </p>
-                          <span className="text-[10px] text-slate-600 dark:text-slate-400 mt-1 font-semibold">
+                          <span className="text-[10px] text-[#58737D] dark:text-[#A8D0D5] mt-1 font-semibold">
                             {new Date(n.createdAt).toLocaleTimeString([], {
                               hour: '2-digit',
                               minute: '2-digit',
@@ -193,7 +193,7 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                           <button
                             onClick={(e) => handleMarkRead(n._id, e)}
                             title="Mark as read"
-                            className="text-slate-600 dark:text-slate-300 hover:text-emerald-500 p-1"
+                            className="text-[#58737D] dark:text-[#D3F2F4] hover:text-mint-500 p-1"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                           </button>
@@ -213,26 +213,26 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                 setShowUserMenu(!showUserMenu);
                 setShowNotifications(false);
               }}
-              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-sky-400/25 glass-panel hover:border-sky-400/50 transition-all text-left"
+              className="flex items-center gap-2.5 sm:gap-3 p-1.5 pr-3 rounded-xl border border-aqua-400/30 glass-panel hover:border-aqua-400/60 transition-all text-left"
             >
               <Avatar src={user?.profileImage} name={user?.name} size="sm" />
               <div className="hidden sm:flex flex-col">
-                <span className="text-xs font-bold text-slate-950 dark:text-white truncate max-w-[120px]">
+                <span className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] truncate max-w-[120px]">
                   {user?.name}
                 </span>
-                <span className="text-[10px] text-sky-700 dark:text-sky-300 font-bold capitalize">
+                <span className="text-[10px] text-aqua-700 dark:text-[#5DE0EA] font-bold capitalize">
                   {user?.role?.toLowerCase()}
                 </span>
               </div>
             </button>
 
             {showUserMenu && (
-              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-sky-400/30 shadow-2xl z-50 overflow-hidden animate-scaleUp">
-                <div className="p-4 border-b border-sky-400/20 bg-white/98 dark:bg-navy-900/98">
-                  <p className="text-xs font-bold text-slate-950 dark:text-white truncate">
+              <div className="absolute right-0 mt-3 w-56 rounded-2xl glass-dropdown border border-aqua-400/35 shadow-2xl z-50 overflow-hidden animate-scaleUp">
+                <div className="p-4 border-b border-aqua-400/20 bg-white/98 dark:bg-teal-900/98">
+                  <p className="text-xs font-bold text-[#173B4A] dark:text-[#F3FFFF] truncate">
                     {user?.name}
                   </p>
-                  <p className="text-[11px] text-slate-700 dark:text-slate-300 truncate font-medium">{user?.email}</p>
+                  <p className="text-[11px] text-[#58737D] dark:text-[#D3F2F4] truncate font-semibold">{user?.email}</p>
                   <div className="mt-2">
                     <Badge variant="sky" size="sm">
                       {user?.role}
@@ -240,18 +240,18 @@ export const Navbar = ({ onToggleSidebar, isSidebarOpen }) => {
                   </div>
                 </div>
 
-                <div className="p-2 divide-y divide-sky-400/10 dark:divide-white/10 text-xs bg-white/95 dark:bg-navy-850/95">
+                <div className="p-2 divide-y divide-aqua-400/15 dark:divide-white/10 text-xs bg-white/95 dark:bg-teal-850/95">
                   <Link
                     to="/profile"
                     onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 text-slate-800 dark:text-slate-100 hover:text-sky-700 dark:hover:text-sky-300 hover:bg-sky-500/15 rounded-lg transition-colors font-bold"
+                    className="flex items-center gap-2.5 px-3 py-2 text-[#173B4A] dark:text-[#F3FFFF] hover:text-aqua-700 dark:hover:text-[#5DE0EA] hover:bg-aqua-500/15 rounded-lg transition-colors font-bold"
                   >
-                    <User className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                    <User className="w-4 h-4 text-aqua-600 dark:text-[#5DE0EA]" />
                     <span>My Profile</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left mt-1 font-medium"
+                    className="w-full flex items-center gap-2.5 px-3 py-2 text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors text-left mt-1 font-semibold"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>

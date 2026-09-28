@@ -23,12 +23,12 @@ export const Button = ({
   };
 
   const variantStyles = {
-    primary: 'sky-gradient-btn text-white focus:ring-sky-400 font-bold shadow-md hover:shadow-lg',
-    secondary: 'bg-sky-50/80 dark:bg-navy-800 hover:bg-sky-100 dark:hover:bg-navy-750 text-slate-900 dark:text-white border border-sky-400/35 focus:ring-sky-500 shadow-xs font-semibold',
-    outline: 'border-2 border-sky-500/60 dark:border-sky-400/60 text-sky-700 dark:text-sky-300 hover:bg-sky-500/10 dark:hover:bg-sky-500/20 hover:border-sky-500 focus:ring-sky-400 font-bold',
+    primary: 'aqua-gradient-btn text-white focus:ring-aqua-400 font-bold shadow-md hover:shadow-lg',
+    secondary: 'bg-white/80 dark:bg-teal-900/80 hover:bg-aqua-500 hover:text-white dark:hover:bg-aqua-400 dark:hover:text-teal-950 text-[#1685A5] dark:text-[#D3F2F4] border border-aqua-400/40 focus:ring-aqua-400 shadow-xs font-bold transition-all',
+    outline: 'border-2 border-aqua-500/60 dark:border-aqua-400/60 text-aqua-800 dark:text-[#5DE0EA] hover:bg-aqua-500/15 dark:hover:bg-aqua-500/25 hover:border-aqua-500 focus:ring-aqua-400 font-bold',
     danger: 'bg-rose-600 hover:bg-rose-700 text-white border border-rose-500/40 focus:ring-rose-500 shadow-xs font-bold',
-    ghost: 'text-slate-800 dark:text-slate-100 hover:text-sky-700 dark:hover:text-sky-300 hover:bg-sky-500/10 dark:hover:bg-sky-500/15 focus:ring-sky-400/20 font-semibold',
-    glass: 'glass-panel hover:bg-sky-50 dark:hover:bg-navy-750 text-slate-900 dark:text-white border border-sky-400/30 shadow-xs font-semibold',
+    ghost: 'text-[#173B4A] dark:text-[#F3FFFF] hover:text-aqua-700 dark:hover:text-[#5DE0EA] hover:bg-aqua-500/15 dark:hover:bg-aqua-500/20 focus:ring-aqua-400/20 font-bold',
+    glass: 'glass-panel hover:bg-white/95 dark:hover:bg-teal-800/90 text-[#173B4A] dark:text-[#F3FFFF] border border-aqua-400/35 shadow-xs font-bold',
   };
 
   return (
