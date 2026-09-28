@@ -27,23 +27,23 @@ export const PublicLayout = () => {
               <Compass className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-serif font-bold text-slate-900 dark:text-slate-100 tracking-tight group-hover:text-sky-500 dark:group-hover:text-sky-300 transition-colors">
-                Design<span className="text-sky-500 dark:text-sky-400">Space</span>
+              <span className="text-xl font-serif font-bold text-[#102A43] dark:text-[#F4FAFF] tracking-tight group-hover:text-sky-500 dark:group-hover:text-[#78CCFA] transition-colors">
+                Design<span className="text-sky-500 dark:text-[#5BC0F8]">Space</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-slate-500 dark:text-slate-400 -mt-1 font-medium">
+              <span className="text-[10px] uppercase tracking-widest text-[#52606D] dark:text-[#AFC5D1] -mt-1 font-medium">
                 Atelier Platform
               </span>
             </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-slate-600 dark:text-slate-300 font-semibold">
-            <a href="#features" className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+          <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest text-[#334E68] dark:text-[#D6E8F2] font-semibold">
+            <a href="#features" className="hover:text-sky-500 dark:hover:text-white transition-colors">
               Features
             </a>
-            <a href="#how-it-works" className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+            <a href="#how-it-works" className="hover:text-sky-500 dark:hover:text-white transition-colors">
               How It Works
             </a>
-            <a href="#features" className="hover:text-sky-500 dark:hover:text-sky-400 transition-colors">
+            <a href="#ecosystem" className="hover:text-sky-500 dark:hover:text-white transition-colors">
               Ecosystem
             </a>
           </nav>
@@ -89,21 +89,21 @@ export const PublicLayout = () => {
 
       {/* Public Footer */}
       <footer className="border-t border-sky-400/15 glass-panel py-10 px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500 dark:text-slate-400">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#52606D] dark:text-[#AFC5D1]">
           <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-sky-500/20 text-sky-500 dark:text-sky-400">
+            <div className="p-1.5 rounded-lg bg-sky-500/20 text-sky-500 dark:text-[#5BC0F8]">
               <Compass className="w-4 h-4" />
             </div>
-            <span className="font-serif font-bold text-sm text-slate-900 dark:text-slate-200">
+            <span className="font-serif font-bold text-sm text-[#102A43] dark:text-[#F4FAFF]">
               DesignSpace
             </span>
             <span>— Precision Interior Design & Project Execution</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link to="/login" className="hover:text-sky-500 dark:hover:text-sky-300 transition-colors">
+            <Link to="/login" className="hover:text-sky-500 dark:hover:text-[#78CCFA] transition-colors">
               Log In
             </Link>
-            <Link to="/register" className="hover:text-sky-500 dark:hover:text-sky-300 transition-colors">
+            <Link to="/register" className="hover:text-sky-500 dark:hover:text-[#78CCFA] transition-colors">
               Register
             </Link>
             <ThemeToggle size="sm" />
