@@ -181,4 +181,12 @@ export const analyticsAPI = {
   getContractor: () => api.get('/analytics/contractor'),
 };
 
+// Catalog Service APIs (Furniture & Materials)
+export const catalogAPI = {
+  getFurniture: (params) => api.get('/catalog/furniture', { params }),
+  getMaterials: (params) => api.get('/catalog/materials', { params }),
+  addFurnitureToProject: (data) => api.post('/catalog/add-furniture-to-project', data),
+  addMaterialToProject: (data) => api.post('/catalog/add-material-to-project', data),
+};
+
 export default api;

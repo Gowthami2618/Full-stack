@@ -761,7 +761,7 @@ img.sunset-valley-fallback {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("./fonts/fragment-mono.woff2") format("woff2");
+  src: local("Fragment Mono"), url("https://fonts.gstatic.com/s/fragmentmono/v4/4UaIrENHsxJlG5TH62xC_W612tVk0fD-.woff2") format("woff2");
 }
 
 .article-headings-component,

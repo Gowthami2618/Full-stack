@@ -25,6 +25,7 @@ import fileRoutes from './src/routes/fileRoutes.js';
 import notificationRoutes from './src/routes/notificationRoutes.js';
 import auditLogRoutes from './src/routes/auditLogRoutes.js';
 import analyticsRoutes from './src/routes/analyticsRoutes.js';
+import catalogRoutes from './src/routes/catalogRoutes.js';
 
 // Handle ES module dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -121,6 +122,7 @@ app.use('/api/files', fileRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/audit-logs', auditLogRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/catalog', catalogRoutes);
 
 // Error Handling Middleware
 app.use(notFound);

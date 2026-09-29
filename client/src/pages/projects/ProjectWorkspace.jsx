@@ -65,6 +65,7 @@ import BeforeAfterSlider from '../../components/common/BeforeAfterSlider';
 import RoomDesignerModal from '../../components/common/RoomDesignerModal';
 import RoomApprovalModal from '../../components/common/RoomApprovalModal';
 import ContractorExecutionModal from '../../components/common/ContractorExecutionModal';
+import CatalogExplorerModal from '../../components/common/CatalogExplorerModal';
 
 
 export const ProjectWorkspace = () => {
@@ -99,6 +100,8 @@ export const ProjectWorkspace = () => {
   const [showFileUploadModal, setShowFileUploadModal] = useState(false);
   const [showAssignContractorModal, setShowAssignContractorModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
+  const [showCatalogModal, setShowCatalogModal] = useState(false);
+  const [catalogInitialTab, setCatalogInitialTab] = useState('furniture');
 
   // House Room Modals State
   const [selectedRoomForDesign, setSelectedRoomForDesign] = useState(null);
@@ -910,6 +913,17 @@ export const ProjectWorkspace = () => {
                   Assign Contractor
                 </Button>
               )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setCatalogInitialTab('furniture');
+                  setShowCatalogModal(true);
+                }}
+                icon={Sparkles}
+              >
+                Browse Catalogs
+              </Button>
               {(isClient || isDesigner || isContractor || isAdmin) && (
                 <Button
                   variant="ghost"
@@ -3327,6 +3341,15 @@ export const ProjectWorkspace = () => {
         onClose={() => setSelectedRoomForExecution(null)}
         room={selectedRoomForExecution}
         onSaveExecution={handleSaveRoomExecution}
+      />
+
+      {/* Reusable Architectural & Furniture Catalog Explorer */}
+      <CatalogExplorerModal
+        isOpen={showCatalogModal}
+        onClose={() => setShowCatalogModal(false)}
+        project={project}
+        initialTab={catalogInitialTab}
+        onItemAdded={fetchProjectData}
       />
     </div>
   );
